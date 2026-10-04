@@ -55,3 +55,34 @@ class SomeModuleInsideXxx extends Module {
     // Logic
 }
 ```
+
+2. Unit Test
+
+Unit tests should be implemented in a **per-module** basis for better parallelism and independent bug discovery.  
+
+Utility lib `hammer` provides `Sim` and `Test` API for performant unit tests, where `Sim` invokes `verilator` compilation in ChiselSim and `Test` does an extra reset for reusing the existing `verilator` model.
+
+```scala
+import chisel3._
+import chisel3.experimental.BundleLiterals._
+import chisel3.simulator.scalatest.ChiselSim
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.must.Matchers
+import hammer.test._
+
+class UIntAdderSpec extends AnyFreeSpec with Matchers with ChiselSim {
+    "Some Module" should "do correct things" in Sim(new Xxx()) { dut => 
+
+        Test("Some Behaviour", dut) { dut => 
+            // Do some real tests here
+            // Test(xxx) will reset the dut so that we don't need another verilator compilation    
+        }
+
+        Test("Another Behaviour", dut) { dut => 
+            // Fresh test here
+            // Note: We expect the dut to recover its initial state after reset
+            //       Anything that's not properly reset should be viewed as BUG
+        }
+    }
+}
+```

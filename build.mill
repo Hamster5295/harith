@@ -37,6 +37,7 @@ object `harith` extends SbtModule with ScalafmtModule
 
   override def mvnDeps = Seq(
     mvn"org.chipsalliance::chisel:$chiselVersion",
+    mvn"io.github.hamster5295::hammer:1.0.0",
   )
 
   override def scalacPluginMvnDeps = Seq(
