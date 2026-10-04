@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * A block carry select adder.
@@ -53,4 +54,14 @@ class UIntCarrySelectAdder(val width: Int, val blockSize: Int) extends UIntAdder
   }
 
   io.output := Cat(blockCarry(numBlocks), sums.asUInt)
+}
+
+object UIntCarrySelectAdder extends App {
+  Export(
+    new UIntCarrySelectAdder(32, 4),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

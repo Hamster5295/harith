@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * A fully parallel prefix adder.
@@ -32,4 +33,14 @@ class UIntPrefixAdder(val width: Int, val style: PrefixStyle) extends UIntAdder 
   }
 
   io.output := Cat(carries(width), sums.asUInt)
+}
+
+object UIntPrefixAdder extends App {
+  Export(
+    new UIntPrefixAdder(32, PrefixStyle.KoggeStone),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

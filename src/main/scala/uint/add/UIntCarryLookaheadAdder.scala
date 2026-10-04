@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * A hierarchical carry lookahead adder.
@@ -62,4 +63,14 @@ class UIntCarryLookaheadAdder(val width: Int, val groupSize: Int) extends UIntAd
   }
 
   io.output := Cat(groupCarry(numGroups), sums.asUInt)
+}
+
+object UIntCarryLookaheadAdder extends App {
+  Export(
+    new UIntCarryLookaheadAdder(32, 4),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

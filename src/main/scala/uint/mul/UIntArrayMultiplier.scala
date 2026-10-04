@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * A structural carry save array multiplier.
@@ -35,4 +36,14 @@ class UIntArrayMultiplier(val width: Int) extends UIntMultiplier {
   }
 
   io.output := MultiplierUtils.finalAdd(acc, carry)
+}
+
+object UIntArrayMultiplier extends App {
+  Export(
+    new UIntArrayMultiplier(32),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

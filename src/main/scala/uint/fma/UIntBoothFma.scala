@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * A fused multiply-adder using modified Booth radix-4 partial products.
@@ -20,7 +21,7 @@ class UIntBoothFma(val width: Int, val reductionStyle: ReductionStyle, adder: =>
 
   val outputWidth = 2 * width + 1
 
-  val partial        = MultiplierUtils.boothColumns(io.mul1, io.mul2, width)
+  val partial        = MultiplierUtils.boothColumns(io.mul1, io.mul2, width, extraColumns = 1)
   val columns        = FmaUtils.withAddend(partial, io.add, outputWidth)
   val (lower, upper) = MultiplierUtils.toRows(MultiplierUtils.reduce(columns, reductionStyle))
 
@@ -35,4 +36,18 @@ class UIntBoothFma(val width: Int, val reductionStyle: ReductionStyle, adder: =>
   io.output           := finalAdder.io.output(2 * width, 0)
 
   override def latency: Int = finalAdder.latency
+}
+
+object UIntBoothFma extends App {
+  Export(
+    new UIntBoothFma(
+      32,
+      ReductionStyle.Dadda,
+      new UIntPrefixAdder(65, PrefixStyle.KoggeStone),
+    ),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

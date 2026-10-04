@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * A pipelined parallel prefix adder.
@@ -88,4 +89,14 @@ class UIntPipelinedPrefixAdder(val width: Int, val style: PrefixStyle, val stage
       chunk
     }
   }
+}
+
+object UIntPipelinedPrefixAdder extends App {
+  Export(
+    new UIntPipelinedPrefixAdder(32, PrefixStyle.KoggeStone, 2),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

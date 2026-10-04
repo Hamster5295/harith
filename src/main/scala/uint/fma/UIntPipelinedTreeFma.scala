@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * A pipelined fused multiply-adder using AND partial products.
@@ -50,4 +51,19 @@ class UIntPipelinedTreeFma(
   io.output           := finalAdder.io.output(2 * width, 0)
 
   override def latency: Int = stages + finalAdder.latency
+}
+
+object UIntPipelinedTreeFma extends App {
+  Export(
+    new UIntPipelinedTreeFma(
+      32,
+      ReductionStyle.Dadda,
+      new UIntPrefixAdder(65, PrefixStyle.KoggeStone),
+      2,
+    ),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

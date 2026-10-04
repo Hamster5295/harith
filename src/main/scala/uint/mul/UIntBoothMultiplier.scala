@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * A modified Booth radix-4 carry save tree multiplier.
@@ -35,4 +36,18 @@ class UIntBoothMultiplier(
   io.output           := finalAdder.io.output(2 * width - 1, 0)
 
   override def latency: Int = finalAdder.latency
+}
+
+object UIntBoothMultiplier extends App {
+  Export(
+    new UIntBoothMultiplier(
+      32,
+      ReductionStyle.Dadda,
+      new UIntPrefixAdder(64, PrefixStyle.KoggeStone),
+    ),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

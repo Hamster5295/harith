@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * An iterative non-restoring divider.
@@ -33,15 +34,14 @@ class UIntNonRestoringDivider(val width: Int) extends UIntDivider {
   val rem      = Reg(SInt(remWidth.W))
 
   val divisorS     = divisorReg.pad(remWidth).asSInt
-  val bit          = shiftReg(width - 1).asUInt.pad(remWidth).asSInt
+  val bit          = Cat(0.U((remWidth - 1).W), shiftReg(width - 1)).asSInt
   val w            = (rem << 1) + bit
-  val partialNext  = Mux(w(remWidth), w + divisorS, w - divisorS)
+  val partialNext  = Mux(rem < 0.S, w + divisorS, w - divisorS)
   val remNext      = partialNext(remWidth - 1, 0).asSInt
   val quotientNext = (quotient << 1)(width - 1, 0) | !partialNext(remWidth)
   val last         = count === 1.U
 
   val remainderCorrected = Mux(remNext(remWidth - 1), remNext + divisorS, remNext)
-  val quotientCorrected  = Mux(remNext(remWidth - 1), quotientNext - 1.U, quotientNext)
 
   io.in.ready              := !busy && !io.flush
   io.out.valid             := valid
@@ -72,10 +72,20 @@ class UIntNonRestoringDivider(val width: Int) extends UIntDivider {
     when(last) {
       busy      := false.B
       valid     := true.B
-      quotient  := quotientCorrected
+      quotient  := quotientNext
       remainder := remainderCorrected(width - 1, 0).asUInt
     }.otherwise {
       count := count - 1.U
     }
   }
+}
+
+object UIntNonRestoringDivider extends App {
+  Export(
+    new UIntNonRestoringDivider(32),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

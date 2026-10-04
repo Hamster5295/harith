@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * A pipelined fused multiply-adder using modified Booth radix-4 partial products.
@@ -28,7 +29,7 @@ class UIntPipelinedBoothFma(
   val outputWidth = 2 * width + 1
 
   var columns = FmaUtils.withAddend(
-    MultiplierUtils.boothColumns(io.mul1, io.mul2, width),
+    MultiplierUtils.boothColumns(io.mul1, io.mul2, width, extraColumns = 1),
     io.add,
     outputWidth,
   )
@@ -53,4 +54,19 @@ class UIntPipelinedBoothFma(
   io.output           := finalAdder.io.output(2 * width, 0)
 
   override def latency: Int = stages + finalAdder.latency
+}
+
+object UIntPipelinedBoothFma extends App {
+  Export(
+    new UIntPipelinedBoothFma(
+      32,
+      ReductionStyle.Dadda,
+      new UIntPrefixAdder(65, PrefixStyle.KoggeStone),
+      2,
+    ),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

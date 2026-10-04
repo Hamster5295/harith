@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * The unsigned FMA implemented with the `*` and `+` operators.
@@ -15,4 +16,14 @@ class UIntMacroFma(val width: Int) extends UIntFma {
   val io = IO(new UIntFmaIO(width))
 
   io.output := (io.mul1 * io.mul2) +& io.add
+}
+
+object UIntMacroFma extends App {
+  Export(
+    new UIntMacroFma(32),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

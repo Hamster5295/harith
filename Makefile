@@ -1,5 +1,5 @@
 PRJ = _
-TARGET ?= _.Cli
+TARGET ?= harith.uint.UIntMacroAdder
 
 MILL = ./mill
 JAVA = java

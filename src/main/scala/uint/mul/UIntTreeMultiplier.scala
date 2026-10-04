@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * A carry save tree multiplier using AND partial products.
@@ -35,4 +36,18 @@ class UIntTreeMultiplier(
   io.output           := finalAdder.io.output(2 * width - 1, 0)
 
   override def latency: Int = finalAdder.latency
+}
+
+object UIntTreeMultiplier extends App {
+  Export(
+    new UIntTreeMultiplier(
+      32,
+      ReductionStyle.Dadda,
+      new UIntPrefixAdder(64, PrefixStyle.KoggeStone),
+    ),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

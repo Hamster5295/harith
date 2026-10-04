@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * A block carry skip (carry bypass) adder.
@@ -42,4 +43,14 @@ class UIntCarrySkipAdder(val width: Int, val blockSize: Int) extends UIntAdder {
   }
 
   io.output := Cat(blockCarry(numBlocks), sums.asUInt)
+}
+
+object UIntCarrySkipAdder extends App {
+  Export(
+    new UIntCarrySkipAdder(32, 4),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

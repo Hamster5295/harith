@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * A fused multiply-adder using AND partial products.
@@ -35,4 +36,18 @@ class UIntTreeFma(val width: Int, val reductionStyle: ReductionStyle, adder: => 
   io.output           := finalAdder.io.output(2 * width, 0)
 
   override def latency: Int = finalAdder.latency
+}
+
+object UIntTreeFma extends App {
+  Export(
+    new UIntTreeFma(
+      32,
+      ReductionStyle.Dadda,
+      new UIntPrefixAdder(65, PrefixStyle.KoggeStone),
+    ),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

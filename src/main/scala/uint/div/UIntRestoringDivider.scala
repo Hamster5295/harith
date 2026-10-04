@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * An iterative restoring divider.
@@ -73,4 +74,14 @@ class UIntRestoringDivider(val width: Int) extends UIntDivider {
       count := count - 1.U
     }
   }
+}
+
+object UIntRestoringDivider extends App {
+  Export(
+    new UIntRestoringDivider(32),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

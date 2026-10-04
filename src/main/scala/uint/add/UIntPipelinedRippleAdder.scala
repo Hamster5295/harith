@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * A pipelined ripple carry adder.
@@ -56,4 +57,14 @@ class UIntPipelinedRippleAdder(val width: Int, val blockSize: Int) extends UIntA
   }
 
   io.output := Cat(carry, sums.asUInt)
+}
+
+object UIntPipelinedRippleAdder extends App {
+  Export(
+    new UIntPipelinedRippleAdder(32, 4),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

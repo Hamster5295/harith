@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * An FMA composed from a [[UIntMultiplier]] and a [[UIntAdder]].
@@ -37,4 +38,22 @@ class UIntComposedFma(val width: Int, mul: => UIntMultiplier, adder: => UIntAdde
   io.output           := finalAdder.io.output(2 * width, 0)
 
   override def latency: Int = multiplier.latency + finalAdder.latency
+}
+
+object UIntComposedFma extends App {
+  Export(
+    new UIntComposedFma(
+      32,
+      new UIntTreeMultiplier(
+        32,
+        ReductionStyle.Dadda,
+        new UIntPrefixAdder(64, PrefixStyle.KoggeStone),
+      ),
+      new UIntPrefixAdder(65, PrefixStyle.KoggeStone),
+    ),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

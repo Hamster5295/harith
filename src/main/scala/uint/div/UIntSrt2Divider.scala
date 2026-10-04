@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * An iterative radix-2 SRT divider.
@@ -38,7 +39,7 @@ class UIntSrt2Divider(val width: Int) extends UIntDivider {
   val rem         = Reg(SInt(remWidth.W))
   val quotientAcc = Reg(SInt(quotWidth.W))
 
-  val take     = shiftReg(width - 1).asUInt.pad(remWidth + 1).asSInt
+  val take     = Cat(0.U(remWidth.W), shiftReg(width - 1)).asSInt
   val w        = (rem << 1) + take
   val w2       = (w << 1)(cmpWidth - 1, 0).asSInt
   val divisorS = divisorReg.pad(cmpWidth).asSInt
@@ -94,4 +95,14 @@ class UIntSrt2Divider(val width: Int) extends UIntDivider {
       count := count - 1.U
     }
   }
+}
+
+object UIntSrt2Divider extends App {
+  Export(
+    new UIntSrt2Divider(32),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

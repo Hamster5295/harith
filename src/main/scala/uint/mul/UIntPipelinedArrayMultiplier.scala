@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * A pipelined carry save array multiplier.
@@ -52,4 +53,14 @@ class UIntPipelinedArrayMultiplier(val width: Int, val stages: Int) extends Modu
   io.output := MultiplierUtils.finalAdd(acc, carry)
 
   override def latency: Int = stages
+}
+
+object UIntPipelinedArrayMultiplier extends App {
+  Export(
+    new UIntPipelinedArrayMultiplier(32, 2),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

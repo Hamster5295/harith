@@ -41,16 +41,18 @@ private[uint] object MultiplierUtils {
     * The column bit heaps of the modified Booth radix-4 partial products.
     *
     * The multiplier is grouped into overlapping triples and each digit selects `0`, `+-src1` or
-    * `+-2 * src1`. Partially built heaps are zero extended to the full output width so the product
-    * is recovered modulo `2^(2 * width)`.
+    * `+-2 * src1`. Partially built heaps are sign extended to the full output width so the product
+    * is recovered modulo `2^(2 * width)`. `extraColumns` adds sign extension columns on top of the
+    * `2 * width` output, as required when the product feeds a wider fused multiply-adder.
     *
-    * @param src1  The multiplicand
-    * @param src2  The multiplier
-    * @param width The width of the operands
+    * @param src1         The multiplicand
+    * @param src2         The multiplier
+    * @param width        The width of the operands
+    * @param extraColumns The number of extra sign extension columns
     * @return one heap of bit expressions per output column
     */
-  def boothColumns(src1: UInt, src2: UInt, width: Int): Seq[Seq[Bool]] = {
-    val nCols   = columnCount(width)
+  def boothColumns(src1: UInt, src2: UInt, width: Int, extraColumns: Int = 0): Seq[Seq[Bool]] = {
+    val nCols   = columnCount(width) + extraColumns
     val columns = Array.fill(nCols)(mutable.ArrayBuffer.empty[Bool])
     val digits  = (width + 2) / 2
     for (i <- 0 until digits) {
@@ -111,7 +113,8 @@ private[uint] object MultiplierUtils {
         val height = currentHeight(c)
         val count  = style match {
           case ReductionStyle.Wallace => height / 3
-          case ReductionStyle.Dadda   => if (height > target) (height - target + 1) / 2 else 0
+          case ReductionStyle.Dadda   =>
+            if (height > target) math.min((height - target + 1) / 2, height / 3) else 0
         }
         compressors(c) = count
         next(c) -= 2 * count

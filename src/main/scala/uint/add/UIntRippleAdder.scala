@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * A structural ripple carry adder.
@@ -25,4 +26,14 @@ class UIntRippleAdder(val width: Int) extends UIntAdder {
   }
 
   io.output := Cat(carries(width), sums.asUInt)
+}
+
+object UIntRippleAdder extends App {
+  Export(
+    new UIntRippleAdder(32),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

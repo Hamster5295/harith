@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * An iterative radix-4 SRT divider.
@@ -104,4 +105,14 @@ class UIntSrt4Divider(val width: Int) extends UIntDivider {
       count := count - 1.U
     }
   }
+}
+
+object UIntSrt4Divider extends App {
+  Export(
+    new UIntSrt4Divider(32),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

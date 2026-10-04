@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * The unsigned adder implemented with the `+` operator.
@@ -13,4 +14,14 @@ import chisel3.util._
 class UIntMacroAdder(val width: Int) extends UIntAdder {
   val io = IO(new UIntAdderIO(width))
   io.output := io.src1 +& io.src2 + io.carry
+}
+
+object UIntMacroAdder extends App {
+  Export(
+    new UIntMacroAdder(32),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }

@@ -2,6 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * A pipelined carry save tree multiplier using AND partial products.
@@ -46,4 +47,19 @@ class UIntPipelinedTreeMultiplier(
   io.output           := finalAdder.io.output(2 * width - 1, 0)
 
   override def latency: Int = stages + finalAdder.latency
+}
+
+object UIntPipelinedTreeMultiplier extends App {
+  Export(
+    new UIntPipelinedTreeMultiplier(
+      32,
+      ReductionStyle.Dadda,
+      new UIntPrefixAdder(64, PrefixStyle.KoggeStone),
+      2,
+    ),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
 }
