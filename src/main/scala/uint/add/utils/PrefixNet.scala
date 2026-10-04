@@ -3,7 +3,8 @@ package harith.uint
 import chisel3._
 import chisel3.util._
 
-/** Builds parallel prefix networks shared by [[UIntPrefixAdder]] and [[UIntCarryLookaheadAdder]].
+/**
+  * Builds parallel prefix networks shared by [[UIntPrefixAdder]] and [[UIntCarryLookaheadAdder]].
   *
   * A network is expressed as a sequence of levels, each level being a sequence of
   * `(target, source)` index pairs. All pairs of a level read the state produced by the previous
@@ -11,13 +12,26 @@ import chisel3.util._
   */
 private[uint] object PrefixNet {
 
-  /** The smallest power of two greater than or equal to `n`. */
+  /**
+    * The smallest power of two greater than or equal to `n`.
+    *
+    * @param n The lower bound
+    * @return the smallest power of two that is at least `n`
+    */
   def nextPow2(n: Int): Int = {
     require(n > 0, "nextPow2 requires a positive size")
     1 << log2Ceil(n)
   }
 
-  /** The prefix levels of `n` (a power of two) generated according to `style`. */
+  /**
+    * The prefix levels of `n` generated according to `style`.
+    *
+    * `n` must be a power of two.
+    *
+    * @param n     The number of bits
+    * @param style The parallel prefix network style
+    * @return the levels of `(target, source)` index pairs
+    */
   def levels(n: Int, style: PrefixStyle): Seq[Seq[(Int, Int)]] = {
     require(n > 0 && (n & (n - 1)) == 0, "prefix networks require a power-of-two size")
     style match {
@@ -69,11 +83,15 @@ private[uint] object PrefixNet {
     }
   }
 
-  /** Apply the inclusive prefix network to per-bit generate/propagate values.
+  /**
+    * Apply the inclusive prefix network to per-bit generate/propagate values.
     *
     * Bit `i` of the inputs describes bit `i` of the operands. The network is padded to a power of
     * two with the neutral element `(g, p) = (false, true)`, so arbitrary widths are supported.
     *
+    * @param p     The per-bit propagate values
+    * @param g     The per-bit generate values
+    * @param style The parallel prefix network style
     * @return the inclusive prefix generate and propagate nodes, truncated to the input width
     */
   def nodes(p: Seq[Bool], g: Seq[Bool], style: PrefixStyle): (Seq[Bool], Seq[Bool]) = {
@@ -100,8 +118,13 @@ private[uint] object PrefixNet {
     (gs.take(width), ps.take(width))
   }
 
-  /** Compute the carry into each bit, including the final carry out.
+  /**
+    * Compute the carry into each bit, including the final carry out.
     *
+    * @param p       The per-bit propagate values
+    * @param g       The per-bit generate values
+    * @param carryIn The carry into the least significant bit
+    * @param style   The parallel prefix network style
     * @return a sequence of `width + 1` carries, where index `i` is the carry into bit `i`
     */
   def carries(p: Seq[Bool], g: Seq[Bool], carryIn: Bool, style: PrefixStyle): Seq[Bool] = {

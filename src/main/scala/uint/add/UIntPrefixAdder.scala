@@ -3,7 +3,8 @@ package harith.uint
 import chisel3._
 import chisel3.util._
 
-/** A fully parallel prefix adder.
+/**
+  * A fully parallel prefix adder.
   *
   * All carries are computed by a single prefix network, giving a logarithmic critical path. The
   * [[PrefixStyle]] selects the network shape and therefore the area/performance point.

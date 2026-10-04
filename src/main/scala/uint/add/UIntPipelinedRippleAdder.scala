@@ -3,7 +3,8 @@ package harith.uint
 import chisel3._
 import chisel3.util._
 
-/** A pipelined ripple carry adder.
+/**
+  * A pipelined ripple carry adder.
   *
   * The carry chain is cut at every block boundary and the carry, the operand slices and the
   * accumulated sums advance one block per cycle. This yields a short, block sized critical path and

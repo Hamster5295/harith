@@ -3,7 +3,8 @@ package harith.uint
 import chisel3._
 import chisel3.util._
 
-/** A block carry skip (carry bypass) adder.
+/**
+  * A block carry skip (carry bypass) adder.
   *
   * Each block ripples internally, while a block whose bits all propagate lets the incoming carry
   * skip over it, shortening the worst case critical path at little area cost.

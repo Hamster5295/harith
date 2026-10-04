@@ -3,7 +3,8 @@ package harith.uint
 import chisel3._
 import chisel3.util._
 
-/** A structural ripple carry adder.
+/**
+  * A structural ripple carry adder.
   *
   * This is the most resource efficient combinational adder, at the cost of an O(width) critical
   * path. On FPGAs the inferred [[UIntMacroAdder]] is usually preferable.

@@ -3,7 +3,8 @@ package harith.uint
 import chisel3._
 import chisel3.util._
 
-/** A pipelined parallel prefix adder.
+/**
+  * A pipelined parallel prefix adder.
   *
   * The prefix levels of the selected [[PrefixStyle]] are distributed over `stages` register layers.
   * The throughput is one addition per cycle and the latency equals `stages`, regardless of whether
@@ -69,7 +70,13 @@ class UIntPipelinedPrefixAdder(val width: Int, val style: PrefixStyle, val stage
 
   io.output := Cat(carries(width), sums.asUInt)
 
-  /** Split `values` into `groups` consecutive, as evenly sized chunks as possible. */
+  /**
+    * Split `values` into `groups` consecutive, as evenly sized chunks as possible.
+    *
+    * @param values The sequence to split
+    * @param groups The number of chunks to produce
+    * @return the consecutive chunks
+    */
   private def partition[A](values: Seq[A], groups: Int): Seq[Seq[A]] = {
     val base    = values.length / groups
     val extra   = values.length % groups

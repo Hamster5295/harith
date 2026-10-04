@@ -3,7 +3,8 @@ package harith.uint
 import chisel3._
 import chisel3.util._
 
-/** A hierarchical carry lookahead adder.
+/**
+  * A hierarchical carry lookahead adder.
   *
   * The bits are split into groups. Each group resolves its internal carries with a lookahead
   * network, exposes a group generate/propagate pair, and the group carries are resolved by a

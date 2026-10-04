@@ -3,10 +3,17 @@ package harith.uint
 import chisel3._
 import chisel3.util._
 
+/**
+  * The low level helpers shared by the structural adders.
+  */
 private[uint] object AdderUtils {
 
-  /** A single full adder.
+  /**
+    * A single full adder.
     *
+    * @param a       The first operand bit
+    * @param b       The second operand bit
+    * @param carryIn The carry into this bit
     * @return the sum bit and the carry out
     */
   def fullAdder(a: Bool, b: Bool, carryIn: Bool): (Bool, Bool) = {

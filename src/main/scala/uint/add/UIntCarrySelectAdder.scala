@@ -3,7 +3,8 @@ package harith.uint
 import chisel3._
 import chisel3.util._
 
-/** A block carry select adder.
+/**
+  * A block carry select adder.
   *
   * Each block speculatively computes its result for both possible incoming carries and selects the
   * correct one once the real carry arrives. The duplicated logic reduces the critical path to one
