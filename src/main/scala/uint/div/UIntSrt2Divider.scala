@@ -4,28 +4,23 @@ import chisel3._
 import chisel3.util._
 
 /**
-  * An iterative SRT divider.
+  * An iterative radix-2 SRT divider.
   *
-  * Each iteration produces a redundant signed quotient digit so that no full remainder compare is
-  * needed, and the digits are accumulated into a signed quotient that is corrected once at the end.
-  * Radix 4 halves the number of iterations at the cost of a wider selection. The quotient and
-  * remainder are still register normalized by the RISC-V divide-by-zero handling.
+  * Each iteration produces one redundant signed quotient digit from `{-1, 0, 1}` by comparing twice
+  * the partial remainder against `+-divisor`, and the digits are accumulated into a signed quotient
+  * that is corrected once at the end. It needs no restore step and finishes in one cycle per operand
+  * bit.
   *
   * @param width The width of the operands
-  * @param radix The quotient digit radix, either 2 or 4
   */
-class UIntSrtDivider(val width: Int, val radix: Int) extends UIntDivider {
+class UIntSrt2Divider(val width: Int) extends UIntDivider {
   val io = IO(new UIntDividerIO(width))
   require(width > 0, "width must be positive")
-  require(radix == 2 || radix == 4, "radix must be 2 or 4")
 
-  private val bitsPer   = if (radix == 2) 1 else 2
-  private val shiftBits = if (radix == 2) 1 else 2
-  private val steps     = (width + bitsPer - 1) / bitsPer
-  private val total     = steps * bitsPer
+  private val steps     = width
   private val remWidth  = width + 4
   private val quotWidth = width + 2
-  private val cmpWidth  = remWidth + shiftBits + 2
+  private val cmpWidth  = remWidth + 2
 
   override def latency: Int = steps
 
@@ -39,36 +34,23 @@ class UIntSrtDivider(val width: Int, val radix: Int) extends UIntDivider {
   val quotient    = Reg(UInt(width.W))
   val remainder   = Reg(UInt(width.W))
 
-  val shiftReg    = Reg(UInt(total.W))
+  val shiftReg    = Reg(UInt(width.W))
   val rem         = Reg(SInt(remWidth.W))
   val quotientAcc = Reg(SInt(quotWidth.W))
 
-  val take     = shiftReg(total - 1, total - bitsPer)
-  val w        = (rem << shiftBits) + take.pad(remWidth + shiftBits).asSInt
+  val take     = shiftReg(width - 1).asUInt.pad(remWidth + 1).asSInt
+  val w        = (rem << 1) + take
   val w2       = (w << 1)(cmpWidth - 1, 0).asSInt
   val divisorS = divisorReg.pad(cmpWidth).asSInt
-  val divisor3 = ((divisorS << 1) + divisorS)(cmpWidth - 1, 0).asSInt
 
   val digit = Mux(
     zeroDiv,
-    0.S(3.W),
-    if (radix == 2) {
-      Mux(w2 >= divisorS, 1.S(3.W), Mux(w2 <= -divisorS, -1.S(3.W), 0.S(3.W)))
-    } else {
-      Mux(
-        w2 >= divisor3,
-        2.S(3.W),
-        Mux(
-          w2 >= divisorS,
-          1.S(3.W),
-          Mux(w2 <= -divisor3, -2.S(3.W), Mux(w2 <= -divisorS, -1.S(3.W), 0.S(3.W))),
-        ),
-      )
-    },
+    0.S(2.W),
+    Mux(w2 >= divisorS, 1.S(2.W), Mux(w2 <= -divisorS, -1.S(2.W), 0.S(2.W))),
   )
 
   val remNext      = (w - digit * divisorS)(remWidth - 1, 0).asSInt
-  val quotientNext = ((quotientAcc << shiftBits) + digit)(quotWidth - 1, 0).asSInt
+  val quotientNext = ((quotientAcc << 1) + digit)(quotWidth - 1, 0).asSInt
   val last         = count === 1.U
 
   val remCorrected      = Mux(remNext(remWidth - 1), remNext + divisorS, remNext)
@@ -93,7 +75,7 @@ class UIntSrtDivider(val width: Int, val radix: Int) extends UIntDivider {
       divisorReg  := io.in.bits.divisor
       dividendReg := io.in.bits.dividend
       zeroDiv     := io.in.bits.divisor === 0.U
-      shiftReg    := io.in.bits.dividend.pad(total)
+      shiftReg    := io.in.bits.dividend
       rem         := 0.S
       quotientAcc := 0.S
       quotient    := 0.U
@@ -102,7 +84,7 @@ class UIntSrtDivider(val width: Int, val radix: Int) extends UIntDivider {
   }.otherwise {
     rem         := remNext
     quotientAcc := quotientNext
-    shiftReg    := (shiftReg << bitsPer)(total - 1, 0)
+    shiftReg    := shiftReg << 1
     when(last) {
       busy      := false.B
       valid     := true.B
