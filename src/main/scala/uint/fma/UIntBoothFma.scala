@@ -20,8 +20,8 @@ class UIntBoothFma(val width: Int, val reductionStyle: ReductionStyle, adder: =>
 
   val outputWidth = 2 * width + 1
 
-  val partial        = MultiplierUtils.boothColumns(io.src1, io.src2, width)
-  val columns        = FmaUtils.withAddend(partial, io.addend, outputWidth)
+  val partial        = MultiplierUtils.boothColumns(io.mul1, io.mul2, width)
+  val columns        = FmaUtils.withAddend(partial, io.add, outputWidth)
   val (lower, upper) = MultiplierUtils.toRows(MultiplierUtils.reduce(columns, reductionStyle))
 
   val finalAdder = Module(adder)

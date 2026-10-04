@@ -14,5 +14,5 @@ import chisel3.util._
 class UIntMacroFma(val width: Int) extends UIntFma {
   val io = IO(new UIntFmaIO(width))
 
-  io.output := (io.src1 * io.src2) +& io.addend
+  io.output := (io.mul1 * io.mul2) +& io.add
 }

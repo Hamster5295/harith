@@ -23,8 +23,8 @@ class UIntComposedFma(val width: Int, mul: => UIntMultiplier, adder: => UIntAdde
 
   val multiplier = Module(mul)
   require(multiplier.io.output.getWidth == 2 * width, "the multiplier must be 2 * width bits wide")
-  multiplier.io.src1 := io.src1
-  multiplier.io.src2 := io.src2
+  multiplier.io.src1 := io.mul1
+  multiplier.io.src2 := io.mul2
 
   val finalAdder = Module(adder)
   require(
@@ -32,7 +32,7 @@ class UIntComposedFma(val width: Int, mul: => UIntMultiplier, adder: => UIntAdde
     "the final adder must be 2 * width + 1 bits wide",
   )
   finalAdder.io.src1  := multiplier.io.output.pad(outputWidth)
-  finalAdder.io.src2  := io.addend.pad(outputWidth)
+  finalAdder.io.src2  := io.add.pad(outputWidth)
   finalAdder.io.carry := false.B
   io.output           := finalAdder.io.output(2 * width, 0)
 

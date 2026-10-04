@@ -28,8 +28,8 @@ class UIntPipelinedBoothFma(
   val outputWidth = 2 * width + 1
 
   var columns = FmaUtils.withAddend(
-    MultiplierUtils.boothColumns(io.src1, io.src2, width),
-    io.addend,
+    MultiplierUtils.boothColumns(io.mul1, io.mul2, width),
+    io.add,
     outputWidth,
   )
   val levels = MultiplierUtils.schedule(MultiplierUtils.heights(columns), reductionStyle)

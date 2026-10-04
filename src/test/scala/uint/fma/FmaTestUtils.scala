@@ -71,11 +71,11 @@ object FmaTestUtils {
     * @param vectors The `(src1, src2, addend)` vectors to apply
     */
   def checkCombinational(dut: UIntFma, vectors: Seq[(BigInt, BigInt, BigInt)]): Unit = {
-    val width = dut.io.src1.getWidth
+    val width = dut.io.mul1.getWidth
     vectors.foreach { case (a, b, c) =>
-      dut.io.src1.poke(a.U(width.W))
-      dut.io.src2.poke(b.U(width.W))
-      dut.io.addend.poke(c.U((2 * width).W))
+      dut.io.mul1.poke(a.U(width.W))
+      dut.io.mul2.poke(b.U(width.W))
+      dut.io.add.poke(c.U((2 * width).W))
       dut.io.output.expect(reference(a, b, c, width), s"a=$a b=$b c=$c")
     }
   }
@@ -87,12 +87,12 @@ object FmaTestUtils {
     * @param vectors The `(src1, src2, addend)` vectors to apply
     */
   def checkPipelined(dut: UIntFma, vectors: Seq[(BigInt, BigInt, BigInt)]): Unit = {
-    val width   = dut.io.src1.getWidth
+    val width   = dut.io.mul1.getWidth
     val latency = dut.latency
     vectors.foreach { case (a, b, c) =>
-      dut.io.src1.poke(a.U(width.W))
-      dut.io.src2.poke(b.U(width.W))
-      dut.io.addend.poke(c.U((2 * width).W))
+      dut.io.mul1.poke(a.U(width.W))
+      dut.io.mul2.poke(b.U(width.W))
+      dut.io.add.poke(c.U((2 * width).W))
       dut.clock.step(latency)
       dut.io.output.expect(reference(a, b, c, width), s"a=$a b=$b c=$c")
     }

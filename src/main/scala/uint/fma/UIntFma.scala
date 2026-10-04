@@ -9,9 +9,9 @@ import chisel3.util._
   * @param width The width of the operands
   */
 class UIntFmaIO(width: Int) extends Bundle {
-  val src1   = Input(UInt(width.W))
-  val src2   = Input(UInt(width.W))
-  val addend = Input(UInt((2 * width).W))
+  val mul1   = Input(UInt(width.W))
+  val mul2   = Input(UInt(width.W))
+  val add    = Input(UInt((2 * width).W))
   val output = Output(UInt((2 * width + 1).W))
 }
 
