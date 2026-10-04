@@ -86,3 +86,21 @@ class UIntAdderSpec extends AnyFreeSpec with Matchers with ChiselSim {
     }
 }
 ```
+
+3. Doc Comments
+
+Doc Comments should present at any Module / API that is meant to expose to referer. 
+
+Doc Comments should follow the example below: 
+
+```scala
+/** <This line should leave empty>
+  * Header Line, introduce the module / api breifly
+  * <This line should leave empty>
+  * Descriptions, can cross multiple lines
+  * 
+  * @param something Introduce the params (if there are any)
+  */
+
+
+```
