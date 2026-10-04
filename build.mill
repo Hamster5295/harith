@@ -46,18 +46,18 @@ object `harith` extends SbtModule with ScalafmtModule
   /// Publish
   def pomSettings: Simple[PomSettings] = PomSettings(
     description = "Hamster's Arithmatic Lib for Chisel",
-    organization = "io.github.<user>",
-    url = "/hamster5295/harith",
+    organization = "io.github.hamster5295",
+    url = "codeberg.org/hamster5295/harith",
     licenses = Seq(License.MIT),
     versionControl = VersionControl(
-      browsableRepository = Some("/hamster5295/harith"),
+      browsableRepository = Some("codeberg.org/hamster5295/harith"),
       connection = Some(VersionControlConnection.gitHttps(
         "codeberg.org",
-        "<user>/<repo>",
+        "hamster5295/harith",
       )),
       developerConnection = Some(VersionControlConnection.gitSsh(
         "codeberg.org",
-        "<user>/<repo>.git",
+        "hamster5295/harith.git",
         username = Some("git"),
       )),
       tag = None,
