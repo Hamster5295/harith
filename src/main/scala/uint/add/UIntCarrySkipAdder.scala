@@ -12,7 +12,7 @@ import chisel3.util._
   * @param width     The width of the operands
   * @param blockSize The number of bits per skip block
   */
-class UIntCarrySkipAdder(val width: Int, val blockSize: Int) extends Module with UIntAdder {
+class UIntCarrySkipAdder(val width: Int, val blockSize: Int) extends UIntAdder {
   val io = IO(new UIntAdderIO(width))
   require(blockSize > 0, "blockSize must be positive")
 

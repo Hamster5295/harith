@@ -19,7 +19,7 @@ import chisel3.util._
 class UIntPipelinedTreeMultiplier(
     val width:          Int,
     val reductionStyle: ReductionStyle,
-    adder:              => Module with UIntAdder,
+    adder:              => UIntAdder,
     val stages:         Int,
 ) extends Module
     with UIntMultiplier {

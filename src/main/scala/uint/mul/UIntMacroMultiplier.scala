@@ -10,7 +10,7 @@ import chisel3.util._
   *
   * @param width The width of the operands
   */
-class UIntMacroMultiplier(width: Int) extends Module with UIntMultiplier {
+class UIntMacroMultiplier(width: Int) extends UIntMultiplier {
   val io = IO(new UIntMultiplierIO(width))
 
   io.output := io.src1 * io.src2

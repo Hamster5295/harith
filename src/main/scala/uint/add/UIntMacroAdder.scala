@@ -10,7 +10,7 @@ import chisel3.util._
   *
   * @param width The width of the operands
   */
-class UIntMacroAdder(val width: Int) extends Module with UIntAdder {
+class UIntMacroAdder(val width: Int) extends UIntAdder {
   val io = IO(new UIntAdderIO(width))
   io.output := io.src1 +& io.src2 + io.carry
 }

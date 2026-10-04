@@ -70,7 +70,7 @@ object AdderTestUtils {
     * @param dut     The adder under test
     * @param vectors The `(src1, src2, carry)` vectors to apply
     */
-  def checkCombinational(dut: Module with UIntAdder, vectors: Seq[(BigInt, BigInt, Boolean)]): Unit = {
+  def checkCombinational(dut: UIntAdder, vectors: Seq[(BigInt, BigInt, Boolean)]): Unit = {
     val width = dut.io.src1.getWidth
     vectors.foreach { case (a, b, carry) =>
       dut.io.src1.poke(a.U(width.W))
@@ -86,7 +86,7 @@ object AdderTestUtils {
     * @param dut     The adder under test
     * @param vectors The `(src1, src2, carry)` vectors to apply
     */
-  def checkPipelined(dut: Module with UIntAdder, vectors: Seq[(BigInt, BigInt, Boolean)]): Unit = {
+  def checkPipelined(dut: UIntAdder, vectors: Seq[(BigInt, BigInt, Boolean)]): Unit = {
     val width   = dut.io.src1.getWidth
     val latency = dut.latency
     vectors.foreach { case (a, b, carry) =>

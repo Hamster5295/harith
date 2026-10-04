@@ -17,7 +17,7 @@ import chisel3.util._
 class UIntTreeMultiplier(
     val width:          Int,
     val reductionStyle: ReductionStyle,
-    adder:              => Module with UIntAdder,
+    adder:              => UIntAdder,
 ) extends Module
     with UIntMultiplier {
   val io = IO(new UIntMultiplierIO(width))

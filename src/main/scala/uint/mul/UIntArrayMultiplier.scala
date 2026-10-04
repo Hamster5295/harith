@@ -13,7 +13,7 @@ import chisel3.util._
   *
   * @param width The width of the operands
   */
-class UIntArrayMultiplier(val width: Int) extends Module with UIntMultiplier {
+class UIntArrayMultiplier(val width: Int) extends UIntMultiplier {
   val io = IO(new UIntMultiplierIO(width))
   require(width > 0, "width must be positive")
 

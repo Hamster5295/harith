@@ -68,7 +68,7 @@ object MultiplierTestUtils {
     * @param dut     The multiplier under test
     * @param vectors The `(src1, src2)` vectors to apply
     */
-  def checkCombinational(dut: Module with UIntMultiplier, vectors: Seq[(BigInt, BigInt)]): Unit = {
+  def checkCombinational(dut: UIntMultiplier, vectors: Seq[(BigInt, BigInt)]): Unit = {
     val width = dut.io.src1.getWidth
     vectors.foreach { case (a, b) =>
       dut.io.src1.poke(a.U(width.W))
@@ -83,7 +83,7 @@ object MultiplierTestUtils {
     * @param dut     The multiplier under test
     * @param vectors The `(src1, src2)` vectors to apply
     */
-  def checkPipelined(dut: Module with UIntMultiplier, vectors: Seq[(BigInt, BigInt)]): Unit = {
+  def checkPipelined(dut: UIntMultiplier, vectors: Seq[(BigInt, BigInt)]): Unit = {
     val width   = dut.io.src1.getWidth
     val latency = dut.latency
     vectors.foreach { case (a, b) =>

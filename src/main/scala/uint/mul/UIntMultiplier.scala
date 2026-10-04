@@ -20,7 +20,7 @@ class UIntMultiplierIO(width: Int) extends Bundle {
   * Every implementation computes `src1 * src2` as a `width * 2` bit result through
   * [[UIntMultiplierIO]].
   */
-trait UIntMultiplier {
+trait UIntMultiplier extends Module {
   val io: UIntMultiplierIO
 
   /**

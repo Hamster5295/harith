@@ -11,7 +11,7 @@ import chisel3.util._
   *
   * @param width The width of the operands
   */
-class UIntRippleAdder(val width: Int) extends Module with UIntAdder {
+class UIntRippleAdder(val width: Int) extends UIntAdder {
   val io = IO(new UIntAdderIO(width))
 
   val sums    = Wire(Vec(width, Bool()))

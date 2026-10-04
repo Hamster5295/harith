@@ -14,7 +14,7 @@ import chisel3.util._
   * @param width     The width of the operands
   * @param groupSize The number of bits per lookahead group
   */
-class UIntCarryLookaheadAdder(val width: Int, val groupSize: Int) extends Module with UIntAdder {
+class UIntCarryLookaheadAdder(val width: Int, val groupSize: Int) extends UIntAdder {
   val io = IO(new UIntAdderIO(width))
   require(groupSize > 0, "groupSize must be positive")
 

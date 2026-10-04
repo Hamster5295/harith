@@ -12,7 +12,7 @@ import chisel3.util._
   * @param width The width of the operands
   * @param style The parallel prefix network style
   */
-class UIntPrefixAdder(val width: Int, val style: PrefixStyle) extends Module with UIntAdder {
+class UIntPrefixAdder(val width: Int, val style: PrefixStyle) extends UIntAdder {
   val io = IO(new UIntAdderIO(width))
   require(width > 0, "width must be positive")
 
