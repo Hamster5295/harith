@@ -21,7 +21,7 @@ class UIntAdderIO(width: Int) extends Bundle {
   * Every implementation computes `src1 + src2 + carry` as a `width + 1` bit result through
   * [[UIntAdderIO]].
   */
-trait UIntAdder extends Module{
+trait UIntAdder extends Module {
   val io: UIntAdderIO
 
   /**
