@@ -1,5 +1,5 @@
 PRJ = _
-TARGET ?= harith.uint.UIntMacroAdder
+TARGET ?= harith.uint.UIntMacroAdd
 TARGET_NAME = $(lastword $(subst ., ,$(TARGET)))
 
 MILL = ./mill

@@ -1,7 +1,7 @@
 package harith.uint
 
 /**
-  * The partial product reduction styles of [[UIntTreeMultiplier]] and [[UIntBoothMultiplier]].
+  * The partial product reduction styles of [[UIntTreeMul]] and [[UIntBoothMul]].
   *
   * They trade the number of carry save compressors against the reduction wiring, spanning the
   * fastest to the smallest tree multiplier.

@@ -31,7 +31,7 @@ proc env_or {name default} {
   return $default
 }
 
-set DESIGN     [env_or TOP UIntMacroAdder]
+set DESIGN     [env_or TOP UIntMacroAdd]
 set PDK        [env_or PDK icsprout55]
 set PDK_DIR    [env_or PDK_DIR /home/hamster/pdk/icsprout55]
 set PROJ_HOME  [env_or PROJ_HOME [pwd]]

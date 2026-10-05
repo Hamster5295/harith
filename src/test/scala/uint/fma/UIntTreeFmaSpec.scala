@@ -14,7 +14,7 @@ class UIntTreeFmaSpec extends AnyFreeSpec with Matchers with ChiselSim {
       s"reduction style = $style" - {
         FmaTestUtils.widths.foreach { width =>
           s"width = $width" in Sim(
-            new UIntTreeFma(width, style, new UIntPrefixAdder(2 * width + 1, PrefixStyle.KoggeStone)),
+            new UIntTreeFma(width, style, new UIntPrefixAdd(2 * width + 1, PrefixStyle.KoggeStone)),
           ) { dut =>
             Test("edge vectors", dut) { dut =>
               FmaTestUtils.checkCombinational(dut, FmaTestUtils.edgeVectors(width))

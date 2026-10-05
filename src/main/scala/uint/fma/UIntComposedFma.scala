@@ -5,7 +5,7 @@ import chisel3.util._
 import hammer.Export
 
 /**
-  * An FMA composed from a [[UIntMultiplier]] and a [[UIntAdder]].
+  * An FMA composed from a [[UIntMul]] and a [[UIntAdd]].
   *
   * The supplied units are wired in series, so the product and the addend go through two carry
   * propagate adders. This is the flexible and reuse oriented option: pairing a small multiplier
@@ -19,7 +19,7 @@ import hammer.Export
   * delay = 15.715, area = 1990 @32bit@fpga
   * delay = 5.6945, area = 11760.56 @32bit@55nm
   */
-class UIntComposedFma(val width: Int, mul: => UIntMultiplier, adder: => UIntAdder) extends UIntFma {
+class UIntComposedFma(val width: Int, mul: => UIntMul, adder: => UIntAdd) extends UIntFma {
   val io = IO(new UIntFmaIO(width))
   require(width > 0, "width must be positive")
 
@@ -30,29 +30,29 @@ class UIntComposedFma(val width: Int, mul: => UIntMultiplier, adder: => UIntAdde
   multiplier.io.src1 := io.mul1
   multiplier.io.src2 := io.mul2
 
-  val finalAdder = Module(adder)
+  val finalAdd = Module(adder)
   require(
-    finalAdder.io.src1.getWidth == outputWidth,
+    finalAdd.io.src1.getWidth == outputWidth,
     "the final adder must be 2 * width + 1 bits wide",
   )
-  finalAdder.io.src1  := multiplier.io.output.pad(outputWidth)
-  finalAdder.io.src2  := io.add.pad(outputWidth)
-  finalAdder.io.carry := false.B
-  io.output           := finalAdder.io.output(2 * width, 0)
+  finalAdd.io.src1  := multiplier.io.output.pad(outputWidth)
+  finalAdd.io.src2  := io.add.pad(outputWidth)
+  finalAdd.io.carry := false.B
+  io.output         := finalAdd.io.output(2 * width, 0)
 
-  override def latency: Int = multiplier.latency + finalAdder.latency
+  override def latency: Int = multiplier.latency + finalAdd.latency
 }
 
 object UIntComposedFma extends App {
   Export(
     new UIntComposedFma(
       32,
-      new UIntTreeMultiplier(
+      new UIntTreeMul(
         32,
         ReductionStyle.Dadda,
-        new UIntPrefixAdder(64, PrefixStyle.KoggeStone),
+        new UIntPrefixAdd(64, PrefixStyle.KoggeStone),
       ),
-      new UIntPrefixAdder(65, PrefixStyle.KoggeStone),
+      new UIntPrefixAdd(65, PrefixStyle.KoggeStone),
     ),
     args,
     Array(

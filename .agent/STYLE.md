@@ -70,7 +70,7 @@ import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import hammer.test._
 
-class UIntAdderSpec extends AnyFreeSpec with Matchers with ChiselSim {
+class UIntAddSpec extends AnyFreeSpec with Matchers with ChiselSim {
     "Some Module" should "do correct things" in Sim(new Xxx()) { dut => 
 
         Test("Some Behaviour", dut) { dut => 
