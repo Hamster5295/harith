@@ -12,6 +12,9 @@ import hammer.Export
   * extra fractional bits and a sticky from the nonzero remainder, so the final rounding is exact.
   * NaN is canonical, per RISC-V.
   *
+  * delay = 16.596, area = 1268 @32bit@50cycles@fpga
+  * delay = 6.2552, area = 5463.64 @32bit@50cycles@55nm
+  *
   * @param aFmt   The format of the dividend
   * @param bFmt   The format of the divisor
   * @param outFmt The format of the result

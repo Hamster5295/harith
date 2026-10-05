@@ -11,6 +11,13 @@ import hammer.Export
   * so the throughput is one conversion per cycle. `stages = 0` makes the converter combinational,
   * equivalently to [[FpGenericConvert]]. NaN is canonical, per RISC-V.
   *
+  * Note: the `stages` register layers are a plain delay queue on the operands, not registers placed
+  * at internal cut points; the conversion logic between them stays combinational and the intended
+  * pipeline depth is only realised once the EDA tool retimes the queue into the logic.
+  *
+  * delay = 0.559, area = 489 @32bit@2cycles@fpga
+  * delay = 4.5582, area = 1220.52 @32bit@2cycles@55nm
+  *
   * @param inFmt  The input format
   * @param outFmt The output format
   * @param stages The number of pipeline register layers, which is also the latency

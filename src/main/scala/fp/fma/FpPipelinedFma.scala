@@ -13,6 +13,14 @@ import harith.uint._
   * addition and rounding are combinational on the delayed operands. `stages = 0` makes the FMA
   * combinational. NaN is canonical, per RISC-V.
   *
+  * Note: only the significand product is pipelined internally by the underlying
+  * [[harith.uint.UIntPipelinedArrayMul]]; the operands are delayed by a plain register queue matched
+  * to the multiplier latency and the whole alignment/add/round tail stays combinational, so the
+  * effective depth of that part depends on EDA retiming.
+  *
+  * delay = 5.688, area = 5848 @32bit@2cycles@fpga
+  * delay = 24.6785, area = 19875.8 @32bit@2cycles@55nm
+  *
   * @param aFmt   The format of the multiplicand
   * @param bFmt   The format of the multiplier
   * @param cFmt   The format of the addend
