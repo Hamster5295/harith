@@ -145,20 +145,45 @@ object FpRestoringDiv extends App {
 
 /**
   * A float32 restoring divider.
+  *
+  * fpga@fp32-50cyc: delay = 16.596ns  area = 1268luts + 297ff
+  *
+  * 55nm@fp32-50cyc: delay = 6.2552ns  area = 5463.64um²
+  *
   */
 class Fp32Div extends FpRestoringDiv(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32)
 
 /**
   * A float64 restoring divider.
+  *
+  * fpga@fp64-108cyc: delay = 19.397ns  area = 2951luts + 686ff
+  *
+  * 55nm@fp64-108cyc: delay = 9.9518ns  area = 11760.56um²
+  *
   */
 class Fp64Div extends FpRestoringDiv(FpFormat.Fp64, FpFormat.Fp64, FpFormat.Fp64)
 
 /**
   * A float16 by float16 to float32 restoring divider.
+  *
+  * fpga@fp16-50cyc: delay = 16.464ns  area = 1156luts + 266ff
+  *
+  * 55nm@fp16-50cyc: delay = 5.3150ns  area = 4860.24um²
+  *
   */
 class Fp16Fp32Div extends FpRestoringDiv(FpFormat.Fp16, FpFormat.Fp16, FpFormat.Fp32)
 
 /**
   * A bfloat16 by bfloat16 to float32 restoring divider.
+  *
+  * fpga@bf16-50cyc: delay = 16.410ns  area = 1110luts + 257ff
+  *
+  * 55nm@bf16-50cyc: delay = 6.3019ns  area = 4446.68um²
+  *
   */
 class FpBf16Fp32Div extends FpRestoringDiv(FpFormat.Bf16, FpFormat.Bf16, FpFormat.Fp32)
+
+object Fp16Fp32Div   extends App { Export(new Fp16Fp32Div, args, FpExport.opts)   }
+object FpBf16Fp32Div extends App { Export(new FpBf16Fp32Div, args, FpExport.opts) }
+object Fp32Div       extends App { Export(new Fp32Div, args, FpExport.opts)       }
+object Fp64Div       extends App { Export(new Fp64Div, args, FpExport.opts)       }
