@@ -2,7 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 
 /**
   * An FMA composed from a [[UIntMul]] and a [[UIntAdd]].
@@ -12,9 +12,9 @@ import hammer.Export
   * with a ripple adder gives the cheapest FMA, while a tree multiplier with a prefix adder gives a
   * fast one. The latency is the sum of the two unit latencies.
   *
-  * fpga@32bit: delay = 15.715ns  area = 1990luts + 0ff
+  * fpga@32bit: delay[i/o/max] = 12.913ns/13.485ns/12.913ns  area = 1990luts + 0ff
   *
-  * 55nm@32bit: delay = 5.6945ns  area = 11760.56um²
+  * 55nm@32bit: delay[i/o/max] = 5.3590ns/5.3590ns/5.3590ns  area = 11958.24um²
   *
   * @param width The width of the operands
   * @param mul   The multiplier, whose output must be `2 * width` bits wide
@@ -45,7 +45,7 @@ class UIntComposedFma(val width: Int, mul: => UIntMul, adder: => UIntAdd) extend
 }
 
 object UIntComposedFma extends App {
-  Export(
+  ExportForAnalysis(
     new UIntComposedFma(
       32,
       new UIntTreeMul(

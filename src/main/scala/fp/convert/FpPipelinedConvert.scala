@@ -2,7 +2,7 @@ package harith.fp
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 
 /**
   * A pipelined floating-point format converter.
@@ -15,9 +15,9 @@ import hammer.Export
   * at internal cut points; the conversion logic between them stays combinational and the intended
   * pipeline depth is only realised once the EDA tool retimes the queue into the logic.
   *
-  * fpga@fp32-2cyc: delay = 0.559ns  area = 489luts + 70ff
+  * fpga@fp32-2cyc: delay[i/o/max] = 1.364ns/19.160ns/18.172ns  area = 504luts + 68ff
   *
-  * 55nm@fp32-2cyc: delay = 4.5582ns  area = 1220.52um²
+  * 55nm@fp32-2cyc: delay[i/o/max] = 0.0053ns/4.8233ns/4.8233ns  area = 1248.52um²
   *
   * @param inFmt  The input format
   * @param outFmt The output format
@@ -62,5 +62,5 @@ class FpPipelinedConvert(
 }
 
 object FpPipelinedConvert extends App {
-  Export(new FpPipelinedConvert(FpFormat.Fp32, FpFormat.Fp16, 2), args, FpExport.opts)
+  ExportForAnalysis(new FpPipelinedConvert(FpFormat.Fp32, FpFormat.Fp16, 2), args, FpExport.opts)
 }

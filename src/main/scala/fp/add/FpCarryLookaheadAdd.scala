@@ -2,15 +2,15 @@ package harith.fp
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 import harith.uint._
 
 /**
   * A floating-point adder with a hierarchical carry lookahead alignment adder.
   *
-  * fpga@fp32: delay = 45.835ns  area = 4250luts + 0ff
+  * fpga@fp32: delay[i/o/max] = 42.789ns/43.369ns/42.789ns  area = 4312luts + 0ff
   *
-  * 55nm@fp32: delay = 14.0796ns  area = 7059.92um²
+  * 55nm@fp32: delay[i/o/max] = 13.6956ns/13.6956ns/13.6956ns  area = 6375.88um²
   *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand
@@ -25,5 +25,9 @@ class FpCarryLookaheadAdd(
 ) extends FpAddBase(aFmt, bFmt, outFmt, policy, w => Module(new UIntCarryLookaheadAdd(w, 4)))
 
 object FpCarryLookaheadAdd extends App {
-  Export(new FpCarryLookaheadAdd(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32), args, FpExport.opts)
+  ExportForAnalysis(
+    new FpCarryLookaheadAdd(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32),
+    args,
+    FpExport.opts,
+  )
 }

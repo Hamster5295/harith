@@ -2,7 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 
 /**
   * An iterative radix-2 SRT divider.
@@ -12,9 +12,9 @@ import hammer.Export
   * that is corrected once at the end. It needs no restore step and finishes in one cycle per operand
   * bit.
   *
-  * fpga@32bit-32cyc: delay = 13.153ns  area = 323luts + 236ff
+  * fpga@32bit-32cyc: delay[i/o/max] = 2.467ns/1.498ns/13.153ns  area = 324luts + 236ff
   *
-  * 55nm@32bit-32cyc: delay = 7.1542ns  area = 5368.44um²
+  * 55nm@32bit-32cyc: delay[i/o/max] = 6.6244ns/0.8858ns/6.6244ns  area = 5332.88um²
   *
   * @param width The width of the operands
   */
@@ -102,7 +102,7 @@ class UIntSrt2Div(val width: Int) extends UIntDiv {
 }
 
 object UIntSrt2Div extends App {
-  Export(
+  ExportForAnalysis(
     new UIntSrt2Div(32),
     args,
     Array(

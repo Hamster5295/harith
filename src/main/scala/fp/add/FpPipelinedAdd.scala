@@ -2,7 +2,7 @@ package harith.fp
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 import harith.uint._
 
 /**
@@ -18,9 +18,9 @@ import harith.uint._
   * matched to the adder latency and the decode/rounding logic around it stays combinational, so the
   * effective depth of that part depends on EDA retiming.
   *
-  * fpga@fp32-2cyc: delay = 1.964ns  area = 4854luts + 628ff
+  * fpga@fp32-2cyc: delay[i/o/max] = 19.973ns/25.614ns/25.022ns  area = 4952luts + 627ff
   *
-  * 55nm@fp32-2cyc: delay = 19.7837ns  area = 15503.32um²
+  * 55nm@fp32-2cyc: delay[i/o/max] = 8.5569ns/21.8746ns/21.8746ns  area = 17788.96um²
   *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand
@@ -128,7 +128,7 @@ class FpPipelinedAdd(
 }
 
 object FpPipelinedAdd extends App {
-  Export(
+  ExportForAnalysis(
     new FpPipelinedAdd(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32, 2),
     args,
     FpExport.opts,

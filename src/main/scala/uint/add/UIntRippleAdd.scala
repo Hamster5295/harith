@@ -2,7 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 
 /**
   * A structural ripple carry adder.
@@ -10,9 +10,9 @@ import hammer.Export
   * This is the most resource efficient combinational adder, at the cost of an O(width) critical
   * path. On FPGAs the inferred [[UIntMacroAdd]] is usually preferable.
   *
-  * fpga@32bit: delay = 9.168ns  area = 56luts + 0ff
+  * fpga@32bit: delay[i/o/max] = 6.366ns/6.938ns/6.366ns  area = 56luts + 0ff
   *
-  * 55nm@32bit: delay = 2.8152ns  area = 300.44um²
+  * 55nm@32bit: delay[i/o/max] = 2.6383ns/2.6383ns/2.6383ns  area = 300.72um²
   *
   * @param width The width of the operands
   */
@@ -33,7 +33,7 @@ class UIntRippleAdd(val width: Int) extends UIntAdd {
 }
 
 object UIntRippleAdd extends App {
-  Export(
+  ExportForAnalysis(
     new UIntRippleAdd(32),
     args,
     Array(

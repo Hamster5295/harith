@@ -2,15 +2,15 @@ package harith.fp
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 import harith.uint._
 
 /**
   * A floating-point fused multiply-adder with a modified Booth radix-4 tree significand multiplier.
   *
-  * fpga@fp32: delay = 54.714ns  area = 6460luts + 0ff
+  * fpga@fp32: delay[i/o/max] = 52.331ns/52.911ns/52.331ns  area = 6531luts + 0ff
   *
-  * 55nm@fp32: delay = 35.4359ns  area = 30400.16um²
+  * 55nm@fp32: delay[i/o/max] = 37.0841ns/37.0841ns/37.0841ns  area = 30194.92um²
   *
   * @param aFmt   The format of the multiplicand
   * @param bFmt   The format of the multiplier
@@ -42,7 +42,7 @@ class FpBoothFma(
     )
 
 object FpBoothFma extends App {
-  Export(
+  ExportForAnalysis(
     new FpBoothFma(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32),
     args,
     FpExport.opts,

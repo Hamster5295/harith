@@ -2,7 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 
 /**
   * A block carry skip (carry bypass) adder.
@@ -10,9 +10,9 @@ import hammer.Export
   * Each block ripples internally, while a block whose bits all propagate lets the incoming carry
   * skip over it, shortening the worst case critical path at little area cost.
   *
-  * fpga@32bit: delay = 9.150ns  area = 57luts + 0ff
+  * fpga@32bit: delay[i/o/max] = 6.359ns/6.931ns/6.359ns  area = 55luts + 0ff
   *
-  * 55nm@32bit: delay = 2.8118ns  area = 306.04um²
+  * 55nm@32bit: delay[i/o/max] = 2.6155ns/2.6155ns/2.6155ns  area = 308.00um²
   *
   * @param width     The width of the operands
   * @param blockSize The number of bits per skip block
@@ -50,7 +50,7 @@ class UIntCarrySkipAdd(val width: Int, val blockSize: Int) extends UIntAdd {
 }
 
 object UIntCarrySkipAdd extends App {
-  Export(
+  ExportForAnalysis(
     new UIntCarrySkipAdd(32, 4),
     args,
     Array(

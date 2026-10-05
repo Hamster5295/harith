@@ -2,7 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 
 /**
   * An iterative restoring divider.
@@ -11,9 +11,9 @@ import hammer.Export
   * subtraction underflows the remainder is restored and the quotient bit is zero. It is the
   * smallest divider at the cost of one cycle per operand bit.
   *
-  * fpga@32bit-32cyc: delay = 2.678ns  area = 121luts + 201ff
+  * fpga@32bit-32cyc: delay[i/o/max] = 2.467ns/1.644ns/2.678ns  area = 122luts + 201ff
   *
-  * 55nm@32bit-32cyc: delay = 7.0425ns  area = 2605.68um²
+  * 55nm@32bit-32cyc: delay[i/o/max] = 6.6857ns/1.6885ns/6.6857ns  area = 2589.44um²
   *
   * @param width The width of the operands
   */
@@ -81,7 +81,7 @@ class UIntRestoringDiv(val width: Int) extends UIntDiv {
 }
 
 object UIntRestoringDiv extends App {
-  Export(
+  ExportForAnalysis(
     new UIntRestoringDiv(32),
     args,
     Array(

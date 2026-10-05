@@ -2,7 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 
 /**
   * An iterative non-restoring divider.
@@ -10,9 +10,9 @@ import hammer.Export
   * The partial remainder is kept in signed form and the divisor is added or subtracted according
   * to its sign, so no restore step is needed. A final correction handles a negative remainder.
   *
-  * fpga@32bit-32cyc: delay = 4.340ns  area = 140luts + 205ff
+  * fpga@32bit-32cyc: delay[i/o/max] = 2.467ns/1.644ns/4.340ns  area = 141luts + 205ff
   *
-  * 55nm@32bit-32cyc: delay = 6.4711ns  area = 3397.52um²
+  * 55nm@32bit-32cyc: delay[i/o/max] = 5.9947ns/1.7030ns/5.9947ns  area = 3450.16um²
   *
   * @param width The width of the operands
   */
@@ -85,7 +85,7 @@ class UIntNonRestoringDiv(val width: Int) extends UIntDiv {
 }
 
 object UIntNonRestoringDiv extends App {
-  Export(
+  ExportForAnalysis(
     new UIntNonRestoringDiv(32),
     args,
     Array(

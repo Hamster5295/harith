@@ -2,7 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 
 /**
   * A fused multiply-adder using modified Booth radix-4 partial products.
@@ -10,9 +10,9 @@ import hammer.Export
   * The addend is merged into the Booth partial product heap, so fewer partial products than the AND
   * based [[UIntTreeFma]] are reduced by a single carry propagate adder.
   *
-  * fpga@32bit: delay = 13.533ns  area = 2642luts + 0ff
+  * fpga@32bit: delay[i/o/max] = 10.731ns/11.303ns/10.731ns  area = 2642luts + 0ff
   *
-  * 55nm@32bit: delay = 5.5765ns  area = 18796.68um²
+  * 55nm@32bit: delay[i/o/max] = 5.5558ns/5.5558ns/5.5558ns  area = 18806.76um²
   *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
@@ -43,7 +43,7 @@ class UIntBoothFma(val width: Int, val reductionStyle: ReductionStyle, adder: =>
 }
 
 object UIntBoothFma extends App {
-  Export(
+  ExportForAnalysis(
     new UIntBoothFma(
       32,
       ReductionStyle.Dadda,
