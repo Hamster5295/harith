@@ -13,6 +13,9 @@ import hammer.Export
   *
   * @param width     The width of the operands
   * @param blockSize The number of bits per pipeline stage
+  *
+  * delay = 1.791, area = 88 @32bit@8cycles@fpga
+  * delay = 0.3879, area = 2616.04 @32bit@8cycles@55nm
   */
 class UIntPipelinedRippleAdder(val width: Int, val blockSize: Int) extends UIntAdder {
   val io = IO(new UIntAdderIO(width))

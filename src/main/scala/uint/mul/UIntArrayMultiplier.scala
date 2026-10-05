@@ -13,6 +13,9 @@ import hammer.Export
   * usually preferable.
   *
   * @param width The width of the operands
+  *
+  * delay = 23.107, area = 2589 @32bit@fpga
+  * delay = 8.2942, area = 16023.56 @32bit@55nm
   */
 class UIntArrayMultiplier(val width: Int) extends UIntMultiplier {
   val io = IO(new UIntMultiplierIO(width))

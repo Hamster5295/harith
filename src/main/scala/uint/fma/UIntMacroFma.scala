@@ -11,6 +11,9 @@ import hammer.Export
   * inner DSP with a built-in multiply-accumulate.
   *
   * @param width The width of the operands
+  *
+  * delay = 11.917, area = 111 @32bit@fpga
+  * delay = 3.6603, area = 17201.52 @32bit@55nm
   */
 class UIntMacroFma(val width: Int) extends UIntFma {
   val io = IO(new UIntFmaIO(width))

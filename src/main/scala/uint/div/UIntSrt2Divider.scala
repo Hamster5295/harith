@@ -13,6 +13,9 @@ import hammer.Export
   * bit.
   *
   * @param width The width of the operands
+  *
+  * delay = 13.153, area = 323 @32bit@32cycles@fpga
+  * delay = 7.1542, area = 5368.44 @32bit@32cycles@55nm
   */
 class UIntSrt2Divider(val width: Int) extends UIntDivider {
   val io = IO(new UIntDividerIO(width))

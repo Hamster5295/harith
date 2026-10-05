@@ -15,6 +15,9 @@ import hammer.Export
   * @param reductionStyle The reduction style of the partial product tree
   * @param adder          The final carry propagate adder, which must be `2 * width + 1` bits wide
   * @param stages         The number of pipeline register layers in the reduction tree
+  *
+  * delay = 2.360, area = 2441 @32bit@2cycles@fpga
+  * delay = 3.8220, area = 18393.76 @32bit@2cycles@55nm
   */
 class UIntPipelinedBoothFma(
     val width:          Int,

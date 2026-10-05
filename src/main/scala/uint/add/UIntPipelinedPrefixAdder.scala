@@ -15,6 +15,9 @@ import hammer.Export
   * @param width  The width of the operands
   * @param style  The parallel prefix network style
   * @param stages The number of pipeline register layers, which is also the latency
+  *
+  * delay = 1.479, area = 168 @32bit@2cycles@fpga
+  * delay = 0.7994, area = 1852.48 @32bit@2cycles@55nm
   */
 class UIntPipelinedPrefixAdder(val width: Int, val style: PrefixStyle, val stages: Int)
     extends Module

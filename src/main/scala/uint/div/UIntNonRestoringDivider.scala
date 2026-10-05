@@ -11,6 +11,9 @@ import hammer.Export
   * to its sign, so no restore step is needed. A final correction handles a negative remainder.
   *
   * @param width The width of the operands
+  *
+  * delay = 4.340, area = 140 @32bit@32cycles@fpga
+  * delay = 6.4711, area = 3397.52 @32bit@32cycles@55nm
   */
 class UIntNonRestoringDivider(val width: Int) extends UIntDivider {
   val io = IO(new UIntDividerIO(width))
