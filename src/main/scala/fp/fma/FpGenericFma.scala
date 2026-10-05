@@ -110,6 +110,9 @@ class FpFmaImpl(
 
 /**
   * A floating-point fused multiply-adder with inferred significand and alignment datapaths.
+  *
+  * delay = 53.886, area = 5122 @32bit@fpga
+  * delay = 51.6054, area = 26082.28 @32bit@55nm
   */
 class FpGenericFma(
     aFmt:   FpFormat,
@@ -121,6 +124,9 @@ class FpGenericFma(
 
 /**
   * A floating-point fused multiply-adder with an array significand multiplier.
+  *
+  * delay = 60.294, area = 6427 @32bit@fpga
+  * delay = 37.9481, area = 27385.96 @32bit@55nm
   */
 class FpArrayFma(
     aFmt:   FpFormat,
@@ -132,6 +138,9 @@ class FpArrayFma(
 
 /**
   * A floating-point fused multiply-adder with a Booth tree significand multiplier.
+  *
+  * delay = 54.714, area = 6460 @32bit@fpga
+  * delay = 35.4359, area = 30400.16 @32bit@55nm
   */
 class FpBoothFma(
     aFmt:   FpFormat,
@@ -143,6 +152,9 @@ class FpBoothFma(
 
 /**
   * A floating-point fused multiply-adder with an AND partial product tree significand multiplier.
+  *
+  * delay = 54.715, area = 5948 @32bit@fpga
+  * delay = 45.5888, area = 28058.80 @32bit@55nm
   */
 class FpTreeFma(
     aFmt:   FpFormat,
@@ -154,6 +166,9 @@ class FpTreeFma(
 
 /**
   * A floating-point fused multiply-adder with a ripple carry alignment adder.
+  *
+  * delay = 67.529, area = 5380 @32bit@fpga
+  * delay = 40.9942, area = 30536.52 @32bit@55nm
   */
 class FpRippleFma(
     aFmt:   FpFormat,
@@ -165,6 +180,9 @@ class FpRippleFma(
 
 /**
   * A floating-point fused multiply-adder with a parallel prefix alignment adder.
+  *
+  * delay = 54.672, area = 6155 @32bit@fpga
+  * delay = 45.4307, area = 26786.48 @32bit@55nm
   */
 class FpPrefixFma(
     aFmt:   FpFormat,

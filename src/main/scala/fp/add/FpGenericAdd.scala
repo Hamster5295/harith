@@ -94,24 +94,36 @@ class FpAddImpl(
 
 /**
   * A floating-point adder with an inferred alignment adder.
+  *
+  * delay = 43.206, area = 3923 @32bit@fpga
+  * delay = 14.3314, area = 7254.24 @32bit@55nm
   */
 class FpGenericAdd(aFmt: FpFormat, bFmt: FpFormat, outFmt: FpFormat, policy: FpPolicy = FpPolicy())
     extends FpAddImpl(aFmt, bFmt, outFmt, policy, FpSigAddGeneric)
 
 /**
   * A floating-point adder with a ripple carry alignment adder, the cheapest option.
+  *
+  * delay = 55.508, area = 4066 @32bit@fpga
+  * delay = 17.0334, area = 7073.08 @32bit@55nm
   */
 class FpRippleAdd(aFmt: FpFormat, bFmt: FpFormat, outFmt: FpFormat, policy: FpPolicy = FpPolicy())
     extends FpAddImpl(aFmt, bFmt, outFmt, policy, FpSigAddRipple)
 
 /**
   * A floating-point adder with a parallel prefix alignment adder, the fast option.
+  *
+  * delay = 45.192, area = 4818 @32bit@fpga
+  * delay = 15.6692, area = 6928.88 @32bit@55nm
   */
 class FpPrefixAdd(aFmt: FpFormat, bFmt: FpFormat, outFmt: FpFormat, policy: FpPolicy = FpPolicy())
     extends FpAddImpl(aFmt, bFmt, outFmt, policy, FpSigAddPrefix)
 
 /**
   * A floating-point adder with a block carry select alignment adder.
+  *
+  * delay = 48.919, area = 4194 @32bit@fpga
+  * delay = 21.5805, area = 7995.12 @32bit@55nm
   */
 class FpCarrySelectAdd(
     aFmt:   FpFormat,
@@ -122,6 +134,9 @@ class FpCarrySelectAdd(
 
 /**
   * A floating-point adder with a hierarchical carry lookahead alignment adder.
+  *
+  * delay = 45.835, area = 4250 @32bit@fpga
+  * delay = 14.0796, area = 7059.92 @32bit@55nm
   */
 class FpCarryLookaheadAdd(
     aFmt:   FpFormat,

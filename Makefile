@@ -48,13 +48,13 @@ fpga: BUILD_DIR = $(FPGA_DIR)/rtl
 fpga:
 	@rm -rf $(BUILD_DIR)
 	@$(MAKE) verilog BUILD_DIR=$(BUILD_DIR)
-	@$(MAKE) -C $(FPGA_DIR) TOP=$(TARGET_NAME) all
+	@$(MAKE) -C $(FPGA_DIR) TOP=$$(basename $$(ls $(BUILD_DIR)/*.sv | head -1) .sv) all
 
 asic: BUILD_DIR = $(ASIC_DIR)/rtl
 asic:
 	@rm -rf $(BUILD_DIR)
 	@$(MAKE) verilog BUILD_DIR=$(BUILD_DIR)
-	@$(MAKE) -C $(ASIC_DIR) TOP=$(TARGET_NAME) all
+	@$(MAKE) -C $(ASIC_DIR) TOP=$$(basename $$(ls $(BUILD_DIR)/*.sv | head -1) .sv) all
 
 # Publish
 

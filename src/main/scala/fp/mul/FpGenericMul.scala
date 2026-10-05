@@ -62,24 +62,36 @@ class FpMulImpl(
 
 /**
   * A floating-point multiplier with an inferred significand multiplier.
+  *
+  * delay = 28.951, area = 1065 @32bit@fpga
+  * delay = 12.0162, area = 11671.24 @32bit@55nm
   */
 class FpGenericMul(aFmt: FpFormat, bFmt: FpFormat, outFmt: FpFormat, policy: FpPolicy = FpPolicy())
     extends FpMulImpl(aFmt, bFmt, outFmt, policy, FpSigMulGeneric)
 
 /**
   * A floating-point multiplier with an array significand multiplier.
+  *
+  * delay = 36.003, area = 2319 @32bit@fpga
+  * delay = 13.2657, area = 11438.56 @32bit@55nm
   */
 class FpArrayMul(aFmt: FpFormat, bFmt: FpFormat, outFmt: FpFormat, policy: FpPolicy = FpPolicy())
     extends FpMulImpl(aFmt, bFmt, outFmt, policy, FpSigMulArray)
 
 /**
   * A floating-point multiplier with a Booth tree significand multiplier.
+  *
+  * delay = 30.310, area = 2378 @32bit@fpga
+  * delay = 12.1188, area = 12647.88 @32bit@55nm
   */
 class FpBoothMul(aFmt: FpFormat, bFmt: FpFormat, outFmt: FpFormat, policy: FpPolicy = FpPolicy())
     extends FpMulImpl(aFmt, bFmt, outFmt, policy, FpSigMulBooth)
 
 /**
   * A floating-point multiplier with an AND partial product tree significand multiplier.
+  *
+  * delay = 29.481, area = 1841 @32bit@fpga
+  * delay = 11.0304, area = 8116.64 @32bit@55nm
   */
 class FpTreeMul(aFmt: FpFormat, bFmt: FpFormat, outFmt: FpFormat, policy: FpPolicy = FpPolicy())
     extends FpMulImpl(aFmt, bFmt, outFmt, policy, FpSigMulTree)
