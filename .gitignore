@@ -347,3 +347,7 @@ hs_err_pid*
 build
 report
 rtl
+vivado
+*.jou
+*.log
+*.strash

@@ -1,5 +1,6 @@
 PRJ = _
 TARGET ?= harith.uint.UIntMacroAdder
+TARGET_NAME = $(lastword $(subst ., ,$(TARGET)))
 
 MILL = ./mill
 JAVA = java
@@ -36,6 +37,24 @@ test-wave:
 format:
 	@$(MILL) _.reformat
 
+
+# Backend
+
+BACKEND_DIR = backend
+FPGA_DIR = $(BACKEND_DIR)/fpga
+ASIC_DIR = $(BACKEND_DIR)/asic
+
+fpga: BUILD_DIR = $(FPGA_DIR)/rtl
+fpga:
+	@rm -rf $(BUILD_DIR)
+	@$(MAKE) verilog BUILD_DIR=$(BUILD_DIR)
+	@$(MAKE) -C $(FPGA_DIR) TOP=$(TARGET_NAME) all
+
+asic: BUILD_DIR = $(ASIC_DIR)/rtl
+asic:
+	@rm -rf $(BUILD_DIR)
+	@$(MAKE) verilog BUILD_DIR=$(BUILD_DIR)
+	@$(MAKE) -C $(ASIC_DIR) TOP=$(TARGET_NAME) all
 
 # Publish
 
