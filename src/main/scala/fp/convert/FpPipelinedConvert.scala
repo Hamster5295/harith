@@ -15,8 +15,9 @@ import hammer.Export
   * at internal cut points; the conversion logic between them stays combinational and the intended
   * pipeline depth is only realised once the EDA tool retimes the queue into the logic.
   *
-  * delay = 0.559, area = 489 @32bit@2cycles@fpga
-  * delay = 4.5582, area = 1220.52 @32bit@2cycles@55nm
+  * fpga@fp32-2cyc: delay = 0.559ns  area = 489luts + 70ff
+  *
+  * 55nm@fp32-2cyc: delay = 4.5582ns  area = 1220.52um²
   *
   * @param inFmt  The input format
   * @param outFmt The output format

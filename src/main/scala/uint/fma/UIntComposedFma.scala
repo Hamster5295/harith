@@ -12,12 +12,13 @@ import hammer.Export
   * with a ripple adder gives the cheapest FMA, while a tree multiplier with a prefix adder gives a
   * fast one. The latency is the sum of the two unit latencies.
   *
+  * fpga@32bit: delay = 15.715ns  area = 1990luts + 0ff
+  *
+  * 55nm@32bit: delay = 5.6945ns  area = 11760.56um²
+  *
   * @param width The width of the operands
   * @param mul   The multiplier, whose output must be `2 * width` bits wide
   * @param adder The final adder, which must be `2 * width + 1` bits wide
-  *
-  * delay = 15.715, area = 1990 @32bit@fpga
-  * delay = 5.6945, area = 11760.56 @32bit@55nm
   */
 class UIntComposedFma(val width: Int, mul: => UIntMul, adder: => UIntAdd) extends UIntFma {
   val io = IO(new UIntFmaIO(width))

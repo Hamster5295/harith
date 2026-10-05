@@ -9,10 +9,11 @@ import hammer.Export
   *
   * FPGA will likely implement it as an inner DSP or CARRY primitive.
   *
-  * @param width The width of the operands
+  * fpga@32bit: delay = 5.710ns  area = 32luts + 0ff
   *
-  * delay = 5.710, area = 32 @32bit@fpga
-  * delay = 1.8726, area = 378.28 @32bit@55nm
+  * 55nm@32bit: delay = 1.8726ns  area = 378.28um²
+  *
+  * @param width The width of the operands
   */
 class UIntMacroAdd(val width: Int) extends UIntAdd {
   val io = IO(new UIntAddIO(width))

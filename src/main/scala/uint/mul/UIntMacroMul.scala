@@ -9,10 +9,11 @@ import hammer.Export
   *
   * FPGA will likely implement it as an inner DSP.
   *
-  * @param width The width of the operands
+  * fpga@32bit: delay = 10.660ns  area = 47luts + 0ff
   *
-  * delay = 10.660, area = 47 @32bit@fpga
-  * delay = 3.6637, area = 16409.96 @32bit@55nm
+  * 55nm@32bit: delay = 3.6637ns  area = 16409.96um²
+  *
+  * @param width The width of the operands
   */
 class UIntMacroMul(width: Int) extends UIntMul {
   val io = IO(new UIntMulIO(width))

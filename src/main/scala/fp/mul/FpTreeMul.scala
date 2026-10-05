@@ -8,8 +8,9 @@ import harith.uint._
 /**
   * A floating-point multiplier with an AND partial product carry save tree significand multiplier.
   *
-  * delay = 29.481, area = 1841 @32bit@fpga
-  * delay = 11.0304, area = 8116.64 @32bit@55nm
+  * fpga@fp32: delay = 29.481ns  area = 1841luts + 0ff
+  *
+  * 55nm@fp32: delay = 11.0304ns  area = 8116.64um²
   *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand

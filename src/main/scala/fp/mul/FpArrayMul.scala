@@ -8,8 +8,9 @@ import harith.uint._
 /**
   * A floating-point multiplier with a carry save array significand multiplier, the cheapest option.
   *
-  * delay = 36.003, area = 2319 @32bit@fpga
-  * delay = 13.2657, area = 11438.56 @32bit@55nm
+  * fpga@fp32: delay = 36.003ns  area = 2319luts + 0ff
+  *
+  * 55nm@fp32: delay = 13.2657ns  area = 11438.56um²
   *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand

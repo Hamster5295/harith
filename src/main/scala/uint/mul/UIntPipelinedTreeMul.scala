@@ -12,13 +12,14 @@ import hammer.Export
   * latency is `stages` plus the latency of the final adder, so a pipelined adder can shorten the
   * final add.
   *
+  * fpga@32bit-2cyc: delay = 4.947ns  area = 1597luts + 207ff
+  *
+  * 55nm@32bit-2cyc: delay = 2.4426ns  area = 11293.24um²
+  *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
   * @param adder          The final carry propagate adder, which must be `2 * width` bits wide
   * @param stages         The number of pipeline register layers in the reduction tree
-  *
-  * delay = 4.947, area = 1597 @32bit@2cycles@fpga
-  * delay = 2.4426, area = 11293.24 @32bit@2cycles@55nm
   */
 class UIntPipelinedTreeMul(
     val width:          Int,

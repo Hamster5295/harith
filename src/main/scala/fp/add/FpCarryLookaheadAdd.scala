@@ -8,8 +8,9 @@ import harith.uint._
 /**
   * A floating-point adder with a hierarchical carry lookahead alignment adder.
   *
-  * delay = 45.835, area = 4250 @32bit@fpga
-  * delay = 14.0796, area = 7059.92 @32bit@55nm
+  * fpga@fp32: delay = 45.835ns  area = 4250luts + 0ff
+  *
+  * 55nm@fp32: delay = 14.0796ns  area = 7059.92um²
   *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand

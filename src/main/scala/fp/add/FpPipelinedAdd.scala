@@ -18,8 +18,9 @@ import harith.uint._
   * matched to the adder latency and the decode/rounding logic around it stays combinational, so the
   * effective depth of that part depends on EDA retiming.
   *
-  * delay = 1.964, area = 4854 @32bit@2cycles@fpga
-  * delay = 19.7837, area = 15503.32 @32bit@2cycles@55nm
+  * fpga@fp32-2cyc: delay = 1.964ns  area = 4854luts + 628ff
+  *
+  * 55nm@fp32-2cyc: delay = 19.7837ns  area = 15503.32um²
   *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand

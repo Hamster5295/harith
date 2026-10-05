@@ -8,8 +8,9 @@ import harith.uint._
 /**
   * A floating-point adder with a ripple carry alignment adder, the cheapest option.
   *
-  * delay = 55.508, area = 4066 @32bit@fpga
-  * delay = 17.0334, area = 7073.08 @32bit@55nm
+  * fpga@fp32: delay = 55.508ns  area = 4066luts + 0ff
+  *
+  * 55nm@fp32: delay = 17.0334ns  area = 7073.08um²
   *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand

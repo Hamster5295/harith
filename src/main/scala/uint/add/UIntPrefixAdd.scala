@@ -10,11 +10,12 @@ import hammer.Export
   * All carries are computed by a single prefix network, giving a logarithmic critical path. The
   * [[PrefixStyle]] selects the network shape and therefore the area/performance point.
   *
+  * fpga@32bit: delay = 6.814ns  area = 162luts + 0ff
+  *
+  * 55nm@32bit: delay = 1.6987ns  area = 919.24um²
+  *
   * @param width The width of the operands
   * @param style The parallel prefix network style
-  *
-  * delay = 6.814, area = 162 @32bit@fpga
-  * delay = 1.6987, area = 919.24 @32bit@55nm
   */
 class UIntPrefixAdd(val width: Int, val style: PrefixStyle) extends UIntAdd {
   val io = IO(new UIntAddIO(width))

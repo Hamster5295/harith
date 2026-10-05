@@ -8,8 +8,9 @@ import harith.uint._
 /**
   * A floating-point multiplier with an inferred significand multiplier.
   *
-  * delay = 28.951, area = 1065 @32bit@fpga
-  * delay = 12.0162, area = 11671.24 @32bit@55nm
+  * fpga@fp32: delay = 28.951ns  area = 1065luts + 0ff
+  *
+  * 55nm@fp32: delay = 12.0162ns  area = 11671.24um²
   *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand

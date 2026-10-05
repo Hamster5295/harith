@@ -11,11 +11,12 @@ import hammer.Export
   * correct one once the real carry arrives. The duplicated logic reduces the critical path to one
   * carry select per block.
   *
+  * fpga@32bit: delay = 6.506ns  area = 70luts + 0ff
+  *
+  * 55nm@32bit: delay = 3.3749ns  area = 404.60um²
+  *
   * @param width     The width of the operands
   * @param blockSize The number of bits per select block
-  *
-  * delay = 6.506, area = 70 @32bit@fpga
-  * delay = 3.3749, area = 404.60 @32bit@55nm
   */
 class UIntCarrySelectAdd(val width: Int, val blockSize: Int) extends UIntAdd {
   val io = IO(new UIntAddIO(width))

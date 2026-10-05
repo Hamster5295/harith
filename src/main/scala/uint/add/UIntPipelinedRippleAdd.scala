@@ -11,11 +11,12 @@ import hammer.Export
   * accumulated sums advance one block per cycle. This yields a short, block sized critical path and
   * a throughput of one addition per cycle with a fixed latency of the number of blocks.
   *
+  * fpga@32bit-8cyc: delay = 1.791ns  area = 88luts + 156ff
+  *
+  * 55nm@32bit-8cyc: delay = 0.3879ns  area = 2616.04um²
+  *
   * @param width     The width of the operands
   * @param blockSize The number of bits per pipeline stage
-  *
-  * delay = 1.791, area = 88 @32bit@8cycles@fpga
-  * delay = 0.3879, area = 2616.04 @32bit@8cycles@55nm
   */
 class UIntPipelinedRippleAdd(val width: Int, val blockSize: Int) extends UIntAdd {
   val io = IO(new UIntAddIO(width))

@@ -11,12 +11,13 @@ import hammer.Export
   * rows are added by the supplied [[UIntAdd]]. The reduction is combinational, so the latency is
   * the latency of the final adder.
   *
+  * fpga@32bit: delay = 13.118ns  area = 1616luts + 0ff
+  *
+  * 55nm@32bit: delay = 5.1937ns  area = 10559.36um²
+  *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
   * @param adder          The final carry propagate adder, which must be `2 * width` bits wide
-  *
-  * delay = 13.118, area = 1616 @32bit@fpga
-  * delay = 5.1937, area = 10559.36 @32bit@55nm
   */
 class UIntTreeMul(
     val width:          Int,

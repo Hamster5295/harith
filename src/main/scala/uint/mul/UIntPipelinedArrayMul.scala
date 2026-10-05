@@ -11,11 +11,12 @@ import hammer.Export
   * product per cycle and the latency equals `stages`. A value of 0 makes the multiplier
   * combinational, equivalently to [[UIntArrayMul]].
   *
+  * fpga@32bit-2cyc: delay = 7.545ns  area = 2124luts + 220ff
+  *
+  * 55nm@32bit-2cyc: delay = 2.7713ns  area = 18377.24um²
+  *
   * @param width  The width of the operands
   * @param stages The number of pipeline register layers
-  *
-  * delay = 7.545, area = 2124 @32bit@2cycles@fpga
-  * delay = 2.7713, area = 18377.24 @32bit@2cycles@55nm
   */
 class UIntPipelinedArrayMul(val width: Int, val stages: Int) extends Module
     with UIntMul {

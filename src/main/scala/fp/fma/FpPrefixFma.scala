@@ -8,8 +8,9 @@ import harith.uint._
 /**
   * A floating-point fused multiply-adder with a parallel prefix alignment adder.
   *
-  * delay = 54.672, area = 6155 @32bit@fpga
-  * delay = 45.4307, area = 26786.48 @32bit@55nm
+  * fpga@fp32: delay = 54.672ns  area = 6155luts + 0ff
+  *
+  * 55nm@fp32: delay = 45.4307ns  area = 26786.48um²
   *
   * @param aFmt   The format of the multiplicand
   * @param bFmt   The format of the multiplier

@@ -10,8 +10,9 @@ import hammer.Export
   * The value is decoded to its exact significand and exponent and re-rounded to the destination
   * format. Special values map to the destination encoding; NaN is canonical, per RISC-V.
   *
-  * delay = 21.135, area = 489 @32bit@fpga
-  * delay = 4.5429, area = 769.44 @32bit@55nm
+  * fpga@fp32: delay = 21.135ns  area = 489luts + 0ff
+  *
+  * 55nm@fp32: delay = 4.5429ns  area = 769.44um²
   *
   * @param inFmt  The input format
   * @param outFmt The output format

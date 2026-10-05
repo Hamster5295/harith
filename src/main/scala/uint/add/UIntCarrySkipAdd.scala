@@ -10,11 +10,12 @@ import hammer.Export
   * Each block ripples internally, while a block whose bits all propagate lets the incoming carry
   * skip over it, shortening the worst case critical path at little area cost.
   *
+  * fpga@32bit: delay = 9.150ns  area = 57luts + 0ff
+  *
+  * 55nm@32bit: delay = 2.8118ns  area = 306.04um²
+  *
   * @param width     The width of the operands
   * @param blockSize The number of bits per skip block
-  *
-  * delay = 9.150, area = 57 @32bit@fpga
-  * delay = 2.8118, area = 306.04 @32bit@55nm
   */
 class UIntCarrySkipAdd(val width: Int, val blockSize: Int) extends UIntAdd {
   val io = IO(new UIntAddIO(width))
