@@ -11,13 +11,14 @@ import hammer.Export
   * `stages` register layers and the two reduced rows are added by the supplied [[UIntAdd]]. The
   * throughput is one FMA per cycle and the latency is `stages` plus the adder latency.
   *
+  * fpga@32bit-2cyc: delay = 4.947ns  area = 1683luts + 211ff
+  *
+  * 55nm@32bit-2cyc: delay = 2.9186ns  area = 11859.68um²
+  *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
   * @param adder          The final carry propagate adder, which must be `2 * width + 1` bits wide
   * @param stages         The number of pipeline register layers in the reduction tree
-  *
-  * delay = 4.947, area = 1683 @32bit@2cycles@fpga
-  * delay = 2.9186, area = 11859.68 @32bit@2cycles@55nm
   */
 class UIntPipelinedTreeFma(
     val width:          Int,

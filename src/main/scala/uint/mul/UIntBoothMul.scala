@@ -11,12 +11,13 @@ import hammer.Export
   * [[UIntTreeMul]] are generated. The partial products are reduced to two rows by a Wallace
   * or Dadda network and the two rows are added by the supplied [[UIntAdd]].
   *
+  * fpga@32bit: delay = 13.036ns  area = 2269luts + 0ff
+  *
+  * 55nm@32bit: delay = 5.5814ns  area = 15956.08um²
+  *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
   * @param adder          The final carry propagate adder, which must be `2 * width` bits wide
-  *
-  * delay = 13.036, area = 2269 @32bit@fpga
-  * delay = 5.5814, area = 15956.08 @32bit@55nm
   */
 class UIntBoothMul(
     val width:          Int,

@@ -8,8 +8,9 @@ import harith.uint._
 /**
   * A floating-point adder with a block carry select alignment adder.
   *
-  * delay = 48.919, area = 4194 @32bit@fpga
-  * delay = 21.5805, area = 7995.12 @32bit@55nm
+  * fpga@fp32: delay = 48.919ns  area = 4194luts + 0ff
+  *
+  * 55nm@fp32: delay = 21.5805ns  area = 7995.12um²
   *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand

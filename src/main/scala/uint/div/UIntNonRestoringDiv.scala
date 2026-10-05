@@ -10,10 +10,11 @@ import hammer.Export
   * The partial remainder is kept in signed form and the divisor is added or subtracted according
   * to its sign, so no restore step is needed. A final correction handles a negative remainder.
   *
-  * @param width The width of the operands
+  * fpga@32bit-32cyc: delay = 4.340ns  area = 140luts + 205ff
   *
-  * delay = 4.340, area = 140 @32bit@32cycles@fpga
-  * delay = 6.4711, area = 3397.52 @32bit@32cycles@55nm
+  * 55nm@32bit-32cyc: delay = 6.4711ns  area = 3397.52um²
+  *
+  * @param width The width of the operands
   */
 class UIntNonRestoringDiv(val width: Int) extends UIntDiv {
   val io = IO(new UIntDivIO(width))

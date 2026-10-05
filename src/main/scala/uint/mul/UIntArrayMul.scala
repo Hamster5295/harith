@@ -12,10 +12,11 @@ import hammer.Export
   * the price of an O(width) critical path. On FPGAs the inferred [[UIntMacroMul]] is
   * usually preferable.
   *
-  * @param width The width of the operands
+  * fpga@32bit: delay = 23.107ns  area = 2589luts + 0ff
   *
-  * delay = 23.107, area = 2589 @32bit@fpga
-  * delay = 8.2942, area = 16023.56 @32bit@55nm
+  * 55nm@32bit: delay = 8.2942ns  area = 16023.56um²
+  *
+  * @param width The width of the operands
   */
 class UIntArrayMul(val width: Int) extends UIntMul {
   val io = IO(new UIntMulIO(width))

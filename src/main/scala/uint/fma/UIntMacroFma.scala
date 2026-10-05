@@ -10,10 +10,11 @@ import hammer.Export
   * The whole expression is left to the synthesis tool, which on FPGA will likely map it into an
   * inner DSP with a built-in multiply-accumulate.
   *
-  * @param width The width of the operands
+  * fpga@32bit: delay = 11.917ns  area = 111luts + 0ff
   *
-  * delay = 11.917, area = 111 @32bit@fpga
-  * delay = 3.6603, area = 17201.52 @32bit@55nm
+  * 55nm@32bit: delay = 3.6603ns  area = 17201.52um²
+  *
+  * @param width The width of the operands
   */
 class UIntMacroFma(val width: Int) extends UIntFma {
   val io = IO(new UIntFmaIO(width))

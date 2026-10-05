@@ -10,12 +10,13 @@ import hammer.Export
   * The addend is merged into the partial product heap, so the reduction tree produces two rows that
   * a single carry propagate adder resolves. It is one adder cheaper than [[UIntComposedFma]].
   *
+  * fpga@32bit: delay = 13.250ns  area = 1704luts + 0ff
+  *
+  * 55nm@32bit: delay = 5.3544ns  area = 11301.36um²
+  *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
   * @param adder          The final carry propagate adder, which must be `2 * width + 1` bits wide
-  *
-  * delay = 13.250, area = 1704 @32bit@fpga
-  * delay = 5.3544, area = 11301.36 @32bit@55nm
   */
 class UIntTreeFma(val width: Int, val reductionStyle: ReductionStyle, adder: => UIntAdd)
     extends UIntFma {

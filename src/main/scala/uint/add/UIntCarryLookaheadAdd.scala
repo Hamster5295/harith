@@ -12,11 +12,12 @@ import hammer.Export
   * second lookahead level. This keeps the critical path logarithmic while using far less logic
   * than a fully parallel prefix adder.
   *
+  * fpga@32bit: delay = 6.681ns  area = 70luts + 0ff
+  *
+  * 55nm@32bit: delay = 1.8824ns  area = 517.16um²
+  *
   * @param width     The width of the operands
   * @param groupSize The number of bits per lookahead group
-  *
-  * delay = 6.681, area = 70 @32bit@fpga
-  * delay = 1.8824, area = 517.16 @32bit@55nm
   */
 class UIntCarryLookaheadAdd(val width: Int, val groupSize: Int) extends UIntAdd {
   val io = IO(new UIntAddIO(width))

@@ -12,12 +12,13 @@ import hammer.Export
   * a layer is used for prefix logic or only for retiming. A value of 0 makes the adder
   * combinational, equivalently to [[UIntPrefixAdd]].
   *
+  * fpga@32bit-2cyc: delay = 1.479ns  area = 168luts + 192ff
+  *
+  * 55nm@32bit-2cyc: delay = 0.7994ns  area = 1852.48um²
+  *
   * @param width  The width of the operands
   * @param style  The parallel prefix network style
   * @param stages The number of pipeline register layers, which is also the latency
-  *
-  * delay = 1.479, area = 168 @32bit@2cycles@fpga
-  * delay = 0.7994, area = 1852.48 @32bit@2cycles@55nm
   */
 class UIntPipelinedPrefixAdd(val width: Int, val style: PrefixStyle, val stages: Int)
     extends Module

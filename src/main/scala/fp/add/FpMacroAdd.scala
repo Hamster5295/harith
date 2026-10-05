@@ -8,8 +8,9 @@ import harith.uint._
 /**
   * A floating-point adder with an inferred alignment adder.
   *
-  * delay = 43.206, area = 3923 @32bit@fpga
-  * delay = 14.3314, area = 7254.24 @32bit@55nm
+  * fpga@fp32: delay = 43.206ns  area = 3923luts + 0ff
+  *
+  * 55nm@fp32: delay = 14.3314ns  area = 7254.24um²
   *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand

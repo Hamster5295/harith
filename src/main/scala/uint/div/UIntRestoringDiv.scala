@@ -11,10 +11,11 @@ import hammer.Export
   * subtraction underflows the remainder is restored and the quotient bit is zero. It is the
   * smallest divider at the cost of one cycle per operand bit.
   *
-  * @param width The width of the operands
+  * fpga@32bit-32cyc: delay = 2.678ns  area = 121luts + 201ff
   *
-  * delay = 2.678, area = 121 @32bit@32cycles@fpga
-  * delay = 7.0425, area = 2605.68 @32bit@32cycles@55nm
+  * 55nm@32bit-32cyc: delay = 7.0425ns  area = 2605.68um²
+  *
+  * @param width The width of the operands
   */
 class UIntRestoringDiv(val width: Int) extends UIntDiv {
   val io = IO(new UIntDivIO(width))

@@ -8,8 +8,9 @@ import harith.uint._
 /**
   * A floating-point multiplier with a modified Booth radix-4 tree significand multiplier.
   *
-  * delay = 30.310, area = 2378 @32bit@fpga
-  * delay = 12.1188, area = 12647.88 @32bit@55nm
+  * fpga@fp32: delay = 30.310ns  area = 2378luts + 0ff
+  *
+  * 55nm@fp32: delay = 12.1188ns  area = 12647.88um²
   *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand

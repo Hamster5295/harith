@@ -10,10 +10,11 @@ import hammer.Export
   * This is the most resource efficient combinational adder, at the cost of an O(width) critical
   * path. On FPGAs the inferred [[UIntMacroAdd]] is usually preferable.
   *
-  * @param width The width of the operands
+  * fpga@32bit: delay = 9.168ns  area = 56luts + 0ff
   *
-  * delay = 9.168, area = 56 @32bit@fpga
-  * delay = 2.8152, area = 300.44 @32bit@55nm
+  * 55nm@32bit: delay = 2.8152ns  area = 300.44um²
+  *
+  * @param width The width of the operands
   */
 class UIntRippleAdd(val width: Int) extends UIntAdd {
   val io = IO(new UIntAddIO(width))

@@ -12,10 +12,11 @@ import hammer.Export
   * that is corrected once at the end. It needs no restore step and finishes in one cycle per operand
   * bit.
   *
-  * @param width The width of the operands
+  * fpga@32bit-32cyc: delay = 13.153ns  area = 323luts + 236ff
   *
-  * delay = 13.153, area = 323 @32bit@32cycles@fpga
-  * delay = 7.1542, area = 5368.44 @32bit@32cycles@55nm
+  * 55nm@32bit-32cyc: delay = 7.1542ns  area = 5368.44um²
+  *
+  * @param width The width of the operands
   */
 class UIntSrt2Div(val width: Int) extends UIntDiv {
   val io = IO(new UIntDivIO(width))

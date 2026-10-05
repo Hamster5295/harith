@@ -8,8 +8,9 @@ import harith.uint._
 /**
   * A floating-point fused multiply-adder with a modified Booth radix-4 tree significand multiplier.
   *
-  * delay = 54.714, area = 6460 @32bit@fpga
-  * delay = 35.4359, area = 30400.16 @32bit@55nm
+  * fpga@fp32: delay = 54.714ns  area = 6460luts + 0ff
+  *
+  * 55nm@fp32: delay = 35.4359ns  area = 30400.16um²
   *
   * @param aFmt   The format of the multiplicand
   * @param bFmt   The format of the multiplier

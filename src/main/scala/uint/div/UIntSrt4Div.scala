@@ -13,10 +13,11 @@ import hammer.Export
   * remainder always stays below the divisor and no restore or final correction step is needed.
   * This halves the number of iterations of a radix-2 divider.
   *
-  * @param width The width of the operands
+  * fpga@32bit-16cyc: delay = 4.338ns  area = 328luts + 202ff
   *
-  * delay = 4.338, area = 328 @32bit@16cycles@fpga
-  * delay = 6.2867, area = 3836.00 @32bit@16cycles@55nm
+  * 55nm@32bit-16cyc: delay = 6.2867ns  area = 3836.00um²
+  *
+  * @param width The width of the operands
   */
 class UIntSrt4Div(val width: Int) extends UIntDiv {
   val io = IO(new UIntDivIO(width))

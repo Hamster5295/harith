@@ -8,8 +8,9 @@ import harith.uint._
 /**
   * A floating-point fused multiply-adder with an AND partial product tree significand multiplier.
   *
-  * delay = 54.715, area = 5948 @32bit@fpga
-  * delay = 45.5888, area = 28058.80 @32bit@55nm
+  * fpga@fp32: delay = 54.715ns  area = 5948luts + 0ff
+  *
+  * 55nm@fp32: delay = 45.5888ns  area = 28058.80um²
   *
   * @param aFmt   The format of the multiplicand
   * @param bFmt   The format of the multiplier
