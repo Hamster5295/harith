@@ -4,21 +4,24 @@ import chisel3._
 import chisel3.util._
 
 /**
-  * A floating-point multiplier built from the exact product and a single rounding step.
+  * A floating-point multiplier built from an exact significand product and a single rounding step.
   *
-  * The significands are multiplied exactly and the exact exponent is passed to
-  * [[FpUtils.roundPack]]. NaN is canonical, per RISC-V.
+  * The significand multiplier is supplied as a [[FpSigMul]] strategy, so the same floating-point
+  * wrapping can be paired with different `harith.uint` multiplier datapaths. NaN is canonical, per
+  * RISC-V.
   *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand
   * @param outFmt The format of the result
   * @param policy The numeric policy
+  * @param sigMul The significand multiplier strategy
   */
-class FpGenericMul(
+class FpMulImpl(
     val aFmt:   FpFormat,
     val bFmt:   FpFormat,
     val outFmt: FpFormat,
-    policy:     FpPolicy = FpPolicy(),
+    policy:     FpPolicy,
+    sigMul:     FpSigMul,
 ) extends FpMul {
   val io = IO(new FpMulIO(aFmt, bFmt, outFmt))
 
@@ -29,7 +32,7 @@ class FpGenericMul(
   val bZero = if (policy.daz) b.isZero || b.isSubnormal else b.isZero
 
   val sign  = a.sign ^ b.sign
-  val prod  = a.sig * b.sig
+  val prod  = sigMul(a.sig, b.sig)
   val eProd = a.exp + b.exp - (aFmt.manWidth + bFmt.manWidth).S(FpUtils.EW.W)
 
   val rounded = FpUtils.roundPack(sign, prod, eProd, outFmt, io.rm, policy)
@@ -56,6 +59,30 @@ class FpGenericMul(
   io.fflags.dz := false.B
   io.fflags.nv := invalid
 }
+
+/**
+  * A floating-point multiplier with an inferred significand multiplier.
+  */
+class FpGenericMul(aFmt: FpFormat, bFmt: FpFormat, outFmt: FpFormat, policy: FpPolicy = FpPolicy())
+    extends FpMulImpl(aFmt, bFmt, outFmt, policy, FpSigMulGeneric)
+
+/**
+  * A floating-point multiplier with an array significand multiplier.
+  */
+class FpArrayMul(aFmt: FpFormat, bFmt: FpFormat, outFmt: FpFormat, policy: FpPolicy = FpPolicy())
+    extends FpMulImpl(aFmt, bFmt, outFmt, policy, FpSigMulArray)
+
+/**
+  * A floating-point multiplier with a Booth tree significand multiplier.
+  */
+class FpBoothMul(aFmt: FpFormat, bFmt: FpFormat, outFmt: FpFormat, policy: FpPolicy = FpPolicy())
+    extends FpMulImpl(aFmt, bFmt, outFmt, policy, FpSigMulBooth)
+
+/**
+  * A floating-point multiplier with an AND partial product tree significand multiplier.
+  */
+class FpTreeMul(aFmt: FpFormat, bFmt: FpFormat, outFmt: FpFormat, policy: FpPolicy = FpPolicy())
+    extends FpMulImpl(aFmt, bFmt, outFmt, policy, FpSigMulTree)
 
 /**
   * A bfloat16 by bfloat16 to float32 multiplier.

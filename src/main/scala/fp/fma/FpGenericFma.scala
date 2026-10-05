@@ -7,21 +7,26 @@ import chisel3.util._
   * A floating-point fused multiply-adder built from one exact product, one alignment and one
   * rounding step.
   *
-  * The addend is aligned to the product with a sticky bit so the single rounding is exact. NaN is
-  * canonical, per RISC-V.
+  * The significand multiplier and the wide alignment adder are supplied as strategies, so the same
+  * floating-point wrapping can be paired with different `harith.uint` datapaths. NaN is canonical,
+  * per RISC-V.
   *
   * @param aFmt   The format of the multiplicand
   * @param bFmt   The format of the multiplier
   * @param cFmt   The format of the addend
   * @param outFmt The format of the result
   * @param policy The numeric policy
+  * @param sigMul The significand multiplier strategy
+  * @param sigAdd The wide alignment adder strategy
   */
-class FpGenericFma(
+class FpFmaImpl(
     val aFmt:   FpFormat,
     val bFmt:   FpFormat,
     val cFmt:   FpFormat,
     val outFmt: FpFormat,
-    policy:     FpPolicy = FpPolicy(),
+    policy:     FpPolicy,
+    sigMul:     FpSigMul,
+    sigAdd:     FpSigAdd,
 ) extends FpFma {
   val io = IO(new FpFmaIO(aFmt, bFmt, cFmt, outFmt))
 
@@ -35,7 +40,7 @@ class FpGenericFma(
 
   // exact product and addend
   val signP = a.sign ^ b.sign
-  val prod  = a.sig * b.sig
+  val prod  = sigMul(a.sig, b.sig)
   val x     = a.exp + b.exp - (aFmt.manWidth + bFmt.manWidth).S(FpUtils.EW.W)
   val csig  = c.sig
   val y     = c.exp - cFmt.manWidth.S(FpUtils.EW.W)
@@ -51,9 +56,11 @@ class FpGenericFma(
   val (psh, pst) = FpUtils.alignToExp(prod, x, eW, keep)
   val (csh, cst) = FpUtils.alignToExp(csig, y, eW, keep)
 
-  val aw    = math.max(psh.getWidth, csh.getWidth) + 1
-  val total = Mux(signP, -psh.pad(aw), psh.pad(aw)) + Mux(c.sign, -csh.pad(aw), csh.pad(aw))
-  val tSign = total(aw - 1)
+  val w     = math.max(psh.getWidth, csh.getWidth)
+  val pVal  = Mux(signP, -psh.pad(w), psh.pad(w))
+  val cVal  = Mux(c.sign, -csh.pad(w), csh.pad(w))
+  val total = sigAdd(pVal, cVal)
+  val tSign = total(w)
   val tMag  = Mux(tSign, (-total).asUInt, total.asUInt)
 
   val general = FpUtils.roundPack(tSign, tMag, eW, outFmt, io.rm, policy, pst || cst)
@@ -100,6 +107,72 @@ class FpGenericFma(
   io.fflags.dz := false.B
   io.fflags.nv := invalid || infMinus
 }
+
+/**
+  * A floating-point fused multiply-adder with inferred significand and alignment datapaths.
+  */
+class FpGenericFma(
+    aFmt:   FpFormat,
+    bFmt:   FpFormat,
+    cFmt:   FpFormat,
+    outFmt: FpFormat,
+    policy: FpPolicy = FpPolicy(),
+) extends FpFmaImpl(aFmt, bFmt, cFmt, outFmt, policy, FpSigMulGeneric, FpSigAddGeneric)
+
+/**
+  * A floating-point fused multiply-adder with an array significand multiplier.
+  */
+class FpArrayFma(
+    aFmt:   FpFormat,
+    bFmt:   FpFormat,
+    cFmt:   FpFormat,
+    outFmt: FpFormat,
+    policy: FpPolicy = FpPolicy(),
+) extends FpFmaImpl(aFmt, bFmt, cFmt, outFmt, policy, FpSigMulArray, FpSigAddGeneric)
+
+/**
+  * A floating-point fused multiply-adder with a Booth tree significand multiplier.
+  */
+class FpBoothFma(
+    aFmt:   FpFormat,
+    bFmt:   FpFormat,
+    cFmt:   FpFormat,
+    outFmt: FpFormat,
+    policy: FpPolicy = FpPolicy(),
+) extends FpFmaImpl(aFmt, bFmt, cFmt, outFmt, policy, FpSigMulBooth, FpSigAddGeneric)
+
+/**
+  * A floating-point fused multiply-adder with an AND partial product tree significand multiplier.
+  */
+class FpTreeFma(
+    aFmt:   FpFormat,
+    bFmt:   FpFormat,
+    cFmt:   FpFormat,
+    outFmt: FpFormat,
+    policy: FpPolicy = FpPolicy(),
+) extends FpFmaImpl(aFmt, bFmt, cFmt, outFmt, policy, FpSigMulTree, FpSigAddGeneric)
+
+/**
+  * A floating-point fused multiply-adder with a ripple carry alignment adder.
+  */
+class FpRippleFma(
+    aFmt:   FpFormat,
+    bFmt:   FpFormat,
+    cFmt:   FpFormat,
+    outFmt: FpFormat,
+    policy: FpPolicy = FpPolicy(),
+) extends FpFmaImpl(aFmt, bFmt, cFmt, outFmt, policy, FpSigMulGeneric, FpSigAddRipple)
+
+/**
+  * A floating-point fused multiply-adder with a parallel prefix alignment adder.
+  */
+class FpPrefixFma(
+    aFmt:   FpFormat,
+    bFmt:   FpFormat,
+    cFmt:   FpFormat,
+    outFmt: FpFormat,
+    policy: FpPolicy = FpPolicy(),
+) extends FpFmaImpl(aFmt, bFmt, cFmt, outFmt, policy, FpSigMulGeneric, FpSigAddPrefix)
 
 /**
   * A bfloat16 by bfloat16 plus float32 to float32 fused multiply-adder.

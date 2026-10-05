@@ -6,19 +6,21 @@ import chisel3.util._
 /**
   * A floating-point adder built from one alignment and one rounding step.
   *
-  * The exponents are aligned with a sticky bit so the single rounding is exact. NaN is canonical,
-  * per RISC-V.
+  * The wide alignment adder is supplied as a strategy, so the same floating-point wrapping can be
+  * paired with different `harith.uint` adder datapaths. NaN is canonical, per RISC-V.
   *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand
   * @param outFmt The format of the result
   * @param policy The numeric policy
+  * @param sigAdd The wide alignment adder strategy
   */
-class FpGenericAdd(
+class FpAddImpl(
     val aFmt:   FpFormat,
     val bFmt:   FpFormat,
     val outFmt: FpFormat,
-    policy:     FpPolicy = FpPolicy(),
+    policy:     FpPolicy,
+    sigAdd:     FpSigAdd,
 ) extends FpAdd {
   val io = IO(new FpAddIO(aFmt, bFmt, outFmt))
 
@@ -39,9 +41,11 @@ class FpGenericAdd(
   val (ash, ast) = FpUtils.alignToExp(a.sig, expA, eW, keep)
   val (bsh, bst) = FpUtils.alignToExp(b.sig, expB, eW, keep)
 
-  val aw    = math.max(ash.getWidth, bsh.getWidth) + 1
-  val total = Mux(a.sign, -ash.pad(aw), ash.pad(aw)) + Mux(b.sign, -bsh.pad(aw), bsh.pad(aw))
-  val tSign = total(aw - 1)
+  val w     = math.max(ash.getWidth, bsh.getWidth)
+  val aVal  = Mux(a.sign, -ash.pad(w), ash.pad(w))
+  val bVal  = Mux(b.sign, -bsh.pad(w), bsh.pad(w))
+  val total = sigAdd(aVal, bVal)
+  val tSign = total(w)
   val tMag  = Mux(tSign, (-total).asUInt, total.asUInt)
 
   val general = FpUtils.roundPack(tSign, tMag, eW, outFmt, io.rm, policy, ast || bst)
@@ -87,6 +91,44 @@ class FpGenericAdd(
   io.fflags.dz := false.B
   io.fflags.nv := oppositeInf
 }
+
+/**
+  * A floating-point adder with an inferred alignment adder.
+  */
+class FpGenericAdd(aFmt: FpFormat, bFmt: FpFormat, outFmt: FpFormat, policy: FpPolicy = FpPolicy())
+    extends FpAddImpl(aFmt, bFmt, outFmt, policy, FpSigAddGeneric)
+
+/**
+  * A floating-point adder with a ripple carry alignment adder, the cheapest option.
+  */
+class FpRippleAdd(aFmt: FpFormat, bFmt: FpFormat, outFmt: FpFormat, policy: FpPolicy = FpPolicy())
+    extends FpAddImpl(aFmt, bFmt, outFmt, policy, FpSigAddRipple)
+
+/**
+  * A floating-point adder with a parallel prefix alignment adder, the fast option.
+  */
+class FpPrefixAdd(aFmt: FpFormat, bFmt: FpFormat, outFmt: FpFormat, policy: FpPolicy = FpPolicy())
+    extends FpAddImpl(aFmt, bFmt, outFmt, policy, FpSigAddPrefix)
+
+/**
+  * A floating-point adder with a block carry select alignment adder.
+  */
+class FpCarrySelectAdd(
+    aFmt:   FpFormat,
+    bFmt:   FpFormat,
+    outFmt: FpFormat,
+    policy: FpPolicy = FpPolicy(),
+) extends FpAddImpl(aFmt, bFmt, outFmt, policy, FpSigAddCarrySelect)
+
+/**
+  * A floating-point adder with a hierarchical carry lookahead alignment adder.
+  */
+class FpCarryLookaheadAdd(
+    aFmt:   FpFormat,
+    bFmt:   FpFormat,
+    outFmt: FpFormat,
+    policy: FpPolicy = FpPolicy(),
+) extends FpAddImpl(aFmt, bFmt, outFmt, policy, FpSigAddCarryLookahead)
 
 /**
   * A bfloat16 plus float32 to float32 adder.
