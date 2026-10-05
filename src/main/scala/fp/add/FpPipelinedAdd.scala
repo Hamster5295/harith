@@ -13,6 +13,14 @@ import harith.uint._
   * decode, special handling and rounding stay combinational on the delayed operands. `stages = 0`
   * makes the adder combinational. NaN is canonical, per RISC-V.
   *
+  * Note: only the wide alignment adder is pipelined internally by the underlying
+  * [[harith.uint.UIntPipelinedPrefixAdd]]; the floating-point control is a plain register queue
+  * matched to the adder latency and the decode/rounding logic around it stays combinational, so the
+  * effective depth of that part depends on EDA retiming.
+  *
+  * delay = 1.964, area = 4854 @32bit@2cycles@fpga
+  * delay = 19.7837, area = 15503.32 @32bit@2cycles@55nm
+  *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand
   * @param outFmt The format of the result

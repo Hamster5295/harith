@@ -13,6 +13,14 @@ import harith.uint._
   * so that the rounding and special handling line up with the product. `stages = 0` makes the
   * multiplier combinational, equivalently to [[FpArrayMul]]. NaN is canonical, per RISC-V.
   *
+  * Note: only the significand multiplier is pipelined internally by the underlying
+  * [[harith.uint.UIntPipelinedArrayMul]]; the floating-point control is a plain register queue
+  * matched to the multiplier latency and the rounding/special logic after it stays combinational,
+  * so the effective depth of that part depends on EDA retiming.
+  *
+  * delay = 5.687, area = 1791 @32bit@2cycles@fpga
+  * delay = 7.8804, area = 9454.76 @32bit@2cycles@55nm
+  *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand
   * @param outFmt The format of the result

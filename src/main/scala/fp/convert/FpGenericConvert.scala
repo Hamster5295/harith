@@ -2,12 +2,16 @@ package harith.fp
 
 import chisel3._
 import chisel3.util._
+import hammer.Export
 
 /**
   * A floating-point format converter.
   *
   * The value is decoded to its exact significand and exponent and re-rounded to the destination
   * format. Special values map to the destination encoding; NaN is canonical, per RISC-V.
+  *
+  * delay = 21.135, area = 489 @32bit@fpga
+  * delay = 4.5429, area = 769.44 @32bit@55nm
   *
   * @param inFmt  The input format
   * @param outFmt The output format
@@ -71,3 +75,7 @@ class Fp64ToFp32 extends FpGenericConvert(FpFormat.Fp64, FpFormat.Fp32)
   * A float32 to float64 converter.
   */
 class Fp32ToFp64 extends FpGenericConvert(FpFormat.Fp32, FpFormat.Fp64)
+
+object FpGenericConvert extends App {
+  Export(new FpGenericConvert(FpFormat.Fp32, FpFormat.Fp16), args, FpExport.opts)
+}
