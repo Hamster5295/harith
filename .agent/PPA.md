@@ -15,6 +15,14 @@ make asic TARGET=<package>.<class>
 ```
 
 
+## Policy
+
+Modules should be designed to **eliminate** non-structual overhead.
+
+e.g:   
+When designing a high-performance module, unnecessary logic that adds up delay should be eliminated, until the structure reaches its limit.
+
+
 ## Annotation
 
 For every arith module, PPA analysis should be conducted and annoted in the doc comments.
@@ -28,6 +36,9 @@ PPA Anotations should follow the format below:
   * Descriptions, can cross multiple lines
   * 
   * <platform>@<condition>: delay = <delay>  area = <area>
+  * <This line should leave empty>
+  * <platform>@<condition>: delay = <delay>  area = <area>
+  * <This line should leave empty>
   * <platform>@<condition>: delay = <delay>  area = <area>
   * 
   * @param something Introduce the params (if there are any)
@@ -46,3 +57,14 @@ where
 - `<area>` is the area / utility of the module
   - For FPGA, this is the resources cost, e.g. `100luts + 30ff`
   - For ASIC, this is the area cost, e.g. `100um²`
+
+
+## Conditions
+
+Every module should **AT LEAST** do 2 analysis, fpga & asic each.
+
+For complex modules, it's encouraged to analyze under different parameter set.
+
+e.g.  
+- A pipelined module can be analyzed with different delay cycles, which shows its trade of performance and area.
+- A Fp module can be analyzed with different input / output datatypes, which shows the influence on datatype adaption.
