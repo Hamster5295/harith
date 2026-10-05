@@ -26,20 +26,45 @@ object FpMacroAdd extends App {
 
 /**
   * A bfloat16 plus float32 to float32 adder.
+  *
+  * fpga@bf16: delay = 43.047ns  area = 3419luts + 0ff
+  *
+  * 55nm@bf16: delay = 15.0485ns  area = 5576.48um²
+  *
   */
 class FpBf16Fp32Add extends FpMacroAdd(FpFormat.Bf16, FpFormat.Fp32, FpFormat.Fp32)
 
 /**
   * A float16 plus float32 to float32 adder.
+  *
+  * fpga@fp16: delay = 43.904ns  area = 3527luts + 0ff
+  *
+  * 55nm@fp16: delay = 13.7410ns  area = 5369.56um²
+  *
   */
 class Fp16Fp32Add extends FpMacroAdd(FpFormat.Fp16, FpFormat.Fp32, FpFormat.Fp32)
 
 /**
   * A float32 adder.
+  *
+  * fpga@fp32: delay = 43.506ns  area = 3950luts + 0ff
+  *
+  * 55nm@fp32: delay = 16.3992ns  area = 6669.88um²
+  *
   */
 class Fp32Add extends FpMacroAdd(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32)
 
 /**
   * A float64 adder.
+  *
+  * fpga@fp64: delay = 51.000ns  area = 8508luts + 0ff
+  *
+  * 55nm@fp64: delay = 23.3570ns  area = 13904.80um²
+  *
   */
 class Fp64Add extends FpMacroAdd(FpFormat.Fp64, FpFormat.Fp64, FpFormat.Fp64)
+
+object FpBf16Fp32Add extends App { Export(new FpBf16Fp32Add, args, FpExport.opts) }
+object Fp16Fp32Add   extends App { Export(new Fp16Fp32Add, args, FpExport.opts)   }
+object Fp32Add       extends App { Export(new Fp32Add, args, FpExport.opts)       }
+object Fp64Add       extends App { Export(new Fp64Add, args, FpExport.opts)       }
