@@ -2,7 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 
 /**
   * A pipelined fused multiply-adder using AND partial products.
@@ -11,9 +11,9 @@ import hammer.Export
   * `stages` register layers and the two reduced rows are added by the supplied [[UIntAdd]]. The
   * throughput is one FMA per cycle and the latency is `stages` plus the adder latency.
   *
-  * fpga@32bit-2cyc: delay = 4.947ns  area = 1683luts + 211ff
+  * fpga@32bit-2cyc: delay[i/o/max] = 6.132ns/4.783ns/4.947ns  area = 1683luts + 211ff
   *
-  * 55nm@32bit-2cyc: delay = 2.9186ns  area = 11859.68um²
+  * 55nm@32bit-2cyc: delay[i/o/max] = 1.9244ns/2.5375ns/2.5375ns  area = 12053.44um²
   *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
@@ -58,7 +58,7 @@ class UIntPipelinedTreeFma(
 }
 
 object UIntPipelinedTreeFma extends App {
-  Export(
+  ExportForAnalysis(
     new UIntPipelinedTreeFma(
       32,
       ReductionStyle.Dadda,

@@ -2,7 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 
 /**
   * A carry save tree multiplier using AND partial products.
@@ -11,9 +11,9 @@ import hammer.Export
   * rows are added by the supplied [[UIntAdd]]. The reduction is combinational, so the latency is
   * the latency of the final adder.
   *
-  * fpga@32bit: delay = 13.118ns  area = 1616luts + 0ff
+  * fpga@32bit: delay[i/o/max] = 10.316ns/10.888ns/10.316ns  area = 1616luts + 0ff
   *
-  * 55nm@32bit: delay = 5.1937ns  area = 10559.36um²
+  * 55nm@32bit: delay[i/o/max] = 4.8125ns/4.8125ns/4.8125ns  area = 10564.68um²
   *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
@@ -43,7 +43,7 @@ class UIntTreeMul(
 }
 
 object UIntTreeMul extends App {
-  Export(
+  ExportForAnalysis(
     new UIntTreeMul(
       32,
       ReductionStyle.Dadda,

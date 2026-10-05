@@ -2,7 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 
 /**
   * A modified Booth radix-4 carry save tree multiplier.
@@ -11,9 +11,9 @@ import hammer.Export
   * [[UIntTreeMul]] are generated. The partial products are reduced to two rows by a Wallace
   * or Dadda network and the two rows are added by the supplied [[UIntAdd]].
   *
-  * fpga@32bit: delay = 13.036ns  area = 2269luts + 0ff
+  * fpga@32bit: delay[i/o/max] = 10.234ns/10.806ns/10.234ns  area = 2269luts + 0ff
   *
-  * 55nm@32bit: delay = 5.5814ns  area = 15956.08um²
+  * 55nm@32bit: delay[i/o/max] = 5.3502ns/5.3502ns/5.3502ns  area = 16288.16um²
   *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
@@ -43,7 +43,7 @@ class UIntBoothMul(
 }
 
 object UIntBoothMul extends App {
-  Export(
+  ExportForAnalysis(
     new UIntBoothMul(
       32,
       ReductionStyle.Dadda,

@@ -2,7 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 
 /**
   * A pipelined ripple carry adder.
@@ -11,9 +11,9 @@ import hammer.Export
   * accumulated sums advance one block per cycle. This yields a short, block sized critical path and
   * a throughput of one addition per cycle with a fixed latency of the number of blocks.
   *
-  * fpga@32bit-8cyc: delay = 1.791ns  area = 88luts + 156ff
+  * fpga@32bit-8cyc: delay[i/o/max] = 2.115ns/0.912ns/1.791ns  area = 88luts + 156ff
   *
-  * 55nm@32bit-8cyc: delay = 0.3879ns  area = 2616.04um²
+  * 55nm@32bit-8cyc: delay[i/o/max] = 0.2891ns/0.3929ns/0.2891ns  area = 2615.76um²
   *
   * @param width     The width of the operands
   * @param blockSize The number of bits per pipeline stage
@@ -64,7 +64,7 @@ class UIntPipelinedRippleAdd(val width: Int, val blockSize: Int) extends UIntAdd
 }
 
 object UIntPipelinedRippleAdd extends App {
-  Export(
+  ExportForAnalysis(
     new UIntPipelinedRippleAdd(32, 4),
     args,
     Array(

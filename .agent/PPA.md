@@ -35,11 +35,11 @@ PPA Anotations should follow the format below:
   * <This line should leave empty>
   * Descriptions, can cross multiple lines
   * 
-  * <platform>@<condition>: delay = <delay>  area = <area>
+  * <platform>@<condition>: delay[i/o/max] = <in>/<out>/<max>  area = <area>
   * <This line should leave empty>
-  * <platform>@<condition>: delay = <delay>  area = <area>
+  * <platform>@<condition>: delay[i/o/max] = <in>/<out>/<max>  area = <area>
   * <This line should leave empty>
-  * <platform>@<condition>: delay = <delay>  area = <area>
+  * <platform>@<condition>: delay[i/o/max] = <in>/<out>/<max>  area = <area>
   * 
   * @param something Introduce the params (if there are any)
   */
@@ -53,10 +53,17 @@ where
   - For `UInt`, this includes the width of the oprands, e.g. `32bit`
   - For `Fp`, this includes the type of the oprand, e.g. `fp32`
   - For general, this includes the delay cycle count (if pipelined or staged) 
-- `<delay>` is the delay in human-friendly unit, e.g. `1ns`, `3ms`
+- `<delay>` is the triple of delays separated by `/`, in human-friendly unit, e.g. `1ns/2ns/3ns`
+  - `<in>`: the **input delay**: from a data input port to the first register (or to an output port, for a combin module)
+  - `<out>`: the **output delay**: from the last register (or from an input port, for a combin module) to an output port, excluding the output buffer's own delay
+  - `<max>`: the **largest delay**: the worst register-to-register delay, which fixes the achievable frequency
+  - all three are **pure logic** delays: the external input/output delay modeled by the constraint is excluded
 - `<area>` is the area / utility of the module
   - For FPGA, this is the resources cost, e.g. `100luts + 30ff`
   - For ASIC, this is the area cost, e.g. `100um²`
+  - The analysis output register inserted by `ExportForAnalysis` is **not** counted towards the module:
+    subtract its bit count (`reg_bits`, the total width of the `*_reg` output ports) from the FPGA `ff`,
+    and `reg_bits * 6.16um²` (one `DFFQX0P5H7L` in the icsprout55 PDK) from the ASIC area.
 
 
 ## Conditions

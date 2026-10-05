@@ -2,15 +2,15 @@ package harith.fp
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 import harith.uint._
 
 /**
   * A floating-point multiplier with an AND partial product carry save tree significand multiplier.
   *
-  * fpga@fp32: delay = 29.481ns  area = 1841luts + 0ff
+  * fpga@fp32: delay[i/o/max] = 26.628ns/27.219ns/26.628ns  area = 1864luts + 0ff
   *
-  * 55nm@fp32: delay = 11.0304ns  area = 8116.64um²
+  * 55nm@fp32: delay[i/o/max] = 11.0121ns/11.0121ns/11.0121ns  area = 8316.00um²
   *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand
@@ -30,5 +30,5 @@ class FpTreeMul(aFmt: FpFormat, bFmt: FpFormat, outFmt: FpFormat, policy: FpPoli
     )
 
 object FpTreeMul extends App {
-  Export(new FpTreeMul(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32), args, FpExport.opts)
+  ExportForAnalysis(new FpTreeMul(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32), args, FpExport.opts)
 }

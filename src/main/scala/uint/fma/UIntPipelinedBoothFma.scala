@@ -2,7 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 
 /**
   * A pipelined fused multiply-adder using modified Booth radix-4 partial products.
@@ -11,9 +11,9 @@ import hammer.Export
   * over `stages` register layers and the two reduced rows are added by the supplied [[UIntAdd]].
   * The throughput is one FMA per cycle and the latency is `stages` plus the adder latency.
   *
-  * fpga@32bit-2cyc: delay = 2.360ns  area = 2441luts + 454ff
+  * fpga@32bit-2cyc: delay[i/o/max] = 6.250ns/4.289ns/3.718ns  area = 2441luts + 454ff
   *
-  * 55nm@32bit-2cyc: delay = 3.8220ns  area = 18393.76um²
+  * 55nm@32bit-2cyc: delay[i/o/max] = 3.4447ns/1.6032ns/3.4447ns  area = 18331.88um²
   *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
@@ -61,7 +61,7 @@ class UIntPipelinedBoothFma(
 }
 
 object UIntPipelinedBoothFma extends App {
-  Export(
+  ExportForAnalysis(
     new UIntPipelinedBoothFma(
       32,
       ReductionStyle.Dadda,

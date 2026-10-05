@@ -2,7 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 
 /**
   * A pipelined parallel prefix adder.
@@ -12,9 +12,9 @@ import hammer.Export
   * a layer is used for prefix logic or only for retiming. A value of 0 makes the adder
   * combinational, equivalently to [[UIntPrefixAdd]].
   *
-  * fpga@32bit-2cyc: delay = 1.479ns  area = 168luts + 192ff
+  * fpga@32bit-2cyc: delay[i/o/max] = 2.833ns/1.716ns/1.479ns  area = 168luts + 192ff
   *
-  * 55nm@32bit-2cyc: delay = 0.7994ns  area = 1852.48um²
+  * 55nm@32bit-2cyc: delay[i/o/max] = 0.3475ns/0.8007ns/0.8007ns  area = 1847.72um²
   *
   * @param width  The width of the operands
   * @param style  The parallel prefix network style
@@ -96,7 +96,7 @@ class UIntPipelinedPrefixAdd(val width: Int, val style: PrefixStyle, val stages:
 }
 
 object UIntPipelinedPrefixAdd extends App {
-  Export(
+  ExportForAnalysis(
     new UIntPipelinedPrefixAdd(32, PrefixStyle.KoggeStone, 2),
     args,
     Array(

@@ -2,7 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 
 /**
   * An iterative radix-4 divider.
@@ -13,9 +13,9 @@ import hammer.Export
   * remainder always stays below the divisor and no restore or final correction step is needed.
   * This halves the number of iterations of a radix-2 divider.
   *
-  * fpga@32bit-16cyc: delay = 4.338ns  area = 328luts + 202ff
+  * fpga@32bit-16cyc: delay[i/o/max] = 2.467ns/1.528ns/4.338ns  area = 328luts + 202ff
   *
-  * 55nm@32bit-16cyc: delay = 6.2867ns  area = 3836.00um²
+  * 55nm@32bit-16cyc: delay[i/o/max] = 5.8867ns/0.8927ns/5.8867ns  area = 3832.64um²
   *
   * @param width The width of the operands
   */
@@ -103,7 +103,7 @@ class UIntSrt4Div(val width: Int) extends UIntDiv {
 }
 
 object UIntSrt4Div extends App {
-  Export(
+  ExportForAnalysis(
     new UIntSrt4Div(32),
     args,
     Array(

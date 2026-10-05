@@ -2,7 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 
 /**
   * A hierarchical carry lookahead adder.
@@ -12,9 +12,9 @@ import hammer.Export
   * second lookahead level. This keeps the critical path logarithmic while using far less logic
   * than a fully parallel prefix adder.
   *
-  * fpga@32bit: delay = 6.681ns  area = 70luts + 0ff
+  * fpga@32bit: delay[i/o/max] = 3.879ns/4.451ns/3.879ns  area = 70luts + 0ff
   *
-  * 55nm@32bit: delay = 1.8824ns  area = 517.16um²
+  * 55nm@32bit: delay[i/o/max] = 1.4466ns/1.4466ns/1.4466ns  area = 493.08um²
   *
   * @param width     The width of the operands
   * @param groupSize The number of bits per lookahead group
@@ -70,7 +70,7 @@ class UIntCarryLookaheadAdd(val width: Int, val groupSize: Int) extends UIntAdd 
 }
 
 object UIntCarryLookaheadAdd extends App {
-  Export(
+  ExportForAnalysis(
     new UIntCarryLookaheadAdd(32, 4),
     args,
     Array(

@@ -2,15 +2,15 @@ package harith.fp
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 import harith.uint._
 
 /**
   * A floating-point fused multiply-adder with a ripple carry alignment adder.
   *
-  * fpga@fp32: delay = 67.529ns  area = 5380luts + 0ff
+  * fpga@fp32: delay[i/o/max] = 63.167ns/63.738ns/63.167ns  area = 5256luts + 0ff
   *
-  * 55nm@fp32: delay = 40.9942ns  area = 30536.52um²
+  * 55nm@fp32: delay[i/o/max] = 41.1512ns/41.1512ns/41.1512ns  area = 28605.08um²
   *
   * @param aFmt   The format of the multiplicand
   * @param bFmt   The format of the multiplier
@@ -35,7 +35,7 @@ class FpRippleFma(
     )
 
 object FpRippleFma extends App {
-  Export(
+  ExportForAnalysis(
     new FpRippleFma(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32),
     args,
     FpExport.opts,

@@ -76,6 +76,16 @@ foreach port [all_inputs] {
 }
 set data_outputs [all_outputs]
 
+# Raw (non-registered) outputs and register data pins, used for the three
+# interface/critical-path reports below.
+set raw_outputs [list]
+foreach port [all_outputs] {
+  if {![string match "*_reg*" [get_full_name $port]]} {
+    lappend raw_outputs $port
+  }
+}
+set reg_data_pins [all_registers -data_pins]
+
 set driver   [env_or DRIVER_CELL $BUF_CELL]
 set cap_load [env_or CAP_LOAD 0.05]
 
@@ -94,6 +104,20 @@ if {[llength $data_outputs] > 0} {
 report_checks -path_delay max -format full_clock_expanded -digits 4 > $RESULT_DIR/timing.rpt
 report_checks -path_delay min -format full_clock_expanded -digits 4 > $RESULT_DIR/timing.hold.rpt
 report_checks -path_delay max -format summary -group_count 20 -endpoint_count 1 -digits 4 > $RESULT_DIR/timing.summary.rpt
+
+# Three delay views:
+#   in  - worst max path starting at a data input (input-side logic delay)
+#   out - worst max path ending at a raw output (output-side logic delay)
+#   max - worst max path ending at a register (true register-to-register Fmax)
+if {[llength $data_inputs] > 0} {
+  report_checks -path_delay max -from $data_inputs -format full_clock_expanded -digits 4 > $RESULT_DIR/timing.in.rpt
+}
+if {[llength $raw_outputs] > 0} {
+  report_checks -path_delay max -to $raw_outputs -format full_clock_expanded -digits 4 > $RESULT_DIR/timing.out.rpt
+}
+if {[llength $reg_data_pins] > 0} {
+  report_checks -path_delay max -to $reg_data_pins -format full_clock_expanded -digits 4 > $RESULT_DIR/timing.max.rpt
+}
 
 report_power -digits 4 > $RESULT_DIR/power.rpt
 

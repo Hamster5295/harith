@@ -2,16 +2,16 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 
 /**
   * The unsigned multiplier implemented with the `*` operator.
   *
   * FPGA will likely implement it as an inner DSP.
   *
-  * fpga@32bit: delay = 10.660ns  area = 47luts + 0ff
+  * fpga@32bit: delay[i/o/max] = 7.721ns/8.293ns/7.721ns  area = 47luts + 0ff
   *
-  * 55nm@32bit: delay = 3.6637ns  area = 16409.96um²
+  * 55nm@32bit: delay[i/o/max] = 3.2678ns/3.2678ns/3.2678ns  area = 16313.36um²
   *
   * @param width The width of the operands
   */
@@ -22,7 +22,7 @@ class UIntMacroMul(width: Int) extends UIntMul {
 }
 
 object UIntMacroMul extends App {
-  Export(
+  ExportForAnalysis(
     new UIntMacroMul(32),
     args,
     Array(

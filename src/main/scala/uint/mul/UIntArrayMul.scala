@@ -2,7 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 
 /**
   * A structural carry save array multiplier.
@@ -12,9 +12,9 @@ import hammer.Export
   * the price of an O(width) critical path. On FPGAs the inferred [[UIntMacroMul]] is
   * usually preferable.
   *
-  * fpga@32bit: delay = 23.107ns  area = 2589luts + 0ff
+  * fpga@32bit: delay[i/o/max] = 20.305ns/20.877ns/20.305ns  area = 2589luts + 0ff
   *
-  * 55nm@32bit: delay = 8.2942ns  area = 16023.56um²
+  * 55nm@32bit: delay[i/o/max] = 7.9127ns/7.9127ns/7.9127ns  area = 16088.52um²
   *
   * @param width The width of the operands
   */
@@ -43,7 +43,7 @@ class UIntArrayMul(val width: Int) extends UIntMul {
 }
 
 object UIntArrayMul extends App {
-  Export(
+  ExportForAnalysis(
     new UIntArrayMul(32),
     args,
     Array(

@@ -2,7 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 
 /**
   * A pipelined carry save array multiplier.
@@ -11,9 +11,9 @@ import hammer.Export
   * product per cycle and the latency equals `stages`. A value of 0 makes the multiplier
   * combinational, equivalently to [[UIntArrayMul]].
   *
-  * fpga@32bit-2cyc: delay = 7.545ns  area = 2124luts + 220ff
+  * fpga@32bit-2cyc: delay[i/o/max] = 7.198ns/6.753ns/7.545ns  area = 2124luts + 220ff
   *
-  * 55nm@32bit-2cyc: delay = 2.7713ns  area = 18377.24um²
+  * 55nm@32bit-2cyc: delay[i/o/max] = 2.6341ns/2.7981ns/2.6341ns  area = 18446.40um²
   *
   * @param width  The width of the operands
   * @param stages The number of pipeline register layers
@@ -60,7 +60,7 @@ class UIntPipelinedArrayMul(val width: Int, val stages: Int) extends Module
 }
 
 object UIntPipelinedArrayMul extends App {
-  Export(
+  ExportForAnalysis(
     new UIntPipelinedArrayMul(32, 2),
     args,
     Array(

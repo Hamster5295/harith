@@ -2,7 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 
 /**
   * The unsigned FMA implemented with the `*` and `+` operators.
@@ -10,9 +10,9 @@ import hammer.Export
   * The whole expression is left to the synthesis tool, which on FPGA will likely map it into an
   * inner DSP with a built-in multiply-accumulate.
   *
-  * fpga@32bit: delay = 11.917ns  area = 111luts + 0ff
+  * fpga@32bit: delay[i/o/max] = 8.933ns/9.505ns/8.933ns  area = 111luts + 0ff
   *
-  * 55nm@32bit: delay = 3.6603ns  area = 17201.52um²
+  * 55nm@32bit: delay[i/o/max] = 3.2738ns/3.2738ns/3.2484ns  area = 17201.52um²
   *
   * @param width The width of the operands
   */
@@ -23,7 +23,7 @@ class UIntMacroFma(val width: Int) extends UIntFma {
 }
 
 object UIntMacroFma extends App {
-  Export(
+  ExportForAnalysis(
     new UIntMacroFma(32),
     args,
     Array(

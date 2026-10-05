@@ -2,15 +2,15 @@ package harith.fp
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 import harith.uint._
 
 /**
   * A floating-point adder with a ripple carry alignment adder, the cheapest option.
   *
-  * fpga@fp32: delay = 55.508ns  area = 4066luts + 0ff
+  * fpga@fp32: delay[i/o/max] = 51.462ns/52.042ns/51.462ns  area = 4107luts + 0ff
   *
-  * 55nm@fp32: delay = 17.0334ns  area = 7073.08um²
+  * 55nm@fp32: delay[i/o/max] = 14.2377ns/14.2377ns/14.2377ns  area = 5554.36um²
   *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand
@@ -21,5 +21,9 @@ class FpRippleAdd(aFmt: FpFormat, bFmt: FpFormat, outFmt: FpFormat, policy: FpPo
     extends FpAddBase(aFmt, bFmt, outFmt, policy, w => Module(new UIntRippleAdd(w)))
 
 object FpRippleAdd extends App {
-  Export(new FpRippleAdd(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32), args, FpExport.opts)
+  ExportForAnalysis(
+    new FpRippleAdd(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32),
+    args,
+    FpExport.opts,
+  )
 }

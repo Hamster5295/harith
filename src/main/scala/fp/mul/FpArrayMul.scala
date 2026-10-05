@@ -2,15 +2,15 @@ package harith.fp
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 import harith.uint._
 
 /**
   * A floating-point multiplier with a carry save array significand multiplier, the cheapest option.
   *
-  * fpga@fp32: delay = 36.003ns  area = 2319luts + 0ff
+  * fpga@fp32: delay[i/o/max] = 33.146ns/33.737ns/33.146ns  area = 2341luts + 0ff
   *
-  * 55nm@fp32: delay = 13.2657ns  area = 11438.56um²
+  * 55nm@fp32: delay[i/o/max] = 12.6329ns/12.6329ns/12.6329ns  area = 11450.88um²
   *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand
@@ -21,5 +21,9 @@ class FpArrayMul(aFmt: FpFormat, bFmt: FpFormat, outFmt: FpFormat, policy: FpPol
     extends FpMulBase(aFmt, bFmt, outFmt, policy, w => Module(new UIntArrayMul(w)))
 
 object FpArrayMul extends App {
-  Export(new FpArrayMul(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32), args, FpExport.opts)
+  ExportForAnalysis(
+    new FpArrayMul(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32),
+    args,
+    FpExport.opts,
+  )
 }

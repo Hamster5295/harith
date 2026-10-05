@@ -2,15 +2,15 @@ package harith.fp
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 import harith.uint._
 
 /**
   * A floating-point fused multiply-adder with a parallel prefix alignment adder.
   *
-  * fpga@fp32: delay = 54.672ns  area = 6155luts + 0ff
+  * fpga@fp32: delay[i/o/max] = 51.516ns/52.095ns/51.516ns  area = 6090luts + 0ff
   *
-  * 55nm@fp32: delay = 45.4307ns  area = 26786.48um²
+  * 55nm@fp32: delay[i/o/max] = 35.9554ns/35.9554ns/35.9554ns  area = 24540.60um²
   *
   * @param aFmt   The format of the multiplicand
   * @param bFmt   The format of the multiplier
@@ -35,7 +35,7 @@ class FpPrefixFma(
     )
 
 object FpPrefixFma extends App {
-  Export(
+  ExportForAnalysis(
     new FpPrefixFma(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32),
     args,
     FpExport.opts,

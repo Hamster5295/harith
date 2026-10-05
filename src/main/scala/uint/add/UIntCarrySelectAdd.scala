@@ -2,7 +2,7 @@ package harith.uint
 
 import chisel3._
 import chisel3.util._
-import hammer.Export
+import harith.ExportForAnalysis
 
 /**
   * A block carry select adder.
@@ -11,9 +11,9 @@ import hammer.Export
   * correct one once the real carry arrives. The duplicated logic reduces the critical path to one
   * carry select per block.
   *
-  * fpga@32bit: delay = 6.506ns  area = 70luts + 0ff
+  * fpga@32bit: delay[i/o/max] = 4.104ns/4.676ns/4.104ns  area = 57luts + 0ff
   *
-  * 55nm@32bit: delay = 3.3749ns  area = 404.60um²
+  * 55nm@32bit: delay[i/o/max] = 2.8304ns/2.8304ns/2.8304ns  area = 416.64um²
   *
   * @param width     The width of the operands
   * @param blockSize The number of bits per select block
@@ -61,7 +61,7 @@ class UIntCarrySelectAdd(val width: Int, val blockSize: Int) extends UIntAdd {
 }
 
 object UIntCarrySelectAdd extends App {
-  Export(
+  ExportForAnalysis(
     new UIntCarrySelectAdd(32, 4),
     args,
     Array(
