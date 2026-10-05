@@ -1,4 +1,4 @@
-TOP ?= UIntMacroAdder
+TOP ?= UIntMacroAdd
 
 PDK = icsprout55
 PDK_DIR = /opt/pdk/icsprout55

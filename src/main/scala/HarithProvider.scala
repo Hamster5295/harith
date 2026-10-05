@@ -13,8 +13,8 @@ case object HarithConfigKey extends Field[HarithConfig]
   * When used with `HasHarith`, this act as a default module factory for the unified arith api
   */
 case class HarithConfig(
-    val uintAdd: Int => UIntAdder,
-    val uintMul: Int => UIntMultiplier,
+    val uintAdd: Int => UIntAdd,
+    val uintMul: Int => UIntMul,
 )
 
 trait HasHarith {

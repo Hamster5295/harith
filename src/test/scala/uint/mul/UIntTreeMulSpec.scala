@@ -5,22 +5,22 @@ import hammer.test._
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 
-class UIntBoothFmaSpec extends AnyFreeSpec with Matchers with ChiselSim {
+class UIntTreeMulSpec extends AnyFreeSpec with Matchers with ChiselSim {
 
   private val styles = Seq(ReductionStyle.Wallace, ReductionStyle.Dadda)
 
-  "UIntBoothFma" - {
+  "UIntTreeMul" - {
     styles.foreach { style =>
       s"reduction style = $style" - {
-        FmaTestUtils.widths.foreach { width =>
+        MulTestUtils.widths.foreach { width =>
           s"width = $width" in Sim(
-            new UIntBoothFma(width, style, new UIntPrefixAdd(2 * width + 1, PrefixStyle.KoggeStone)),
+            new UIntTreeMul(width, style, new UIntPrefixAdd(width * 2, PrefixStyle.KoggeStone)),
           ) { dut =>
             Test("edge vectors", dut) { dut =>
-              FmaTestUtils.checkCombinational(dut, FmaTestUtils.edgeVectors(width))
+              MulTestUtils.checkCombinational(dut, MulTestUtils.edgeVectors(width))
             }
             Test("random vectors", dut) { dut =>
-              FmaTestUtils.checkCombinational(dut, FmaTestUtils.randomVectors(width, width + 4))
+              MulTestUtils.checkCombinational(dut, MulTestUtils.randomVectors(width, width))
             }
           }
         }

@@ -1,5 +1,5 @@
 VIVADO ?= vivado
-TOP ?= UIntMacroAdder
+TOP ?= UIntMacroAdd
 
 all:
 	@rm -rf vivado report

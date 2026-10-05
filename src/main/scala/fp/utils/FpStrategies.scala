@@ -28,7 +28,7 @@ private[fp] object FpSigMulGeneric extends FpSigMul {
 private[fp] object FpSigMulArray extends FpSigMul {
   def apply(x: UInt, y: UInt): UInt = {
     val w   = math.max(x.getWidth, y.getWidth)
-    val mul = Module(new UIntArrayMultiplier(w))
+    val mul = Module(new UIntArrayMul(w))
     mul.io.src1 := x.pad(w)
     mul.io.src2 := y.pad(w)
     mul.io.output
@@ -42,10 +42,10 @@ private[fp] object FpSigMulBooth extends FpSigMul {
   def apply(x: UInt, y: UInt): UInt = {
     val w   = math.max(x.getWidth, y.getWidth)
     val mul = Module(
-      new UIntBoothMultiplier(
+      new UIntBoothMul(
         w,
         ReductionStyle.Dadda,
-        new UIntPrefixAdder(2 * w, PrefixStyle.KoggeStone),
+        new UIntPrefixAdd(2 * w, PrefixStyle.KoggeStone),
       ),
     )
     mul.io.src1 := x.pad(w)
@@ -61,10 +61,10 @@ private[fp] object FpSigMulTree extends FpSigMul {
   def apply(x: UInt, y: UInt): UInt = {
     val w   = math.max(x.getWidth, y.getWidth)
     val mul = Module(
-      new UIntTreeMultiplier(
+      new UIntTreeMul(
         w,
         ReductionStyle.Dadda,
-        new UIntPrefixAdder(2 * w, PrefixStyle.KoggeStone),
+        new UIntPrefixAdd(2 * w, PrefixStyle.KoggeStone),
       ),
     )
     mul.io.src1 := x.pad(w)
@@ -96,7 +96,7 @@ private[fp] object FpSigAddGeneric extends FpSigAdd {
   * The two's complement wide sum implemented with the given unsigned adder.
   */
 private[fp] object FpSigAddUtil {
-  def sum(adder: UIntAdder)(x: SInt, y: SInt): SInt = {
+  def sum(adder: UIntAdd)(x: SInt, y: SInt): SInt = {
     val w = x.getWidth
     // Sign extend both operands to w + 1 bits before the unsigned add, then keep the low w + 1
     // bits, which are the correct two's complement sum.
@@ -112,7 +112,7 @@ private[fp] object FpSigAddUtil {
   */
 private[fp] object FpSigAddRipple extends FpSigAdd {
   def apply(x: SInt, y: SInt): SInt =
-    FpSigAddUtil.sum(Module(new UIntRippleAdder(x.getWidth + 1)))(x, y)
+    FpSigAddUtil.sum(Module(new UIntRippleAdd(x.getWidth + 1)))(x, y)
 }
 
 /**
@@ -120,7 +120,7 @@ private[fp] object FpSigAddRipple extends FpSigAdd {
   */
 private[fp] object FpSigAddPrefix extends FpSigAdd {
   def apply(x: SInt, y: SInt): SInt =
-    FpSigAddUtil.sum(Module(new UIntPrefixAdder(x.getWidth + 1, PrefixStyle.KoggeStone)))(x, y)
+    FpSigAddUtil.sum(Module(new UIntPrefixAdd(x.getWidth + 1, PrefixStyle.KoggeStone)))(x, y)
 }
 
 /**
@@ -128,7 +128,7 @@ private[fp] object FpSigAddPrefix extends FpSigAdd {
   */
 private[fp] object FpSigAddCarrySelect extends FpSigAdd {
   def apply(x: SInt, y: SInt): SInt =
-    FpSigAddUtil.sum(Module(new UIntCarrySelectAdder(x.getWidth + 1, 4)))(x, y)
+    FpSigAddUtil.sum(Module(new UIntCarrySelectAdd(x.getWidth + 1, 4)))(x, y)
 }
 
 /**
@@ -136,5 +136,5 @@ private[fp] object FpSigAddCarrySelect extends FpSigAdd {
   */
 private[fp] object FpSigAddCarryLookahead extends FpSigAdd {
   def apply(x: SInt, y: SInt): SInt =
-    FpSigAddUtil.sum(Module(new UIntCarryLookaheadAdder(x.getWidth + 1, 4)))(x, y)
+    FpSigAddUtil.sum(Module(new UIntCarryLookaheadAdd(x.getWidth + 1, 4)))(x, y)
 }

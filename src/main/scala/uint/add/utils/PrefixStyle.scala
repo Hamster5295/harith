@@ -1,7 +1,7 @@
 package harith.uint
 
 /**
-  * The parallel prefix network styles of [[UIntPrefixAdder]].
+  * The parallel prefix network styles of [[UIntPrefixAdd]].
   *
   * They trade logic depth against area and wiring, spanning the high-performance to resource
   * constrained range of prefix adders.

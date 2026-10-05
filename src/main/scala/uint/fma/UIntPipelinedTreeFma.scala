@@ -8,7 +8,7 @@ import hammer.Export
   * A pipelined fused multiply-adder using AND partial products.
   *
   * The addend is merged into the partial product heap, the reduction levels are distributed over
-  * `stages` register layers and the two reduced rows are added by the supplied [[UIntAdder]]. The
+  * `stages` register layers and the two reduced rows are added by the supplied [[UIntAdd]]. The
   * throughput is one FMA per cycle and the latency is `stages` plus the adder latency.
   *
   * @param width          The width of the operands
@@ -22,7 +22,7 @@ import hammer.Export
 class UIntPipelinedTreeFma(
     val width:          Int,
     val reductionStyle: ReductionStyle,
-    adder:              => UIntAdder,
+    adder:              => UIntAdd,
     val stages:         Int,
 ) extends UIntFma {
   val io = IO(new UIntFmaIO(width))
@@ -32,28 +32,28 @@ class UIntPipelinedTreeFma(
   val outputWidth = 2 * width + 1
 
   var columns =
-    FmaUtils.withAddend(MultiplierUtils.andColumns(io.mul1, io.mul2, width), io.add, outputWidth)
-  val levels = MultiplierUtils.schedule(MultiplierUtils.heights(columns), reductionStyle)
-  val groups = if (stages == 0) Seq(levels) else MultiplierUtils.partition(levels, stages)
+    FmaUtils.withAddend(MulUtils.andColumns(io.mul1, io.mul2, width), io.add, outputWidth)
+  val levels = MulUtils.schedule(MulUtils.heights(columns), reductionStyle)
+  val groups = if (stages == 0) Seq(levels) else MulUtils.partition(levels, stages)
 
   for (group <- groups) {
-    for (level <- group) columns = MultiplierUtils.applyLevel(columns, level)
+    for (level <- group) columns = MulUtils.applyLevel(columns, level)
     if (stages > 0) columns = columns.map(_.map(bit => RegNext(bit)))
   }
 
-  val (lower, upper) = MultiplierUtils.toRows(columns)
+  val (lower, upper) = MulUtils.toRows(columns)
 
-  val finalAdder = Module(adder)
+  val finalAdd = Module(adder)
   require(
-    finalAdder.io.src1.getWidth == outputWidth,
+    finalAdd.io.src1.getWidth == outputWidth,
     "the final adder must be 2 * width + 1 bits wide",
   )
-  finalAdder.io.src1  := lower
-  finalAdder.io.src2  := upper
-  finalAdder.io.carry := false.B
-  io.output           := finalAdder.io.output(2 * width, 0)
+  finalAdd.io.src1  := lower
+  finalAdd.io.src2  := upper
+  finalAdd.io.carry := false.B
+  io.output         := finalAdd.io.output(2 * width, 0)
 
-  override def latency: Int = stages + finalAdder.latency
+  override def latency: Int = stages + finalAdd.latency
 }
 
 object UIntPipelinedTreeFma extends App {
@@ -61,7 +61,7 @@ object UIntPipelinedTreeFma extends App {
     new UIntPipelinedTreeFma(
       32,
       ReductionStyle.Dadda,
-      new UIntPrefixAdder(65, PrefixStyle.KoggeStone),
+      new UIntPrefixAdd(65, PrefixStyle.KoggeStone),
       2,
     ),
     args,

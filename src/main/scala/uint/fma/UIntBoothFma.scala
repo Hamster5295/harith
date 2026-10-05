@@ -17,28 +17,28 @@ import hammer.Export
   * delay = 13.533, area = 2642 @32bit@fpga
   * delay = 5.5765, area = 18796.68 @32bit@55nm
   */
-class UIntBoothFma(val width: Int, val reductionStyle: ReductionStyle, adder: => UIntAdder)
+class UIntBoothFma(val width: Int, val reductionStyle: ReductionStyle, adder: => UIntAdd)
     extends UIntFma {
   val io = IO(new UIntFmaIO(width))
   require(width > 0, "width must be positive")
 
   val outputWidth = 2 * width + 1
 
-  val partial        = MultiplierUtils.boothColumns(io.mul1, io.mul2, width, extraColumns = 1)
+  val partial        = MulUtils.boothColumns(io.mul1, io.mul2, width, extraColumns = 1)
   val columns        = FmaUtils.withAddend(partial, io.add, outputWidth)
-  val (lower, upper) = MultiplierUtils.toRows(MultiplierUtils.reduce(columns, reductionStyle))
+  val (lower, upper) = MulUtils.toRows(MulUtils.reduce(columns, reductionStyle))
 
-  val finalAdder = Module(adder)
+  val finalAdd = Module(adder)
   require(
-    finalAdder.io.src1.getWidth == outputWidth,
+    finalAdd.io.src1.getWidth == outputWidth,
     "the final adder must be 2 * width + 1 bits wide",
   )
-  finalAdder.io.src1  := lower
-  finalAdder.io.src2  := upper
-  finalAdder.io.carry := false.B
-  io.output           := finalAdder.io.output(2 * width, 0)
+  finalAdd.io.src1  := lower
+  finalAdd.io.src2  := upper
+  finalAdd.io.carry := false.B
+  io.output         := finalAdd.io.output(2 * width, 0)
 
-  override def latency: Int = finalAdder.latency
+  override def latency: Int = finalAdd.latency
 }
 
 object UIntBoothFma extends App {
@@ -46,7 +46,7 @@ object UIntBoothFma extends App {
     new UIntBoothFma(
       32,
       ReductionStyle.Dadda,
-      new UIntPrefixAdder(65, PrefixStyle.KoggeStone),
+      new UIntPrefixAdd(65, PrefixStyle.KoggeStone),
     ),
     args,
     Array(

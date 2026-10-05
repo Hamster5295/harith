@@ -4,7 +4,7 @@ import chisel3._
 import chisel3.util._
 
 /**
-  * Builds parallel prefix networks shared by [[UIntPrefixAdder]] and [[UIntCarryLookaheadAdder]].
+  * Builds parallel prefix networks shared by [[UIntPrefixAdd]] and [[UIntCarryLookaheadAdd]].
   *
   * A network is expressed as a sequence of levels, each level being a sequence of
   * `(target, source)` index pairs. All pairs of a level read the state produced by the previous
