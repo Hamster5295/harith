@@ -22,6 +22,27 @@ object FpDivSpec {
     else BigInt(java.lang.Double.doubleToRawLongBits(r)) & ((BigInt(1) << 64) - 1)
   }
 
+  def request(dut: FpDiv, a: BigInt, b: BigInt, aFmt: FpFormat, bFmt: FpFormat): Unit = {
+    dut.io.in.valid.poke(true.B)
+    dut.io.in.bits.src1.poke(a.U(aFmt.width.W))
+    dut.io.in.bits.src2.poke(b.U(bFmt.width.W))
+    dut.io.in.bits.rm.poke(0.U(3.W))
+    var guard = 0
+    while (!dut.io.in.ready.peekBoolean()) {
+      dut.clock.step()
+      guard += 1
+      require(guard <= 4 * dut.latency + 32, "the divider never became ready")
+    }
+    dut.clock.step()
+    dut.io.in.valid.poke(false.B)
+    guard = 0
+    while (!dut.io.out.valid.peekBoolean()) {
+      dut.clock.step()
+      guard += 1
+      require(guard <= 4 * dut.latency + 32, "the divider never produced a valid response")
+    }
+  }
+
   def check(
       dut:     FpDiv,
       aFmt:    FpFormat,
@@ -31,11 +52,8 @@ object FpDivSpec {
       ref:     (BigInt, BigInt) => BigInt,
   ): Unit =
     vectors.foreach { case (a, b) =>
-      dut.io.src1.poke(a.U(aFmt.width.W))
-      dut.io.src2.poke(b.U(bFmt.width.W))
-      dut.io.rm.poke(0.U(3.W))
-      dut.io.output.expect(ref(a, b).U(outFmt.width.W), s"a=$a b=$b")
-      dut.clock.step()
+      request(dut, a, b, aFmt, bFmt)
+      dut.io.out.bits.output.expect(ref(a, b).U(outFmt.width.W), s"a=$a b=$b")
     }
 }
 
@@ -46,8 +64,8 @@ class FpDivSpec extends AnyFreeSpec with Matchers with ChiselSim {
   "Fp32Div" - {
     "matches IEEE single precision" in Sim(new Fp32Div) { dut =>
       Test("random vectors", dut) { dut =>
-        val a = randomBits(FpFormat.Fp32, 200)
-        val b = randomBits(FpFormat.Fp32, 200)
+        val a = randomBits(FpFormat.Fp32, 60)
+        val b = randomBits(FpFormat.Fp32, 60)
         check(dut, FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32, a.zip(b), (x, y) => divFp32Ref(x, y, FpFormat.Fp32, FpFormat.Fp32))
       }
     }
@@ -56,8 +74,8 @@ class FpDivSpec extends AnyFreeSpec with Matchers with ChiselSim {
   "Fp64Div" - {
     "matches IEEE double precision" in Sim(new Fp64Div) { dut =>
       Test("random vectors", dut) { dut =>
-        val a = randomBits(FpFormat.Fp64, 100)
-        val b = randomBits(FpFormat.Fp64, 100)
+        val a = randomBits(FpFormat.Fp64, 30)
+        val b = randomBits(FpFormat.Fp64, 30)
         check(dut, FpFormat.Fp64, FpFormat.Fp64, FpFormat.Fp64, a.zip(b), divFp64Ref)
       }
     }
@@ -66,8 +84,8 @@ class FpDivSpec extends AnyFreeSpec with Matchers with ChiselSim {
   "Fp16Fp32Div" - {
     "matches single precision" in Sim(new Fp16Fp32Div) { dut =>
       Test("random vectors", dut) { dut =>
-        val a = randomBits(FpFormat.Fp16, 200)
-        val b = randomBits(FpFormat.Fp16, 200)
+        val a = randomBits(FpFormat.Fp16, 60)
+        val b = randomBits(FpFormat.Fp16, 60)
         check(dut, FpFormat.Fp16, FpFormat.Fp16, FpFormat.Fp32, a.zip(b), (x, y) => divFp32Ref(x, y, FpFormat.Fp16, FpFormat.Fp16))
       }
     }

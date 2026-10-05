@@ -196,6 +196,17 @@ private[fp] object FpUtils {
     Packed(Mux(flush, out.zero(sign), bits), inexact, uf, ovf)
   }
 
+  /**
+    * Register `x` through `stages` cycles, preserving its type. A non-positive stage count returns
+    * `x` unchanged.
+    *
+    * @param x      The value to delay
+    * @param stages The number of register layers
+    * @return the delayed value
+    */
+  def pipe[T <: Data](x: T, stages: Int): T =
+    if (stages <= 0) x else pipe(RegNext(x), stages - 1)
+
   /** The index of the most significant set bit of `value`. */
   def msbIndex(value: UInt): UInt =
     (value.getWidth - 1).U - PriorityEncoder(Reverse(value))
