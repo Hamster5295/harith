@@ -12,6 +12,9 @@ import hammer.Export
   * smallest divider at the cost of one cycle per operand bit.
   *
   * @param width The width of the operands
+  *
+  * delay = 2.678, area = 121 @32bit@32cycles@fpga
+  * delay = 7.0425, area = 2605.68 @32bit@32cycles@55nm
   */
 class UIntRestoringDivider(val width: Int) extends UIntDivider {
   val io = IO(new UIntDividerIO(width))

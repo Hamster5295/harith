@@ -14,6 +14,9 @@ import hammer.Export
   * This halves the number of iterations of a radix-2 divider.
   *
   * @param width The width of the operands
+  *
+  * delay = 4.338, area = 328 @32bit@16cycles@fpga
+  * delay = 6.2867, area = 3836.00 @32bit@16cycles@55nm
   */
 class UIntSrt4Divider(val width: Int) extends UIntDivider {
   val io = IO(new UIntDividerIO(width))

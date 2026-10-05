@@ -13,6 +13,9 @@ import hammer.Export
   *
   * @param width  The width of the operands
   * @param stages The number of pipeline register layers
+  *
+  * delay = 7.545, area = 2124 @32bit@2cycles@fpga
+  * delay = 2.7713, area = 18377.24 @32bit@2cycles@55nm
   */
 class UIntPipelinedArrayMultiplier(val width: Int, val stages: Int) extends Module
     with UIntMultiplier {

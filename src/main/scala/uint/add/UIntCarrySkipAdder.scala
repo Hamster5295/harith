@@ -12,6 +12,9 @@ import hammer.Export
   *
   * @param width     The width of the operands
   * @param blockSize The number of bits per skip block
+  *
+  * delay = 9.150, area = 57 @32bit@fpga
+  * delay = 2.8118, area = 306.04 @32bit@55nm
   */
 class UIntCarrySkipAdder(val width: Int, val blockSize: Int) extends UIntAdder {
   val io = IO(new UIntAdderIO(width))

@@ -12,6 +12,9 @@ import hammer.Export
   *
   * @param width The width of the operands
   * @param style The parallel prefix network style
+  *
+  * delay = 6.814, area = 162 @32bit@fpga
+  * delay = 1.6987, area = 919.24 @32bit@55nm
   */
 class UIntPrefixAdder(val width: Int, val style: PrefixStyle) extends UIntAdder {
   val io = IO(new UIntAdderIO(width))

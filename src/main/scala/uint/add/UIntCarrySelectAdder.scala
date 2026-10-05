@@ -13,6 +13,9 @@ import hammer.Export
   *
   * @param width     The width of the operands
   * @param blockSize The number of bits per select block
+  *
+  * delay = 6.506, area = 70 @32bit@fpga
+  * delay = 3.3749, area = 404.60 @32bit@55nm
   */
 class UIntCarrySelectAdder(val width: Int, val blockSize: Int) extends UIntAdder {
   val io = IO(new UIntAdderIO(width))

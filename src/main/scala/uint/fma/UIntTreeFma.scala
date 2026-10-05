@@ -13,6 +13,9 @@ import hammer.Export
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
   * @param adder          The final carry propagate adder, which must be `2 * width + 1` bits wide
+  *
+  * delay = 13.250, area = 1704 @32bit@fpga
+  * delay = 5.3544, area = 11301.36 @32bit@55nm
   */
 class UIntTreeFma(val width: Int, val reductionStyle: ReductionStyle, adder: => UIntAdder)
     extends UIntFma {

@@ -14,6 +14,9 @@ import hammer.Export
   *
   * @param width     The width of the operands
   * @param groupSize The number of bits per lookahead group
+  *
+  * delay = 6.681, area = 70 @32bit@fpga
+  * delay = 1.8824, area = 517.16 @32bit@55nm
   */
 class UIntCarryLookaheadAdder(val width: Int, val groupSize: Int) extends UIntAdder {
   val io = IO(new UIntAdderIO(width))

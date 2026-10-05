@@ -11,6 +11,9 @@ import hammer.Export
   * path. On FPGAs the inferred [[UIntMacroAdder]] is usually preferable.
   *
   * @param width The width of the operands
+  *
+  * delay = 9.168, area = 56 @32bit@fpga
+  * delay = 2.8152, area = 300.44 @32bit@55nm
   */
 class UIntRippleAdder(val width: Int) extends UIntAdder {
   val io = IO(new UIntAdderIO(width))

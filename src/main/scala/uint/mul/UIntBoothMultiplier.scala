@@ -14,6 +14,9 @@ import hammer.Export
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
   * @param adder          The final carry propagate adder, which must be `2 * width` bits wide
+  *
+  * delay = 13.036, area = 2269 @32bit@fpga
+  * delay = 5.5814, area = 15956.08 @32bit@55nm
   */
 class UIntBoothMultiplier(
     val width:          Int,
