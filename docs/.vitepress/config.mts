@@ -184,7 +184,7 @@ export default defineConfig({
           tipLabel: '提示',
           warningLabel: '警告',
           dangerLabel: '危险',
-          infoLabel: '来源',
+          infoLabel: '信息',
           detailsLabel: '详细信息',
         },
         codeCopyButton: {
