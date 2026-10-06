@@ -12,7 +12,7 @@ import harith.ExportForAnalysis
   * extra fractional bits and a sticky from the nonzero remainder, so the final rounding is exact.
   * NaN is canonical, per RISC-V.
   *
-  * fpga@fp32-50cyc: delay[i/o/max] = 5.535ns/1.414ns/16.417ns  area = 1263luts + 323ff
+  * fpga@fp32-50cyc: delay[i/o/max] = 5.535ns/1.414ns/18.934ns  area = 1232luts + 184ff
   *
   * 55nm@fp32-50cyc: delay[i/o/max] = 2.3681ns/0.8798ns/6.5751ns  area = 5540.08um²
   *
@@ -150,7 +150,7 @@ object FpRestoringDiv extends App {
 /**
   * A float32 restoring divider.
   *
-  * fpga@fp32-50cyc: delay[i/o/max] = 5.535ns/1.414ns/16.417ns  area = 1263luts + 323ff
+  * fpga@fp32-50cyc: delay[i/o/max] = 5.535ns/1.414ns/18.934ns  area = 1232luts + 184ff
   *
   * 55nm@fp32-50cyc: delay[i/o/max] = 2.3681ns/0.8798ns/6.5751ns  area = 5540.08um²
   *
@@ -160,7 +160,7 @@ class Fp32Div extends FpRestoringDiv(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32
 /**
   * A float64 restoring divider.
   *
-  * fpga@fp64-108cyc: delay[i/o/max] = 5.568ns/1.439ns/19.098ns  area = 2933luts + 715ff
+  * fpga@fp64-108cyc: delay[i/o/max] = 5.568ns/1.439ns/22.187ns  area = 2846luts + 365ff
   *
   * 55nm@fp64-108cyc: delay[i/o/max] = 3.4405ns/0.8743ns/10.1610ns  area = 11796.96um²
   *
@@ -170,7 +170,7 @@ class Fp64Div extends FpRestoringDiv(FpFormat.Fp64, FpFormat.Fp64, FpFormat.Fp64
 /**
   * A float16 by float16 to float32 restoring divider.
   *
-  * fpga@fp16-50cyc: delay[i/o/max] = 4.290ns/1.412ns/16.285ns  area = 1157luts + 269ff
+  * fpga@fp16-50cyc: delay[i/o/max] = 4.290ns/1.412ns/18.582ns  area = 1120luts + 156ff
   *
   * 55nm@fp16-50cyc: delay[i/o/max] = 2.2888ns/0.8798ns/7.5169ns  area = 5359.48um²
   *
@@ -180,7 +180,7 @@ class Fp16Fp32Div extends FpRestoringDiv(FpFormat.Fp16, FpFormat.Fp16, FpFormat.
 /**
   * A bfloat16 by bfloat16 to float32 restoring divider.
   *
-  * fpga@bf16-50cyc: delay[i/o/max] = 4.199ns/1.517ns/16.734ns  area = 1140luts + 257ff
+  * fpga@bf16-50cyc: delay[i/o/max] = 4.199ns/1.517ns/19.233ns  area = 1097luts + 152ff
   *
   * 55nm@bf16-50cyc: delay[i/o/max] = 1.9848ns/0.8798ns/7.0820ns  area = 4786.60um²
   *
