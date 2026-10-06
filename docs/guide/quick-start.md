@@ -1,21 +1,11 @@
 # Quick Start
 
-## Prerequisites
+This page will guide you through the usage and development of Harith.
 
-- **JDK 21** and the bundled `mill` launcher (no separate install needed).
-- Optional, for PPA analysis: **Vivado** (FPGA) and **OpenSTA** plus the icsprout55 PDK (ASIC).
 
-Clone the repository and run the test suite:
+## Usage
 
-```shell
-git clone https://codeberg.org/hamster5295/harith
-cd harith
-make test-all
-```
-
-## Use harith in your design
-
-harith is published to Maven Central under `io.github.hamster5295`. Add it to your `build.mill`
+Harith is published to Maven Central under `io.github.hamster5295`. Add it to your `build.mill`
 alongside Chisel:
 
 ```scala
@@ -25,31 +15,41 @@ override def mvnDeps = Seq(
 )
 ```
 
-During local development you can publish the current checkout into a local Maven repository:
+After `mill` resolves, you're able to use every Harith module in your design.  
+
+For `mill 1.x` below or `sbt` users, change the dependency line accordingly.
+
+
+## Development
+
+For development and contribution, follow the steps below: 
+
+### Prerequisites
+
+- **JDK 21** and the bundled `mill` launcher (no separate install needed).
+- Optional: **Vivado** (FPGA) and **OpenSTA** plus the `icsprout55` PDK (ASIC).
+
+::: info
+The `icsprout55` is way too large and as a result not bundled as a git submodule.  
+
+You can get it from https://github.com/openecos-projects/icsprout55-pdk
+:::
+
+
+### Testing
+
+Clone the repository and run the test suite:
 
 ```shell
-make lib            # publishes to ./.deps
+git clone https://codeberg.org/hamster5295/harith
+cd harith
+make test-all
 ```
 
-Then instantiate a datapath and drive its bundle:
+This will run test suite for every calculation module.
 
-```scala
-import chisel3._
-import harith.fp._
 
-class Top extends Module {
-  val io = IO(new FpAddIO(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32))
-
-  val add = Module(new FpRippleAdd(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32))
-  add.io <> io
-}
-```
-
-Swapping `FpRippleAdd` for `FpPrefixAdd`, `FpCarryLookaheadAdd`, `FpCarrySelectAdd` or
-`FpMacroAdd` changes only the datapath, not the interface. The same holds for every `uint`
-operation.
-
-## Standalone analysis
+### Standalone analysis
 
 Every module ships with a standalone entry point (`object ... extends App`) that emits a
 SystemVerilog wrapper with all outputs registered for analysis. Run the FPGA or ASIC flow for a
@@ -65,7 +65,7 @@ The floating-point modules expose one entry point per format — e.g. `FpRippleA
 `FpRippleAddFp32`, `FpRippleAddFp16` and `FpRippleAddBf16` — while the integer modules expose a
 single entry point each.
 
-## Repository commands
+### Repository commands
 
 | Command | Description |
 | --- | --- |

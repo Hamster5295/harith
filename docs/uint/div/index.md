@@ -1,10 +1,10 @@
-# UInt · Div
+# UIntDiv
 
 4 modules.
 
 ## Comparison
 
-Representative condition per module · `FPGA` = Vivado `xc7a200t`, `55 nm` = icsprout55.
+Representative condition per module.
 
 | Module | Condition | Max · FPGA | Area · FPGA | Max · 55 nm | Area · 55 nm |
 | --- | --- | --- | --- | --- | --- |
