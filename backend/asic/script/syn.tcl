@@ -38,19 +38,138 @@ set LIBS [concat {*}[lmap lib $LIB_FILES {concat "-liberty" $lib}]]
 set EXCLUDE_CELLS [concat {*}[lmap cell $DONT_USE_CELLS {concat "-dont_use" $cell}]]
 
 #===========================================================
-#   ABC constraints
+#   set parameter for ABC
 #===========================================================
+
+set SYNTH_STRATEGY "DELAY 4"
+
+set buffering 1
+set sizing 1
 
 set driver $BUF_CELL
 # unit: pF
 set cap_load 1.6
 
-# Create the ABC timing constraint file (driving cell and output load)
+# input pin cap of BUF
+set max_FO 24
+set max_TR 0
+
+#===========================================================
+#   scripts for ABC
+#===========================================================
+
+# Create SDC File
 set sdc_file $RESULT_DIR/abc.sdc
 set outfile [open ${sdc_file} w]
 puts $outfile "set_driving_cell ${driver}"
 puts $outfile "set_load ${cap_load}"
 close $outfile
+
+# Assemble Scripts (By Strategy)
+set abc_rs_K    "resub,-K,"
+set abc_rs      "resub"
+set abc_rsz     "resub,-z"
+set abc_rw_K    "rewrite,-K,"
+set abc_rw      "rewrite"
+set abc_rwz     "rewrite,-z"
+set abc_rf      "refactor"
+set abc_rfz     "refactor,-z"
+set abc_b       "balance"
+
+set abc_resyn2        "${abc_b}; ${abc_rw}; ${abc_rf}; ${abc_b}; ${abc_rw}; ${abc_rwz}; ${abc_b}; ${abc_rfz}; ${abc_rwz}; ${abc_b}"
+set abc_share         "strash; multi,-m; ${abc_resyn2}"
+set abc_resyn2a       "${abc_b};${abc_rw};${abc_b};${abc_rw};${abc_rwz};${abc_b};${abc_rwz};${abc_b}"
+set abc_resyn3        "balance;resub;resub,-K,6;balance;resub,-z;resub,-z,-K,6;balance;resub,-z,-K,5;balance"
+set abc_resyn2rs      "${abc_b};${abc_rs_K},6;${abc_rw};${abc_rs_K},6,-N,2;${abc_rf};${abc_rs_K},8;${abc_rw};${abc_rs_K},10;${abc_rwz};${abc_rs_K},10,-N,2;${abc_b},${abc_rs_K},12;${abc_rfz};${abc_rs_K},12,-N,2;${abc_rwz};${abc_b}"
+
+set abc_choice        "fraig_store; ${abc_resyn2}; fraig_store; ${abc_resyn2}; fraig_store; fraig_restore"
+set abc_choice2       "fraig_store; balance; fraig_store; ${abc_resyn2}; fraig_store; ${abc_resyn2}; fraig_store; ${abc_resyn2}; fraig_store; fraig_restore"
+
+set abc_map_old_cnt			"map,-p,-a,-B,0.2,-A,0.9,-M,0"
+set abc_map_old_dly     "map,-p,-B,0.2,-A,0.9,-M,0"
+set abc_retime_area     "retime,-D,{D},-M,5"
+set abc_retime_dly      "retime,-D,{D},-M,6"
+set abc_map_new_area    "amap,-m,-Q,0.1,-F,20,-A,20,-C,5000"
+
+set abc_area_recovery_1 "${abc_choice}; map;"
+set abc_area_recovery_2 "${abc_choice2}; map;"
+
+set map_old_cnt			    "map,-p,-a,-B,0.2,-A,0.9,-M,0"
+set map_old_dly			    "map,-p,-B,0.2,-A,0.9,-M,0"
+set abc_retime_area   	"retime,-D,{D},-M,5"
+set abc_retime_dly    	"retime,-D,{D},-M,6"
+set abc_map_new_area  	"amap,-m,-Q,0.1,-F,20,-A,20,-C,5000"
+
+if {$buffering==1} {
+  set max_tr_arg ""
+  if { $max_TR != 0 } {
+    set max_tr_arg ",-S,${max_TR}"
+  }
+  set abc_fine_tune		"buffer,-N,${max_FO}${max_tr_arg};upsize,{D};dnsize,{D}"
+} elseif {$sizing} {
+  set abc_fine_tune   "upsize,{D};dnsize,{D}"
+} else {
+  set abc_fine_tune   ""
+}
+
+set delay_scripts [list \
+  "+fx;mfs;strash;refactor;${abc_resyn2};${abc_retime_dly}; scleanup;${abc_map_old_dly};retime,-D,{D};&get,-n;&st;&dch;&nf;&put;${abc_fine_tune};stime,-p;print_stats -m" \
+  \
+  "+fx;mfs;strash;refactor;${abc_resyn2};${abc_retime_dly}; scleanup;${abc_choice2};${abc_map_old_dly};${abc_area_recovery_2}; retime,-D,{D};&get,-n;&st;&dch;&nf;&put;${abc_fine_tune};stime,-p;print_stats -m" \
+  \
+  "+fx;mfs;strash;refactor;${abc_resyn2};${abc_retime_dly}; scleanup;${abc_choice};${abc_map_old_dly};${abc_area_recovery_1}; retime,-D,{D};&get,-n;&st;&dch;&nf;&put;${abc_fine_tune};stime,-p;print_stats -m" \
+  \
+  "+fx;mfs;strash;refactor;${abc_resyn2};${abc_retime_area};scleanup;${abc_choice2};${abc_map_new_area};${abc_choice2};${abc_map_old_dly};retime,-D,{D};&get,-n;&st;&dch;&nf;&put;${abc_fine_tune};stime,-p;print_stats -m" \
+  "+&get -n;&st;&dch;&nf;&put;&get -n;&st;&syn2;&if -g -K 6;&synch2;&nf;&put;&get -n;&st;&syn2;&if -g -K 6;&synch2;&nf;&put;&get -n;&st;&syn2;&if -g -K 6;&synch2;&nf;&put;&get -n;&st;&syn2;&if -g -K 6;&synch2;&nf;&put;&get -n;&st;&syn2;&if -g -K 6;&synch2;&nf;&put;buffer -c -N ${max_FO};topo;stime -c;upsize -c;dnsize -c;;stime,-p;print_stats -m" \
+  ]
+
+set area_scripts [list \
+  "+fx;mfs;strash;refactor;${abc_resyn2};${abc_retime_area};scleanup;${abc_choice2};${abc_map_new_area};retime,-D,{D};&get,-n;&st;&dch;&nf;&put;${abc_fine_tune};stime,-p;print_stats -m" \
+  \
+  "+fx;mfs;strash;refactor;${abc_resyn2};${abc_retime_area};scleanup;${abc_choice2};${abc_map_new_area};${abc_choice2};${abc_map_new_area};retime,-D,{D};&get,-n;&st;&dch;&nf;&put;${abc_fine_tune};stime,-p;print_stats -m" \
+  \
+  "+fx;mfs;strash;refactor;${abc_choice2};${abc_retime_area};scleanup;${abc_choice2};${abc_map_new_area};${abc_choice2};${abc_map_new_area};retime,-D,{D};&get,-n;&st;&dch;&nf;&put;${abc_fine_tune};stime,-p;print_stats -m" \
+  "+strash;dch;map -B 0.9;topo;stime -c;buffer -c -N ${max_FO};upsize -c;dnsize -c;stime,-p;print_stats -m" \
+  ]
+
+set strategy_parts [split $SYNTH_STRATEGY]
+
+proc synth_strategy_format_err { } {
+  upvar area_scripts area_scripts
+  upvar delay_scripts delay_scripts
+  log -stderr "\[ERROR] Misformatted SYNTH_STRATEGY (\"$SYNTH_STRATEGY\")."
+  log -stderr "\[ERROR] Correct format is \"DELAY|AREA 0-[expr [llength $delay_scripts]-1]|0-[expr [llength $area_scripts]-1]\"."
+  exit 1
+}
+
+if { [llength $strategy_parts] != 2 } {
+  synth_strategy_format_err
+}
+
+set strategy_type [lindex $strategy_parts 0]
+set strategy_type_idx [lindex $strategy_parts 1]
+
+if { $strategy_type != "AREA" && $strategy_type != "DELAY" } {
+  log -stderr "\[ERROR] AREA|DELAY tokens not found. ($strategy_type)"
+  synth_strategy_format_err
+}
+
+if { $strategy_type == "DELAY" && $strategy_type_idx >= [llength $delay_scripts] } {
+  log -stderr "\[ERROR] strategy index ($strategy_type_idx) is too high."
+  synth_strategy_format_err
+}
+
+if { $strategy_type == "AREA" && $strategy_type_idx >= [llength $area_scripts] } {
+  log -stderr "\[ERROR] strategy index ($strategy_type_idx) is too high."
+  synth_strategy_format_err
+}
+
+set strategy_name "$strategy_type-$strategy_type_idx"
+if { $strategy_type == "DELAY" } {
+  set strategy_script [lindex $delay_scripts $strategy_type_idx]
+} else {
+  set strategy_script [lindex $area_scripts $strategy_type_idx]
+}
 
 #===========================================================
 #   main running
@@ -93,35 +212,29 @@ autoname t:*DFF* %n
 # technology mapping for clockgate
 clockgate {*}$LIBS {*}$EXCLUDE_CELLS
 
-# Cell mapping.
-# Retiming is enabled by default: the flip-flops are mapped to generic cells
-# with `simplemap`, handed to ABC via `-dff` (so ABC actually sees the latches)
-# and moved by ABC's `retime` command towards the target period. Set
-# ABC_RETIME=0 to fall back to `dfflibmap` + plain mapping without retiming.
-# ABC_RETIME_SCRIPT can override the ABC retiming/mapping script.
-set ABC_RETIME 1
-if {[info exists env(ABC_RETIME)]} {
-  set ABC_RETIME $::env(ABC_RETIME)
-}
-log "\[INFO\]: ABC retiming = $ABC_RETIME"
+# technology mapping for flip-flops
+dfflibmap {*}$LIBS {*}$EXCLUDE_CELLS
 
-if {$ABC_RETIME} {
-  set abc_retime_script "+strash; retime -M 4 {D}; strash; dch; map"
-  if {[info exists env(ABC_RETIME_SCRIPT)]} {
-    set abc_retime_script $::env(ABC_RETIME_SCRIPT)
-  }
-  simplemap
-  opt -undriven -purge
-  abc -dff -D "$CLK_PERIOD_PS" \
+# optimize the design
+opt -undriven -purge
+
+log "\[INFO\]: USING STRATEGY $strategy_name"
+
+# technology mapping for cells.
+# The lightweight mapping is used by default: the aggressive resynthesis
+# strategy above is far too slow on the large flat reductions of the tree
+# multipliers. Set ABC_SCRIPT=1 to opt into the aggressive strategy.
+set ABC_SCRIPT 0
+if {[info exists env(ABC_SCRIPT)]} {
+  set ABC_SCRIPT $::env(ABC_SCRIPT)
+}
+if {$ABC_SCRIPT} {
+  abc -D "$CLK_PERIOD_PS" \
     -constr "$sdc_file" \
     {*}$LIBS {*}$EXCLUDE_CELLS \
-    -script "$abc_retime_script" \
+    -script "$strategy_script" \
     -showtmp
-  dfflibmap {*}$LIBS {*}$EXCLUDE_CELLS
-  opt -undriven -purge
 } else {
-  dfflibmap {*}$LIBS {*}$EXCLUDE_CELLS
-  opt -undriven -purge
   abc {*}$LIBS {*}$EXCLUDE_CELLS -script "+strash; dch; map"
 }
 

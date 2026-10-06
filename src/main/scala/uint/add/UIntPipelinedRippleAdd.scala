@@ -13,7 +13,7 @@ import harith.ExportForAnalysis
   *
   * fpga@32bit-8cyc: delay[i/o/max] = 2.115ns/0.912ns/1.791ns  area = 88luts + 156ff
   *
-  * 55nm@32bit-8cyc: delay[i/o/max] = 0.2891ns/0.3935ns/0.2891ns  area = 3029.60um²
+  * 55nm@32bit-8cyc: delay[i/o/max] = 0.2891ns/0.3929ns/0.2891ns  area = 2615.76um²
   *
   * @param width     The width of the operands
   * @param blockSize The number of bits per pipeline stage

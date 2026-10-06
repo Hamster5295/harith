@@ -14,7 +14,7 @@ import harith.ExportForAnalysis
   *
   * fpga@32bit: delay[i/o/max] = 12.913ns/13.485ns/12.913ns  area = 1990luts + 0ff
   *
-  * 55nm@32bit: delay[i/o/max] = 5.5256ns/5.5256ns/4.7382ns  area = 11907.00um²
+  * 55nm@32bit: delay[i/o/max] = 5.3590ns/5.3590ns/5.3590ns  area = 11958.24um²
   *
   * @param width The width of the operands
   * @param mul   The multiplier, whose output must be `2 * width` bits wide
