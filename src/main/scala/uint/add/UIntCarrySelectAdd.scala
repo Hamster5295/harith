@@ -13,7 +13,7 @@ import harith.ExportForAnalysis
   *
   * fpga@32bit: delay[i/o/max] = 4.104ns/4.676ns/4.104ns  area = 57luts + 0ff
   *
-  * 55nm@32bit: delay[i/o/max] = 2.8304ns/2.8304ns/2.8304ns  area = 416.64um²
+  * 55nm@32bit: delay[i/o/max] = 3.2030ns/3.2030ns/2.4535ns  area = 485.80um²
   *
   * @param width     The width of the operands
   * @param blockSize The number of bits per select block

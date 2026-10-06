@@ -11,7 +11,7 @@ import harith.ExportForAnalysis
   *
   * fpga@32bit: delay[i/o/max] = 2.726ns/3.298ns/2.726ns  area = 32luts + 0ff
   *
-  * 55nm@32bit: delay[i/o/max] = 1.4861ns/1.4861ns/1.4861ns  area = 378.28um²
+  * 55nm@32bit: delay[i/o/max] = 1.5796ns/1.5796ns/0.7832ns  area = 466.76um²
   *
   * @param width The width of the operands
   */

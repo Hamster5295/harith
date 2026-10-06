@@ -12,7 +12,7 @@ import harith.ExportForAnalysis
   *
   * fpga@32bit: delay[i/o/max] = 6.359ns/6.931ns/6.359ns  area = 55luts + 0ff
   *
-  * 55nm@32bit: delay[i/o/max] = 2.6155ns/2.6155ns/2.6155ns  area = 308.00um²
+  * 55nm@32bit: delay[i/o/max] = 2.6913ns/2.6913ns/2.2349ns  area = 389.48um²
   *
   * @param width     The width of the operands
   * @param blockSize The number of bits per skip block
