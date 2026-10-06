@@ -10,10 +10,22 @@ The reduction levels are distributed over `stages` register layers and the two r
 
 ## Parameters
 
-- **`width`** — The width of the operands
-- **`reductionStyle`** — The reduction style of the partial product tree
-- **`adder`** — The final carry propagate adder, which must be `2 * width` bits wide
-- **`stages`** — The number of pipeline register layers in the reduction tree
+| Name | Type | Description |
+| --- | --- | --- |
+| `width` | `Int` | The width of the operands |
+| `reductionStyle` | `ReductionStyle` | The reduction style of the partial product tree |
+| `adder` | `=> UIntAdd` | The final carry propagate adder, which must be `2 * width` bits wide |
+| `stages` | `Int` | The number of pipeline register layers in the reduction tree |
+
+**Delay** = `stages + adder.latency` cycles
+
+## IO
+
+| Name | Direction | Type | Description |
+| --- | --- | --- | --- |
+| `src1` | Input | `UInt(width.W)` | First operand |
+| `src2` | Input | `UInt(width.W)` | Second operand |
+| `output` | Output | `UInt((2 * width).W)` | Product `src1 * src2` |
 
 ## PPA
 

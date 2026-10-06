@@ -10,8 +10,20 @@ The partial product rows are distributed over `stages` register layers. The thro
 
 ## Parameters
 
-- **`width`** — The width of the operands
-- **`stages`** — The number of pipeline register layers
+| Name | Type | Description |
+| --- | --- | --- |
+| `width` | `Int` | The width of the operands |
+| `stages` | `Int` | The number of pipeline register layers |
+
+**Delay** = `stages` cycles
+
+## IO
+
+| Name | Direction | Type | Description |
+| --- | --- | --- | --- |
+| `src1` | Input | `UInt(width.W)` | First operand |
+| `src2` | Input | `UInt(width.W)` | Second operand |
+| `output` | Output | `UInt((2 * width).W)` | Product `src1 * src2` |
 
 ## PPA
 

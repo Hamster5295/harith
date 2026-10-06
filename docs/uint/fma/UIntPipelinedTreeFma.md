@@ -10,10 +10,23 @@ The addend is merged into the partial product heap, the reduction levels are dis
 
 ## Parameters
 
-- **`width`** — The width of the operands
-- **`reductionStyle`** — The reduction style of the partial product tree
-- **`adder`** — The final carry propagate adder, which must be `2 * width + 1` bits wide
-- **`stages`** — The number of pipeline register layers in the reduction tree
+| Name | Type | Description |
+| --- | --- | --- |
+| `width` | `Int` | The width of the operands |
+| `reductionStyle` | `ReductionStyle` | The reduction style of the partial product tree |
+| `adder` | `=> UIntAdd` | The final carry propagate adder, which must be `2 * width + 1` bits wide |
+| `stages` | `Int` | The number of pipeline register layers in the reduction tree |
+
+**Delay** = `stages + adder.latency` cycles
+
+## IO
+
+| Name | Direction | Type | Description |
+| --- | --- | --- | --- |
+| `mul1` | Input | `UInt(width.W)` | Multiplicand |
+| `mul2` | Input | `UInt(width.W)` | Multiplier |
+| `add` | Input | `UInt((2 * width).W)` | Addend |
+| `output` | Output | `UInt((2 * width + 1).W)` | Result `mul1 * mul2 + add` |
 
 ## PPA
 

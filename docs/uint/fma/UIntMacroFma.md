@@ -10,7 +10,20 @@ The whole expression is left to the synthesis tool, which on FPGA will likely ma
 
 ## Parameters
 
-- **`width`** — The width of the operands
+| Name | Type | Description |
+| --- | --- | --- |
+| `width` | `Int` | The width of the operands |
+
+**Delay** = 0 cycles
+
+## IO
+
+| Name | Direction | Type | Description |
+| --- | --- | --- | --- |
+| `mul1` | Input | `UInt(width.W)` | Multiplicand |
+| `mul2` | Input | `UInt(width.W)` | Multiplier |
+| `add` | Input | `UInt((2 * width).W)` | Addend |
+| `output` | Output | `UInt((2 * width + 1).W)` | Result `mul1 * mul2 + add` |
 
 ## PPA
 
