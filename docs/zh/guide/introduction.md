@@ -1,9 +1,9 @@
-# Harith 是什么
+# Harith 是什么？
 
 Harith，全称 *Hamster's ARITHmatic Lib*，是一个面向标准化 DSP 接口与实现的 Chisel 库，旨在提供两大核心特性。
 
 
-## 💍 统一的接口
+## 💍 接口统一
 
 Chisel 带给我们的最强大工具之一是 **OOP** 模式：通过合理的继承树，可以*在同一接口下提供多种实现*。
 
@@ -84,7 +84,7 @@ val mod2 = Module(new ReallyComplexModule(w => new UIntMacroAdd(w)))
 对于更大的设计，这可能至关重要，因为你可能想尝试不同实现以获得最佳 PPA。你也可以通过*扩展对应的 trait* 来创建自己的实现。
 
 
-## ⚡ 附带 PPA
+## ⚡ PPA 就绪
 
 长久以来，时序与面积开销只能在设计阶段凭经验推断，而实际做分析既费时又费力。
 
