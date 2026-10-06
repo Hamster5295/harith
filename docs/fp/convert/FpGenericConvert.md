@@ -10,9 +10,27 @@ The value is decoded to its exact significand and exponent and re-rounded to the
 
 ## Parameters
 
-- **`inFmt`** — The input format
-- **`outFmt`** — The output format
-- **`policy`** — The numeric policy
+| Name | Type | Description |
+| --- | --- | --- |
+| `inFmt` | `FpFormat` | The input format |
+| `outFmt` | `FpFormat` | The output format |
+| `policy` | `FpPolicy` | The numeric policy |
+
+**Delay** = 0 cycles
+
+## IO
+
+| Name | Direction | Type | Description |
+| --- | --- | --- | --- |
+| `src` | Input | `UInt(inFmt.width.W)` | Input value |
+| `rm` | Input | `UInt(3.W)` | RISC-V rounding mode |
+| `output` | Output | `UInt(outFmt.width.W)` | Converted result |
+| `fflags` | Output | `FpFlags` | IEEE-754 exception flags |
+| `fflags.nx` | Output | `Bool` | Inexact |
+| `fflags.uf` | Output | `Bool` | Underflow |
+| `fflags.of` | Output | `Bool` | Overflow |
+| `fflags.dz` | Output | `Bool` | Divide by zero |
+| `fflags.nv` | Output | `Bool` | Invalid operation |
 
 ## PPA
 

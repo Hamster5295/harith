@@ -10,9 +10,22 @@ The addend is merged into the Booth partial product heap, so fewer partial produ
 
 ## Parameters
 
-- **`width`** — The width of the operands
-- **`reductionStyle`** — The reduction style of the partial product tree
-- **`adder`** — The final carry propagate adder, which must be `2 * width + 1` bits wide
+| Name | Type | Description |
+| --- | --- | --- |
+| `width` | `Int` | The width of the operands |
+| `reductionStyle` | `ReductionStyle` | The reduction style of the partial product tree |
+| `adder` | `=> UIntAdd` | The final carry propagate adder, which must be `2 * width + 1` bits wide |
+
+**Delay** = `adder.latency` cycles
+
+## IO
+
+| Name | Direction | Type | Description |
+| --- | --- | --- | --- |
+| `mul1` | Input | `UInt(width.W)` | Multiplicand |
+| `mul2` | Input | `UInt(width.W)` | Multiplier |
+| `add` | Input | `UInt((2 * width).W)` | Addend |
+| `output` | Output | `UInt((2 * width + 1).W)` | Result `mul1 * mul2 + add` |
 
 ## PPA
 

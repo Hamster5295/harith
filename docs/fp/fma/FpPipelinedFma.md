@@ -10,12 +10,32 @@ The significand product is computed by a pipelined [[harith.uint.UIntPipelinedAr
 
 ## Parameters
 
-- **`aFmt`** — The format of the multiplicand
-- **`bFmt`** — The format of the multiplier
-- **`cFmt`** — The format of the addend
-- **`outFmt`** — The format of the result
-- **`stages`** — The number of pipeline register layers, which is also the latency
-- **`policy`** — The numeric policy
+| Name | Type | Description |
+| --- | --- | --- |
+| `aFmt` | `FpFormat` | The format of the multiplicand |
+| `bFmt` | `FpFormat` | The format of the multiplier |
+| `cFmt` | `FpFormat` | The format of the addend |
+| `outFmt` | `FpFormat` | The format of the result |
+| `stages` | `Int` | The number of pipeline register layers, which is also the latency |
+| `policy` | `FpPolicy` | The numeric policy |
+
+**Delay** = `stages` cycles
+
+## IO
+
+| Name | Direction | Type | Description |
+| --- | --- | --- | --- |
+| `src1` | Input | `UInt(aFmt.width.W)` | Multiplicand |
+| `src2` | Input | `UInt(bFmt.width.W)` | Multiplier |
+| `add` | Input | `UInt(cFmt.width.W)` | Addend |
+| `rm` | Input | `UInt(3.W)` | RISC-V rounding mode |
+| `output` | Output | `UInt(outFmt.width.W)` | Rounded result |
+| `fflags` | Output | `FpFlags` | IEEE-754 exception flags |
+| `fflags.nx` | Output | `Bool` | Inexact |
+| `fflags.uf` | Output | `Bool` | Underflow |
+| `fflags.of` | Output | `Bool` | Overflow |
+| `fflags.dz` | Output | `Bool` | Divide by zero |
+| `fflags.nv` | Output | `Bool` | Invalid operation |
 
 ## PPA
 

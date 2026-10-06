@@ -10,7 +10,27 @@ The remainder is shifted in one dividend bit per cycle and the divisor is subtra
 
 ## Parameters
 
-- **`width`** — The width of the operands
+| Name | Type | Description |
+| --- | --- | --- |
+| `width` | `Int` | The width of the operands |
+
+**Delay** = `width` cycles
+
+## IO
+
+| Name | Direction | Type | Description |
+| --- | --- | --- | --- |
+| `in` | Input | `Decoupled(UIntDivReq)` | Decoupled request channel |
+| `in.valid` | Input | `Bool` | Request valid |
+| `in.ready` | Output | `Bool` | Request accepted |
+| `in.bits.dividend` | Input | `UInt(width.W)` | Dividend |
+| `in.bits.divisor` | Input | `UInt(width.W)` | Divisor |
+| `out` | Output | `Valid(UIntDivResp)` | Valid response channel |
+| `out.valid` | Output | `Bool` | Response valid |
+| `out.bits.quotient` | Output | `UInt(width.W)` | Quotient |
+| `out.bits.remainder` | Output | `UInt(width.W)` | Remainder |
+| `out.bits.divideByZero` | Output | `Bool` | Divide-by-zero flag |
+| `flush` | Input | `Bool` | Abort an in-flight division |
 
 ## PPA
 

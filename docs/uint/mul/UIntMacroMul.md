@@ -10,7 +10,19 @@ FPGA will likely implement it as an inner DSP.
 
 ## Parameters
 
-- **`width`** — The width of the operands
+| Name | Type | Description |
+| --- | --- | --- |
+| `width` | `Int` | The width of the operands |
+
+**Delay** = 0 cycles
+
+## IO
+
+| Name | Direction | Type | Description |
+| --- | --- | --- | --- |
+| `src1` | Input | `UInt(width.W)` | First operand |
+| `src2` | Input | `UInt(width.W)` | Second operand |
+| `output` | Output | `UInt((2 * width).W)` | Product `src1 * src2` |
 
 ## PPA
 

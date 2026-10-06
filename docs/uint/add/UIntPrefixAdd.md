@@ -10,8 +10,21 @@ All carries are computed by a single prefix network, giving a logarithmic critic
 
 ## Parameters
 
-- **`width`** — The width of the operands
-- **`style`** — The parallel prefix network style
+| Name | Type | Description |
+| --- | --- | --- |
+| `width` | `Int` | The width of the operands |
+| `style` | `PrefixStyle` | The parallel prefix network style |
+
+**Delay** = 0 cycles
+
+## IO
+
+| Name | Direction | Type | Description |
+| --- | --- | --- | --- |
+| `src1` | Input | `UInt(width.W)` | First operand |
+| `src2` | Input | `UInt(width.W)` | Second operand |
+| `carry` | Input | `Bool` | Carry in |
+| `output` | Output | `UInt((width + 1).W)` | Sum `src1 + src2 + carry` |
 
 ## PPA
 

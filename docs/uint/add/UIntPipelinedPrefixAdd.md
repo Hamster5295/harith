@@ -10,9 +10,22 @@ The prefix levels of the selected [[PrefixStyle]] are distributed over `stages` 
 
 ## Parameters
 
-- **`width`** — The width of the operands
-- **`style`** — The parallel prefix network style
-- **`stages`** — The number of pipeline register layers, which is also the latency
+| Name | Type | Description |
+| --- | --- | --- |
+| `width` | `Int` | The width of the operands |
+| `style` | `PrefixStyle` | The parallel prefix network style |
+| `stages` | `Int` | The number of pipeline register layers, which is also the latency |
+
+**Delay** = `stages` cycles
+
+## IO
+
+| Name | Direction | Type | Description |
+| --- | --- | --- | --- |
+| `src1` | Input | `UInt(width.W)` | First operand |
+| `src2` | Input | `UInt(width.W)` | Second operand |
+| `carry` | Input | `Bool` | Carry in |
+| `output` | Output | `UInt((width + 1).W)` | Sum `src1 + src2 + carry` |
 
 ## PPA
 

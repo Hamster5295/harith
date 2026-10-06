@@ -10,10 +10,30 @@ The significands are normalized to `NW` bits and the quotient is built one bit p
 
 ## Parameters
 
-- **`aFmt`** — The format of the dividend
-- **`bFmt`** — The format of the divisor
-- **`outFmt`** — The format of the result
-- **`policy`** — The numeric policy
+| Name | Type | Description |
+| --- | --- | --- |
+| `aFmt` | `FpFormat` | The format of the dividend |
+| `bFmt` | `FpFormat` | The format of the divisor |
+| `outFmt` | `FpFormat` | The format of the result |
+| `policy` | `FpPolicy` | The numeric policy |
+
+**Delay** = `max(aFmt.manWidth, bFmt.manWidth, outFmt.manWidth) + outFmt.manWidth + 4` cycles
+
+## IO
+
+| Name | Direction | Type | Description |
+| --- | --- | --- | --- |
+| `in` | Input | `Decoupled(FpDivReq)` | Decoupled request channel |
+| `in.valid` | Input | `Bool` | Request valid |
+| `in.ready` | Output | `Bool` | Request accepted |
+| `in.bits.src1` | Input | `UInt(aFmt.width.W)` | Dividend |
+| `in.bits.src2` | Input | `UInt(bFmt.width.W)` | Divisor |
+| `in.bits.rm` | Input | `UInt(3.W)` | RISC-V rounding mode |
+| `out` | Output | `Valid(FpDivResp)` | Valid response channel |
+| `out.valid` | Output | `Bool` | Response valid |
+| `out.bits.output` | Output | `UInt(outFmt.width.W)` | Rounded quotient |
+| `out.bits.fflags` | Output | `FpFlags` | IEEE-754 exception flags |
+| `flush` | Input | `Bool` | Abort an in-flight division |
 
 ## PPA
 

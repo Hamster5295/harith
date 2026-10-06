@@ -10,8 +10,21 @@ Each block ripples internally, while a block whose bits all propagate lets the i
 
 ## Parameters
 
-- **`width`** — The width of the operands
-- **`blockSize`** — The number of bits per skip block
+| Name | Type | Description |
+| --- | --- | --- |
+| `width` | `Int` | The width of the operands |
+| `blockSize` | `Int` | The number of bits per skip block |
+
+**Delay** = 0 cycles
+
+## IO
+
+| Name | Direction | Type | Description |
+| --- | --- | --- | --- |
+| `src1` | Input | `UInt(width.W)` | First operand |
+| `src2` | Input | `UInt(width.W)` | Second operand |
+| `carry` | Input | `Bool` | Carry in |
+| `output` | Output | `UInt((width + 1).W)` | Sum `src1 + src2 + carry` |
 
 ## PPA
 
