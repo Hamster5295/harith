@@ -1,4 +1,4 @@
-# What's Harith
+# What's Harith?
 
 Harith, or *Hamster's ARITHmatic Lib*, is a Chisel library for standardized DSP interfaces and implementions. It aims to provide 2 core features.
 

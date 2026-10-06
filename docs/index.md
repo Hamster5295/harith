@@ -17,6 +17,6 @@ features:
     details: Multiple implementions with the same functionality share one single Chisel interface, allowing seamless implemention swaps.
   - title: 📈 Parameters to Scale
     details: Parameterized and Configurable Modules provides flexibility for user to integrate into their own projects.
-  - title: ⚡ PPA included
+  - title: ⚡ PPA Ready
     details: Modules are analyzed under FPGA(Vivado) & ASIC(yosys-opensta) flows, providing reliable PPA statistics for in-depth optimization.
 ---
