@@ -10,7 +10,7 @@ import harith.uint._
   *
   * fpga@fp32: delay[i/o/max] = 51.516ns/52.095ns/51.516ns  area = 6090luts + 0ff
   *
-  * 55nm@fp32: delay[i/o/max] = 36.1261ns/36.1261ns/34.8679ns  area = 24814.16um²
+  * 55nm@fp32: delay[i/o/max] = 35.9554ns/35.9554ns/35.9554ns  area = 24540.60um²
   *
   * @param aFmt   The format of the multiplicand
   * @param bFmt   The format of the multiplier

@@ -10,7 +10,7 @@ import harith.uint._
   *
   * fpga@fp32: delay[i/o/max] = 24.908ns/25.495ns/24.908ns  area = 984luts + 0ff
   *
-  * 55nm@fp32: delay[i/o/max] = 9.4294ns/9.4294ns/8.4766ns  area = 10503.08um²
+  * 55nm@fp32: delay[i/o/max] = 9.4441ns/9.4441ns/9.4441ns  area = 10452.12um²
   *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand
@@ -33,7 +33,7 @@ object FpMacroMul extends App {
   *
   * fpga@bf16: delay[i/o/max] = 21.023ns/21.603ns/21.023ns  area = 529luts + 0ff
   *
-  * 55nm@bf16: delay[i/o/max] = 5.9147ns/5.9147ns/4.9057ns  area = 2445.52um²
+  * 55nm@bf16: delay[i/o/max] = 6.7128ns/6.7128ns/6.7128ns  area = 2301.60um²
   *
   */
 class FpBf16Fp32Mul extends FpMacroMul(FpFormat.Bf16, FpFormat.Bf16, FpFormat.Fp32)
@@ -43,7 +43,7 @@ class FpBf16Fp32Mul extends FpMacroMul(FpFormat.Bf16, FpFormat.Bf16, FpFormat.Fp
   *
   * fpga@fp16: delay[i/o/max] = 20.805ns/21.376ns/20.805ns  area = 514luts + 0ff
   *
-  * 55nm@fp16: delay[i/o/max] = 4.3914ns/4.3914ns/2.8358ns  area = 2528.96um²
+  * 55nm@fp16: delay[i/o/max] = 4.1007ns/4.1007ns/4.1007ns  area = 2503.76um²
   *
   */
 class Fp16Fp32Mul extends FpMacroMul(FpFormat.Fp16, FpFormat.Fp16, FpFormat.Fp32)
@@ -53,7 +53,7 @@ class Fp16Fp32Mul extends FpMacroMul(FpFormat.Fp16, FpFormat.Fp16, FpFormat.Fp32
   *
   * fpga@fp32: delay[i/o/max] = 24.908ns/25.495ns/24.908ns  area = 984luts + 0ff
   *
-  * 55nm@fp32: delay[i/o/max] = 9.4294ns/9.4294ns/8.4766ns  area = 10503.08um²
+  * 55nm@fp32: delay[i/o/max] = 9.4441ns/9.4441ns/9.4441ns  area = 10452.12um²
   *
   */
 class Fp32Mul extends FpMacroMul(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32)
@@ -63,7 +63,7 @@ class Fp32Mul extends FpMacroMul(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32)
   *
   * fpga@fp64: delay[i/o/max] = 32.618ns/33.399ns/32.618ns  area = 2379luts + 0ff
   *
-  * 55nm@fp64: delay[i/o/max] = 16.7999ns/16.7999ns/15.3632ns  area = 40251.68um²
+  * 55nm@fp64: delay[i/o/max] = 17.2452ns/17.2452ns/17.2452ns  area = 39994.92um²
   *
   */
 class Fp64Mul extends FpMacroMul(FpFormat.Fp64, FpFormat.Fp64, FpFormat.Fp64)

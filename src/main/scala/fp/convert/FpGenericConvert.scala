@@ -12,7 +12,7 @@ import harith.ExportForAnalysis
   *
   * fpga@fp32: delay[i/o/max] = 18.533ns/19.522ns/18.533ns  area = 484luts + 0ff
   *
-  * 55nm@fp32: delay[i/o/max] = 4.3938ns/4.3938ns/3.5490ns  area = 908.60um²
+  * 55nm@fp32: delay[i/o/max] = 4.4324ns/4.4324ns/4.4324ns  area = 853.72um²
   *
   * @param inFmt  The input format
   * @param outFmt The output format
@@ -52,7 +52,7 @@ class FpGenericConvert(
   *
   * fpga@bf16->fp32: delay[i/o/max] = 15.718ns/16.290ns/15.718ns  area = 329luts + 0ff
   *
-  * 55nm@bf16->fp32: delay[i/o/max] = 1.0286ns/1.0286ns/0.3804ns  area = 45.92um²
+  * 55nm@bf16->fp32: delay[i/o/max] = 1.2570ns/1.2570ns/1.2570ns  area = 74.20um²
   *
   */
 class Bf16ToFp32 extends FpGenericConvert(FpFormat.Bf16, FpFormat.Fp32)
@@ -62,7 +62,7 @@ class Bf16ToFp32 extends FpGenericConvert(FpFormat.Bf16, FpFormat.Fp32)
   *
   * fpga@fp16->fp32: delay[i/o/max] = 14.596ns/15.187ns/14.596ns  area = 315luts + 0ff
   *
-  * 55nm@fp16->fp32: delay[i/o/max] = 2.1164ns/2.1164ns/0.8894ns  area = 253.96um²
+  * 55nm@fp16->fp32: delay[i/o/max] = 2.1520ns/2.1520ns/2.1520ns  area = 210.84um²
   *
   */
 class Fp16ToFp32 extends FpGenericConvert(FpFormat.Fp16, FpFormat.Fp32)
@@ -72,7 +72,7 @@ class Fp16ToFp32 extends FpGenericConvert(FpFormat.Fp16, FpFormat.Fp32)
   *
   * fpga@fp32->fp16: delay[i/o/max] = 18.533ns/19.522ns/18.533ns  area = 484luts + 0ff
   *
-  * 55nm@fp32->fp16: delay[i/o/max] = 4.3938ns/4.3938ns/3.5490ns  area = 908.60um²
+  * 55nm@fp32->fp16: delay[i/o/max] = 4.4324ns/4.4324ns/4.4324ns  area = 853.72um²
   *
   */
 class Fp32ToFp16 extends FpGenericConvert(FpFormat.Fp32, FpFormat.Fp16)
@@ -82,7 +82,7 @@ class Fp32ToFp16 extends FpGenericConvert(FpFormat.Fp32, FpFormat.Fp16)
   *
   * fpga@fp32->bf16: delay[i/o/max] = 18.194ns/19.183ns/18.194ns  area = 478luts + 0ff
   *
-  * 55nm@fp32->bf16: delay[i/o/max] = 2.9466ns/2.9466ns/1.7315ns  area = 391.16um²
+  * 55nm@fp32->bf16: delay[i/o/max] = 2.8542ns/2.8542ns/2.8542ns  area = 351.12um²
   *
   */
 class Fp32ToBf16 extends FpGenericConvert(FpFormat.Fp32, FpFormat.Bf16)
@@ -92,7 +92,7 @@ class Fp32ToBf16 extends FpGenericConvert(FpFormat.Fp32, FpFormat.Bf16)
   *
   * fpga@fp64->fp32: delay[i/o/max] = 21.106ns/21.557ns/21.106ns  area = 1040luts + 0ff
   *
-  * 55nm@fp64->fp32: delay[i/o/max] = 7.2699ns/7.2699ns/6.0489ns  area = 1822.80um²
+  * 55nm@fp64->fp32: delay[i/o/max] = 6.4557ns/6.4557ns/6.4557ns  area = 1778.00um²
   *
   */
 class Fp64ToFp32 extends FpGenericConvert(FpFormat.Fp64, FpFormat.Fp32)
@@ -102,7 +102,7 @@ class Fp64ToFp32 extends FpGenericConvert(FpFormat.Fp64, FpFormat.Fp32)
   *
   * fpga@fp32->fp64: delay[i/o/max] = 19.632ns/20.420ns/19.632ns  area = 707luts + 0ff
   *
-  * 55nm@fp32->fp64: delay[i/o/max] = 3.5567ns/3.5567ns/2.6664ns  area = 617.96um²
+  * 55nm@fp32->fp64: delay[i/o/max] = 3.5764ns/3.5764ns/3.5764ns  area = 565.32um²
   *
   */
 class Fp32ToFp64 extends FpGenericConvert(FpFormat.Fp32, FpFormat.Fp64)
