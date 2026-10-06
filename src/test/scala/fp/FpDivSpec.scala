@@ -61,8 +61,8 @@ class FpDivSpec extends AnyFreeSpec with Matchers with ChiselSim {
   import FpDivSpec._
   import FpFmaSpec.randomBits
 
-  "Fp32Div" - {
-    "matches IEEE single precision" in Sim(new Fp32Div) { dut =>
+  "FpRestoringDiv fp32" - {
+    "matches IEEE single precision" in Sim(new FpRestoringDiv(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32)) { dut =>
       Test("random vectors", dut) { dut =>
         val a = randomBits(FpFormat.Fp32, 60)
         val b = randomBits(FpFormat.Fp32, 60)
@@ -71,8 +71,8 @@ class FpDivSpec extends AnyFreeSpec with Matchers with ChiselSim {
     }
   }
 
-  "Fp64Div" - {
-    "matches IEEE double precision" in Sim(new Fp64Div) { dut =>
+  "FpRestoringDiv fp64" - {
+    "matches IEEE double precision" in Sim(new FpRestoringDiv(FpFormat.Fp64, FpFormat.Fp64, FpFormat.Fp64)) { dut =>
       Test("random vectors", dut) { dut =>
         val a = randomBits(FpFormat.Fp64, 30)
         val b = randomBits(FpFormat.Fp64, 30)
@@ -81,8 +81,8 @@ class FpDivSpec extends AnyFreeSpec with Matchers with ChiselSim {
     }
   }
 
-  "Fp16Fp32Div" - {
-    "matches single precision" in Sim(new Fp16Fp32Div) { dut =>
+  "FpRestoringDiv fp16 to fp32" - {
+    "matches single precision" in Sim(new FpRestoringDiv(FpFormat.Fp16, FpFormat.Fp16, FpFormat.Fp32)) { dut =>
       Test("random vectors", dut) { dut =>
         val a = randomBits(FpFormat.Fp16, 60)
         val b = randomBits(FpFormat.Fp16, 60)

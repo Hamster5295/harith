@@ -12,9 +12,21 @@ import harith.ExportForAnalysis
   * extra fractional bits and a sticky from the nonzero remainder, so the final rounding is exact.
   * NaN is canonical, per RISC-V.
   *
+  * fpga@fp64-108cyc: delay[i/o/max] = 5.568ns/1.439ns/22.187ns  area = 2846luts + 365ff
+  *
+  * 55nm@fp64-108cyc: delay[i/o/max] = 3.4405ns/0.8743ns/10.1610ns  area = 11796.96um²
+  *
   * fpga@fp32-50cyc: delay[i/o/max] = 5.535ns/1.414ns/18.934ns  area = 1232luts + 184ff
   *
   * 55nm@fp32-50cyc: delay[i/o/max] = 2.3681ns/0.8798ns/6.5751ns  area = 5540.08um²
+  *
+  * fpga@fp16-24cyc: delay[i/o/max] = 4.432ns/1.511ns/17.510ns  area = 586luts + 99ff
+  *
+  * 55nm@fp16-24cyc: delay[i/o/max] = 2.6870ns/0.8858ns/4.7179ns  area = 2786.56um²
+  *
+  * fpga@bf16-18cyc: delay[i/o/max] = 4.203ns/1.489ns/16.685ns  area = 477luts + 87ff
+  *
+  * 55nm@bf16-18cyc: delay[i/o/max] = 1.9531ns/0.8800ns/4.4104ns  area = 2530.08um²
   *
   * @param aFmt   The format of the dividend
   * @param bFmt   The format of the divisor
@@ -139,7 +151,15 @@ class FpRestoringDiv(
   }
 }
 
-object FpRestoringDiv extends App {
+object FpRestoringDivFp64 extends App {
+  ExportForAnalysis(
+    new FpRestoringDiv(FpFormat.Fp64, FpFormat.Fp64, FpFormat.Fp64),
+    args,
+    FpExport.opts,
+  )
+}
+
+object FpRestoringDivFp32 extends App {
   ExportForAnalysis(
     new FpRestoringDiv(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32),
     args,
@@ -147,47 +167,18 @@ object FpRestoringDiv extends App {
   )
 }
 
-/**
-  * A float32 restoring divider.
-  *
-  * fpga@fp32-50cyc: delay[i/o/max] = 5.535ns/1.414ns/18.934ns  area = 1232luts + 184ff
-  *
-  * 55nm@fp32-50cyc: delay[i/o/max] = 2.3681ns/0.8798ns/6.5751ns  area = 5540.08um²
-  *
-  */
-class Fp32Div extends FpRestoringDiv(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32)
+object FpRestoringDivFp16 extends App {
+  ExportForAnalysis(
+    new FpRestoringDiv(FpFormat.Fp16, FpFormat.Fp16, FpFormat.Fp16),
+    args,
+    FpExport.opts,
+  )
+}
 
-/**
-  * A float64 restoring divider.
-  *
-  * fpga@fp64-108cyc: delay[i/o/max] = 5.568ns/1.439ns/22.187ns  area = 2846luts + 365ff
-  *
-  * 55nm@fp64-108cyc: delay[i/o/max] = 3.4405ns/0.8743ns/10.1610ns  area = 11796.96um²
-  *
-  */
-class Fp64Div extends FpRestoringDiv(FpFormat.Fp64, FpFormat.Fp64, FpFormat.Fp64)
-
-/**
-  * A float16 by float16 to float32 restoring divider.
-  *
-  * fpga@fp16-50cyc: delay[i/o/max] = 4.290ns/1.412ns/18.582ns  area = 1120luts + 156ff
-  *
-  * 55nm@fp16-50cyc: delay[i/o/max] = 2.2888ns/0.8798ns/7.5169ns  area = 5359.48um²
-  *
-  */
-class Fp16Fp32Div extends FpRestoringDiv(FpFormat.Fp16, FpFormat.Fp16, FpFormat.Fp32)
-
-/**
-  * A bfloat16 by bfloat16 to float32 restoring divider.
-  *
-  * fpga@bf16-50cyc: delay[i/o/max] = 4.199ns/1.517ns/19.233ns  area = 1097luts + 152ff
-  *
-  * 55nm@bf16-50cyc: delay[i/o/max] = 1.9848ns/0.8798ns/7.0820ns  area = 4786.60um²
-  *
-  */
-class FpBf16Fp32Div extends FpRestoringDiv(FpFormat.Bf16, FpFormat.Bf16, FpFormat.Fp32)
-
-object Fp16Fp32Div   extends App { ExportForAnalysis(new Fp16Fp32Div, args, FpExport.opts)   }
-object FpBf16Fp32Div extends App { ExportForAnalysis(new FpBf16Fp32Div, args, FpExport.opts) }
-object Fp32Div       extends App { ExportForAnalysis(new Fp32Div, args, FpExport.opts)       }
-object Fp64Div       extends App { ExportForAnalysis(new Fp64Div, args, FpExport.opts)       }
+object FpRestoringDivBf16 extends App {
+  ExportForAnalysis(
+    new FpRestoringDiv(FpFormat.Bf16, FpFormat.Bf16, FpFormat.Bf16),
+    args,
+    FpExport.opts,
+  )
+}

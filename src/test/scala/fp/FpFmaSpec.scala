@@ -83,8 +83,8 @@ object FpFmaSpec {
 class FpFmaSpec extends AnyFreeSpec with Matchers with ChiselSim {
   import FpFmaSpec._
 
-  "Fp32Fma" - {
-    "matches fused single precision" in Sim(new Fp32Fma) { dut =>
+  "FpMacroFma fp32" - {
+    "matches fused single precision" in Sim(new FpMacroFma(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32)) { dut =>
       Test("random vectors", dut) { dut =>
         val a = randomBits(FpFormat.Fp32, 300)
         val b = randomBits(FpFormat.Fp32, 300)
@@ -94,8 +94,8 @@ class FpFmaSpec extends AnyFreeSpec with Matchers with ChiselSim {
     }
   }
 
-  "Fp64Fma" - {
-    "matches fused double precision" in Sim(new Fp64Fma) { dut =>
+  "FpMacroFma fp64" - {
+    "matches fused double precision" in Sim(new FpMacroFma(FpFormat.Fp64, FpFormat.Fp64, FpFormat.Fp64, FpFormat.Fp64)) { dut =>
       Test("random vectors", dut) { dut =>
         val a = randomBits(FpFormat.Fp64, 150)
         val b = randomBits(FpFormat.Fp64, 150)
@@ -105,8 +105,8 @@ class FpFmaSpec extends AnyFreeSpec with Matchers with ChiselSim {
     }
   }
 
-  "Fp16Fp32Fma" - {
-    "matches fused fp32 from fp16 inputs" in Sim(new Fp16Fp32Fma) { dut =>
+  "FpMacroFma fp16 to fp32" - {
+    "matches fused fp32 from fp16 inputs" in Sim(new FpMacroFma(FpFormat.Fp16, FpFormat.Fp16, FpFormat.Fp32, FpFormat.Fp32)) { dut =>
       Test("random vectors", dut) { dut =>
         val a = randomBits(FpFormat.Fp16, 300)
         val b = randomBits(FpFormat.Fp16, 300)
@@ -116,8 +116,8 @@ class FpFmaSpec extends AnyFreeSpec with Matchers with ChiselSim {
     }
   }
 
-  "FpBf16Fp32Fma" - {
-    "matches fused fp32 from bf16 inputs" in Sim(new FpBf16Fp32Fma) { dut =>
+  "FpMacroFma bf16 to fp32" - {
+    "matches fused fp32 from bf16 inputs" in Sim(new FpMacroFma(FpFormat.Bf16, FpFormat.Bf16, FpFormat.Fp32, FpFormat.Fp32)) { dut =>
       Test("random vectors", dut) { dut =>
         val a = randomBits(FpFormat.Bf16, 300)
         val b = randomBits(FpFormat.Bf16, 300)
