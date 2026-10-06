@@ -73,9 +73,9 @@ class FpPipelinedSpec extends AnyFreeSpec with Matchers with ChiselSim {
     }
   }
 
-  "FpPipelinedAdd" - {
+  "FpPipelinedPrefixAdd" - {
     "matches the sum after its latency" in Sim(
-      new FpPipelinedAdd(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32, 2),
+      new FpPipelinedPrefixAdd(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32, 2),
     ) { dut =>
       Test("random", dut)(d => checkAdd(d, ab))
     }

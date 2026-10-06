@@ -18,9 +18,21 @@ import harith.uint._
   * matched to the multiplier latency and the rounding/special logic after it stays combinational,
   * so the effective depth of that part depends on EDA retiming.
   *
+  * fpga@fp64-2cyc: delay[i/o/max] = 12.426ns/31.548ns/30.950ns  area = 8628luts + 433ff
+  *
+  * 55nm@fp64-2cyc: delay[i/o/max] = 4.8551ns/12.8657ns/12.8657ns  area = 35796.32um²
+  *
   * fpga@fp32-2cyc: delay[i/o/max] = 6.057ns/22.781ns/22.210ns  area = 1889luts + 203ff
   *
   * 55nm@fp32-2cyc: delay[i/o/max] = 2.0848ns/8.0414ns/8.0414ns  area = 9518.32um²
+  *
+  * fpga@fp16-2cyc: delay[i/o/max] = 3.156ns/19.728ns/18.748ns  area = 644luts + 106ff
+  *
+  * 55nm@fp16-2cyc: delay[i/o/max] = 1.0090ns/5.5721ns/5.5721ns  area = 3038.00um²
+  *
+  * fpga@bf16-2cyc: delay[i/o/max] = 3.406ns/18.215ns/17.246ns  area = 483luts + 91ff
+  *
+  * 55nm@bf16-2cyc: delay[i/o/max] = 0.9860ns/5.4115ns/5.4115ns  area = 2340.80um²
   *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand
@@ -90,9 +102,33 @@ class FpPipelinedMul(
   io.fflags.nv := invalid
 }
 
-object FpPipelinedMul extends App {
+object FpPipelinedMulFp64 extends App {
+  ExportForAnalysis(
+    new FpPipelinedMul(FpFormat.Fp64, FpFormat.Fp64, FpFormat.Fp64, 2),
+    args,
+    FpExport.opts,
+  )
+}
+
+object FpPipelinedMulFp32 extends App {
   ExportForAnalysis(
     new FpPipelinedMul(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32, 2),
+    args,
+    FpExport.opts,
+  )
+}
+
+object FpPipelinedMulFp16 extends App {
+  ExportForAnalysis(
+    new FpPipelinedMul(FpFormat.Fp16, FpFormat.Fp16, FpFormat.Fp16, 2),
+    args,
+    FpExport.opts,
+  )
+}
+
+object FpPipelinedMulBf16 extends App {
+  ExportForAnalysis(
+    new FpPipelinedMul(FpFormat.Bf16, FpFormat.Bf16, FpFormat.Bf16, 2),
     args,
     FpExport.opts,
   )

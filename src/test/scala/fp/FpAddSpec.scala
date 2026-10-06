@@ -43,8 +43,8 @@ class FpAddSpec extends AnyFreeSpec with Matchers with ChiselSim {
   import FpAddSpec._
   import FpFmaSpec.randomBits
 
-  "Fp32Add" - {
-    "matches IEEE single precision" in Sim(new Fp32Add) { dut =>
+  "FpMacroAdd fp32" - {
+    "matches IEEE single precision" in Sim(new FpMacroAdd(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32)) { dut =>
       Test("random vectors", dut) { dut =>
         val a = randomBits(FpFormat.Fp32, 300)
         val b = randomBits(FpFormat.Fp32, 300)
@@ -53,8 +53,8 @@ class FpAddSpec extends AnyFreeSpec with Matchers with ChiselSim {
     }
   }
 
-  "Fp64Add" - {
-    "matches IEEE double precision" in Sim(new Fp64Add) { dut =>
+  "FpMacroAdd fp64" - {
+    "matches IEEE double precision" in Sim(new FpMacroAdd(FpFormat.Fp64, FpFormat.Fp64, FpFormat.Fp64)) { dut =>
       Test("random vectors", dut) { dut =>
         val a = randomBits(FpFormat.Fp64, 150)
         val b = randomBits(FpFormat.Fp64, 150)
@@ -63,8 +63,8 @@ class FpAddSpec extends AnyFreeSpec with Matchers with ChiselSim {
     }
   }
 
-  "Fp16Fp32Add" - {
-    "matches single precision" in Sim(new Fp16Fp32Add) { dut =>
+  "FpMacroAdd fp16 to fp32" - {
+    "matches single precision" in Sim(new FpMacroAdd(FpFormat.Fp16, FpFormat.Fp32, FpFormat.Fp32)) { dut =>
       Test("random vectors", dut) { dut =>
         val a = randomBits(FpFormat.Fp16, 300)
         val b = randomBits(FpFormat.Fp32, 300)
@@ -73,8 +73,8 @@ class FpAddSpec extends AnyFreeSpec with Matchers with ChiselSim {
     }
   }
 
-  "FpBf16Fp32Add" - {
-    "matches single precision" in Sim(new FpBf16Fp32Add) { dut =>
+  "FpMacroAdd bf16 to fp32" - {
+    "matches single precision" in Sim(new FpMacroAdd(FpFormat.Bf16, FpFormat.Fp32, FpFormat.Fp32)) { dut =>
       Test("random vectors", dut) { dut =>
         val a = randomBits(FpFormat.Bf16, 300)
         val b = randomBits(FpFormat.Fp32, 300)

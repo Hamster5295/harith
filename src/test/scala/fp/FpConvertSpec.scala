@@ -30,7 +30,7 @@ class FpConvertSpec extends AnyFreeSpec with Matchers with ChiselSim {
   import FpFmaSpec.{bf16ToFloat, fp16ToFloat, randomBits}
 
   "Fp16ToFp32" - {
-    "is exact" in Sim(new Fp16ToFp32) { dut =>
+    "is exact" in Sim(new FpGenericConvert(FpFormat.Fp16, FpFormat.Fp32)) { dut =>
       Test("random vectors", dut) { dut =>
         check(dut, FpFormat.Fp16, FpFormat.Fp32, randomBits(FpFormat.Fp16, 300), a => {
           val f = fp16ToFloat(a)
@@ -42,7 +42,7 @@ class FpConvertSpec extends AnyFreeSpec with Matchers with ChiselSim {
   }
 
   "Bf16ToFp32" - {
-    "is exact" in Sim(new Bf16ToFp32) { dut =>
+    "is exact" in Sim(new FpGenericConvert(FpFormat.Bf16, FpFormat.Fp32)) { dut =>
       Test("random vectors", dut) { dut =>
         check(dut, FpFormat.Bf16, FpFormat.Fp32, randomBits(FpFormat.Bf16, 300), a => {
           val f = bf16ToFloat(a)
@@ -54,7 +54,7 @@ class FpConvertSpec extends AnyFreeSpec with Matchers with ChiselSim {
   }
 
   "Fp32ToFp64" - {
-    "is exact" in Sim(new Fp32ToFp64) { dut =>
+    "is exact" in Sim(new FpGenericConvert(FpFormat.Fp32, FpFormat.Fp64)) { dut =>
       Test("random vectors", dut) { dut =>
         check(dut, FpFormat.Fp32, FpFormat.Fp64, randomBits(FpFormat.Fp32, 300), a => {
           val f = java.lang.Float.intBitsToFloat(a.toInt)
@@ -66,7 +66,7 @@ class FpConvertSpec extends AnyFreeSpec with Matchers with ChiselSim {
   }
 
   "Fp64ToFp32" - {
-    "rounds to nearest" in Sim(new Fp64ToFp32) { dut =>
+    "rounds to nearest" in Sim(new FpGenericConvert(FpFormat.Fp64, FpFormat.Fp32)) { dut =>
       Test("random vectors", dut) { dut =>
         check(dut, FpFormat.Fp64, FpFormat.Fp32, randomBits(FpFormat.Fp64, 300), a => {
           val r = java.lang.Double.longBitsToDouble(a.toLong).toFloat

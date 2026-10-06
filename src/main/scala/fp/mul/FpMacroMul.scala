@@ -8,9 +8,21 @@ import harith.uint._
 /**
   * A floating-point multiplier with an inferred significand multiplier.
   *
+  * fpga@fp64: delay[i/o/max] = 32.618ns/33.399ns/32.618ns  area = 2379luts + 0ff
+  *
+  * 55nm@fp64: delay[i/o/max] = 17.2452ns/17.2452ns/17.2452ns  area = 39994.92um²
+  *
   * fpga@fp32: delay[i/o/max] = 24.908ns/25.495ns/24.908ns  area = 984luts + 0ff
   *
   * 55nm@fp32: delay[i/o/max] = 9.4441ns/9.4441ns/9.4441ns  area = 10452.12um²
+  *
+  * fpga@fp16: delay[i/o/max] = 23.001ns/23.596ns/23.001ns  area = 490luts + 0ff
+  *
+  * 55nm@fp16: delay[i/o/max] = 6.4737ns/6.4737ns/6.4737ns  area = 2972.48um²
+  *
+  * fpga@bf16: delay[i/o/max] = 20.551ns/21.123ns/20.551ns  area = 461luts + 0ff
+  *
+  * 55nm@bf16: delay[i/o/max] = 6.4107ns/6.4107ns/6.4107ns  area = 1971.48um²
   *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand
@@ -20,7 +32,15 @@ import harith.uint._
 class FpMacroMul(aFmt: FpFormat, bFmt: FpFormat, outFmt: FpFormat, policy: FpPolicy = FpPolicy())
     extends FpMulBase(aFmt, bFmt, outFmt, policy, w => Module(new UIntMacroMul(w)))
 
-object FpMacroMul extends App {
+object FpMacroMulFp64 extends App {
+  ExportForAnalysis(
+    new FpMacroMul(FpFormat.Fp64, FpFormat.Fp64, FpFormat.Fp64),
+    args,
+    FpExport.opts,
+  )
+}
+
+object FpMacroMulFp32 extends App {
   ExportForAnalysis(
     new FpMacroMul(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32),
     args,
@@ -28,47 +48,18 @@ object FpMacroMul extends App {
   )
 }
 
-/**
-  * A bfloat16 by bfloat16 to float32 multiplier.
-  *
-  * fpga@bf16: delay[i/o/max] = 21.023ns/21.603ns/21.023ns  area = 529luts + 0ff
-  *
-  * 55nm@bf16: delay[i/o/max] = 6.7128ns/6.7128ns/6.7128ns  area = 2301.60um²
-  *
-  */
-class FpBf16Fp32Mul extends FpMacroMul(FpFormat.Bf16, FpFormat.Bf16, FpFormat.Fp32)
+object FpMacroMulFp16 extends App {
+  ExportForAnalysis(
+    new FpMacroMul(FpFormat.Fp16, FpFormat.Fp16, FpFormat.Fp16),
+    args,
+    FpExport.opts,
+  )
+}
 
-/**
-  * A float16 by float16 to float32 multiplier.
-  *
-  * fpga@fp16: delay[i/o/max] = 20.805ns/21.376ns/20.805ns  area = 514luts + 0ff
-  *
-  * 55nm@fp16: delay[i/o/max] = 4.1007ns/4.1007ns/4.1007ns  area = 2503.76um²
-  *
-  */
-class Fp16Fp32Mul extends FpMacroMul(FpFormat.Fp16, FpFormat.Fp16, FpFormat.Fp32)
-
-/**
-  * A float32 multiplier.
-  *
-  * fpga@fp32: delay[i/o/max] = 24.908ns/25.495ns/24.908ns  area = 984luts + 0ff
-  *
-  * 55nm@fp32: delay[i/o/max] = 9.4441ns/9.4441ns/9.4441ns  area = 10452.12um²
-  *
-  */
-class Fp32Mul extends FpMacroMul(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32)
-
-/**
-  * A float64 multiplier.
-  *
-  * fpga@fp64: delay[i/o/max] = 32.618ns/33.399ns/32.618ns  area = 2379luts + 0ff
-  *
-  * 55nm@fp64: delay[i/o/max] = 17.2452ns/17.2452ns/17.2452ns  area = 39994.92um²
-  *
-  */
-class Fp64Mul extends FpMacroMul(FpFormat.Fp64, FpFormat.Fp64, FpFormat.Fp64)
-
-object FpBf16Fp32Mul extends App { ExportForAnalysis(new FpBf16Fp32Mul, args, FpExport.opts) }
-object Fp16Fp32Mul   extends App { ExportForAnalysis(new Fp16Fp32Mul, args, FpExport.opts)   }
-object Fp32Mul       extends App { ExportForAnalysis(new Fp32Mul, args, FpExport.opts)       }
-object Fp64Mul       extends App { ExportForAnalysis(new Fp64Mul, args, FpExport.opts)       }
+object FpMacroMulBf16 extends App {
+  ExportForAnalysis(
+    new FpMacroMul(FpFormat.Bf16, FpFormat.Bf16, FpFormat.Bf16),
+    args,
+    FpExport.opts,
+  )
+}
