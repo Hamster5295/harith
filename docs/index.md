@@ -3,8 +3,7 @@ layout: home
 
 hero:
   name: Harith
-  text: DSP library for Chisel
-  tagline: Backend-Ready Modules for Calculation
+  text: DSP Lib for Chisel
   actions:
     - theme: brand
       text: Quick Start

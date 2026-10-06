@@ -1,6 +1,6 @@
 # Analysis Condition
 
-Every module in harith is characterized twice: once on an FPGA with Vivado, and once on an ASIC
+Every module in Harith is characterized twice: once on an FPGA with Vivado, and once on an ASIC
 through Yosys and OpenSTA with the icsprout55 PDK. This page describes the environment, the
 constraints and the exact meaning of the reported numbers.
 
@@ -8,12 +8,14 @@ constraints and the exact meaning of the reported numbers.
 
 Each analysis produces three pure-logic delays and one area number:
 
-- **in** — input delay: from a data input to the first register, or, for a combinational module,
+- **in** — *input delay*: from a data input to the first register, or, for a combinational module,
   to the output.
-- **out** — output delay: from the last register to an output, or, for a combinational module,
+- **out** — *output delay*: from the last register to an output, or, for a combinational module,
   from the input to the output. The output buffer's own delay is excluded.
-- **max** — the worst register-to-register delay, which fixes the achievable frequency.
-- **area** — FPGA: LUTs and flip-flops; ASIC: µm².
+- **max** — *worst delay*: the worst register-to-register delay, which fixes the achievable frequency.
+- **area**: 
+  - *FPGA*: LUTs and flip-flops
+  - *ASIC*: µm².
 
 The external input/output delay modeled by the timing constraint is removed from all three delays,
 so they measure the module's own logic rather than the interface around it.
@@ -35,7 +37,7 @@ subtracted from the area — from the FPGA flip-flop count, and as `reg_bits × 
 
 The clock is created by `backend/fpga/script/constraints.xdc`; no input/output delay is modeled, so
 the three delays are raw logic delays. `backend/fpga/script/synth.tcl` emits the `in` view with
-`report_timing -from <data inputs>`, the `out` view with `report_timing -to <non-`*_reg*` outputs>`,
+`report_timing -from <data inputs>`, the `out` view with `report_timing -to <non-*_reg* outputs>`,
 and the `max` view with `report_timing -to <sequential cells>`.
 
 ## ASIC
@@ -57,12 +59,3 @@ into OpenSTA under `backend/asic/script/default.sdc` and writes the three delay 
 `report_checks -from <data inputs>`, `-to <non-`*_reg*` outputs>` and `-to [all_registers -data_pins]`.
 The 0.4 ns input/output delay is modeled only to constrain the interface; it is subtracted from the
 reported delays.
-
-## Reproducing
-
-```shell
-make fpga TARGET=harith.fp.FpRippleAddFp32
-make asic TARGET=harith.fp.FpRippleAddFp32
-```
-
-Reports are written to `backend/fpga/report` and `backend/asic/report`.
