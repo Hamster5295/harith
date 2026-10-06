@@ -1,0 +1,74 @@
+/**
+ * Green brand palette for the default VitePress theme.
+ */
+:root {
+  --vp-c-brand-1: var(--vp-c-green-1);
+  --vp-c-brand-2: var(--vp-c-green-2);
+  --vp-c-brand-3: var(--vp-c-green-3);
+  --vp-c-brand-soft: var(--vp-c-green-soft);
+}
+
+.dark {
+  --vp-c-brand-1: var(--vp-c-green-1);
+  --vp-c-brand-2: var(--vp-c-green-2);
+  --vp-c-brand-3: var(--vp-c-green-3);
+  --vp-c-brand-soft: var(--vp-c-green-soft);
+}
+
+:root {
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(120deg, var(--vp-c-green-1), var(--vp-c-green-3));
+}
+
+/**
+ * Headings: H1 uses the primary color, and H2 and below are a mix of the
+ * primary color with black (light mode) or white (dark mode). Each deeper
+ * level steps a little further from the primary color and closer to full
+ * black/white.
+ */
+:root {
+  --vp-doc-heading-extreme: #000;
+}
+
+.dark {
+  --vp-doc-heading-extreme: #fff;
+}
+
+.vp-doc h1 {
+  color: var(--vp-c-brand-1);
+}
+
+.vp-doc h2 {
+  color: var(--vp-c-brand-1);
+  color: color-mix(in srgb, var(--vp-c-brand-1), var(--vp-doc-heading-extreme) 20%);
+}
+
+.vp-doc h3 {
+  color: var(--vp-c-brand-1);
+  color: color-mix(in srgb, var(--vp-c-brand-1), var(--vp-doc-heading-extreme) 35%);
+}
+
+.vp-doc h4 {
+  color: var(--vp-c-brand-1);
+  color: color-mix(in srgb, var(--vp-c-brand-1), var(--vp-doc-heading-extreme) 50%);
+}
+
+.vp-doc h5 {
+  color: var(--vp-c-brand-1);
+  color: color-mix(in srgb, var(--vp-c-brand-1), var(--vp-doc-heading-extreme) 65%);
+}
+
+.vp-doc h6 {
+  color: var(--vp-c-brand-1);
+  color: color-mix(in srgb, var(--vp-c-brand-1), var(--vp-doc-heading-extreme) 80%);
+}
+
+/**
+ * Emphasis: bold (`**`), italic (`*`) and bold-italic (`***`) text all take
+ * the primary color.
+ */
+.vp-doc strong,
+.vp-doc em {
+  color: var(--vp-c-brand-1);
+}
+
