@@ -10,7 +10,7 @@ import harith.uint._
   *
   * fpga@fp32: delay[i/o/max] = 40.688ns/41.268ns/40.688ns  area = 3925luts + 0ff
   *
-  * 55nm@fp32: delay[i/o/max] = 14.5881ns/14.5881ns/14.5881ns  area = 5899.04um²
+  * 55nm@fp32: delay[i/o/max] = 14.0024ns/14.0024ns/12.8902ns  area = 5892.88um²
   *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand
@@ -33,7 +33,7 @@ object FpMacroAdd extends App {
   *
   * fpga@bf16: delay[i/o/max] = 40.466ns/41.038ns/40.466ns  area = 3540luts + 0ff
   *
-  * 55nm@bf16: delay[i/o/max] = 13.5780ns/13.5780ns/13.5780ns  area = 5701.92um²
+  * 55nm@bf16: delay[i/o/max] = 13.4312ns/13.4312ns/12.2542ns  area = 5894.56um²
   *
   */
 class FpBf16Fp32Add extends FpMacroAdd(FpFormat.Bf16, FpFormat.Fp32, FpFormat.Fp32)
@@ -43,7 +43,7 @@ class FpBf16Fp32Add extends FpMacroAdd(FpFormat.Bf16, FpFormat.Fp32, FpFormat.Fp
   *
   * fpga@fp16: delay[i/o/max] = 39.785ns/40.349ns/39.785ns  area = 3578luts + 0ff
   *
-  * 55nm@fp16: delay[i/o/max] = 13.2556ns/13.2556ns/13.2556ns  area = 5394.20um²
+  * 55nm@fp16: delay[i/o/max] = 13.2703ns/13.2703ns/12.0123ns  area = 5604.48um²
   *
   */
 class Fp16Fp32Add extends FpMacroAdd(FpFormat.Fp16, FpFormat.Fp32, FpFormat.Fp32)
@@ -53,7 +53,7 @@ class Fp16Fp32Add extends FpMacroAdd(FpFormat.Fp16, FpFormat.Fp32, FpFormat.Fp32
   *
   * fpga@fp32: delay[i/o/max] = 40.688ns/41.268ns/40.688ns  area = 3925luts + 0ff
   *
-  * 55nm@fp32: delay[i/o/max] = 14.5881ns/14.5881ns/14.5881ns  area = 5899.04um²
+  * 55nm@fp32: delay[i/o/max] = 14.0024ns/14.0024ns/12.8902ns  area = 5892.88um²
   *
   */
 class Fp32Add extends FpMacroAdd(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32)
@@ -63,7 +63,7 @@ class Fp32Add extends FpMacroAdd(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32)
   *
   * fpga@fp64: delay[i/o/max] = 48.521ns/49.502ns/48.521ns  area = 8433luts + 0ff
   *
-  * 55nm@fp64: delay[i/o/max] = 30.5496ns/30.5496ns/30.5496ns  area = 15172.64um²
+  * 55nm@fp64: delay[i/o/max] = 30.0435ns/30.0435ns/29.0185ns  area = 15273.16um²
   *
   */
 class Fp64Add extends FpMacroAdd(FpFormat.Fp64, FpFormat.Fp64, FpFormat.Fp64)

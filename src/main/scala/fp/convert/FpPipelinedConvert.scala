@@ -17,7 +17,7 @@ import harith.ExportForAnalysis
   *
   * fpga@fp32-2cyc: delay[i/o/max] = 1.364ns/19.160ns/18.172ns  area = 504luts + 68ff
   *
-  * 55nm@fp32-2cyc: delay[i/o/max] = 0.0053ns/4.8233ns/4.8233ns  area = 1248.52um²
+  * 55nm@fp32-2cyc: delay[i/o/max] = 0.0360ns/4.3167ns/3.3981ns  area = 1323.28um²
   *
   * @param inFmt  The input format
   * @param outFmt The output format

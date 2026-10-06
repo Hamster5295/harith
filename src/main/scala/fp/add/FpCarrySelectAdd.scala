@@ -10,7 +10,7 @@ import harith.uint._
   *
   * fpga@fp32: delay[i/o/max] = 45.991ns/46.571ns/45.991ns  area = 4226luts + 0ff
   *
-  * 55nm@fp32: delay[i/o/max] = 14.6117ns/14.6117ns/14.6117ns  area = 5542.88um²
+  * 55nm@fp32: delay[i/o/max] = 14.9205ns/14.9205ns/13.6781ns  area = 5720.96um²
   *
   * @param aFmt   The format of the first operand
   * @param bFmt   The format of the second operand

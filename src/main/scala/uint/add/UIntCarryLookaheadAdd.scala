@@ -14,7 +14,7 @@ import harith.ExportForAnalysis
   *
   * fpga@32bit: delay[i/o/max] = 3.879ns/4.451ns/3.879ns  area = 70luts + 0ff
   *
-  * 55nm@32bit: delay[i/o/max] = 1.4466ns/1.4466ns/1.4466ns  area = 493.08um²
+  * 55nm@32bit: delay[i/o/max] = 1.4960ns/1.4960ns/0.7058ns  area = 578.48um²
   *
   * @param width     The width of the operands
   * @param groupSize The number of bits per lookahead group

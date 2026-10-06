@@ -13,7 +13,7 @@ import harith.ExportForAnalysis
   *
   * fpga@32bit: delay[i/o/max] = 10.234ns/10.806ns/10.234ns  area = 2269luts + 0ff
   *
-  * 55nm@32bit: delay[i/o/max] = 5.3502ns/5.3502ns/5.3502ns  area = 16288.16um²
+  * 55nm@32bit: delay[i/o/max] = 5.5896ns/5.5896ns/4.7705ns  area = 16661.68um²
   *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree

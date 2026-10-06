@@ -10,7 +10,7 @@ import harith.uint._
   *
   * fpga@fp32: delay[i/o/max] = 49.853ns/50.416ns/49.853ns  area = 5107luts + 0ff
   *
-  * 55nm@fp32: delay[i/o/max] = 36.9288ns/36.9288ns/36.9288ns  area = 28061.32um²
+  * 55nm@fp32: delay[i/o/max] = 40.4856ns/40.4856ns/38.8996ns  area = 28242.20um²
   *
   * @param aFmt   The format of the multiplicand
   * @param bFmt   The format of the multiplier
@@ -47,7 +47,7 @@ object FpMacroFma extends App {
   *
   * fpga@bf16: delay[i/o/max] = 43.892ns/44.456ns/43.892ns  area = 3864luts + 0ff
   *
-  * 55nm@bf16: delay[i/o/max] = 21.0160ns/21.0160ns/21.0160ns  area = 10181.36um²
+  * 55nm@bf16: delay[i/o/max] = 21.0332ns/21.0332ns/19.8272ns  area = 10189.20um²
   *
   */
 class FpBf16Fp32Fma extends FpMacroFma(FpFormat.Bf16, FpFormat.Bf16, FpFormat.Fp32, FpFormat.Fp32)
@@ -57,7 +57,7 @@ class FpBf16Fp32Fma extends FpMacroFma(FpFormat.Bf16, FpFormat.Bf16, FpFormat.Fp
   *
   * fpga@fp16: delay[i/o/max] = 45.491ns/46.062ns/45.491ns  area = 3889luts + 0ff
   *
-  * 55nm@fp16: delay[i/o/max] = 14.7697ns/14.7697ns/14.7697ns  area = 8172.92um²
+  * 55nm@fp16: delay[i/o/max] = 17.4532ns/17.4532ns/16.5831ns  area = 8588.72um²
   *
   */
 class Fp16Fp32Fma extends FpMacroFma(FpFormat.Fp16, FpFormat.Fp16, FpFormat.Fp32, FpFormat.Fp32)
@@ -67,7 +67,7 @@ class Fp16Fp32Fma extends FpMacroFma(FpFormat.Fp16, FpFormat.Fp16, FpFormat.Fp32
   *
   * fpga@fp32: delay[i/o/max] = 49.853ns/50.416ns/49.853ns  area = 5107luts + 0ff
   *
-  * 55nm@fp32: delay[i/o/max] = 36.9288ns/36.9288ns/36.9288ns  area = 28061.32um²
+  * 55nm@fp32: delay[i/o/max] = 40.4856ns/40.4856ns/38.8996ns  area = 28242.20um²
   *
   */
 class Fp32Fma extends FpMacroFma(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32)
@@ -77,7 +77,7 @@ class Fp32Fma extends FpMacroFma(FpFormat.Fp32, FpFormat.Fp32, FpFormat.Fp32, Fp
   *
   * fpga@fp64: delay[i/o/max] = 64.329ns/65.309ns/64.329ns  area = 11083luts + 0ff
   *
-  * 55nm@fp64: delay[i/o/max] = 76.5721ns/76.5721ns/76.4466ns  area = 72919.28um²
+  * 55nm@fp64: delay[i/o/max] = 75.8697ns/75.8697ns/74.9867ns  area = 72739.52um²
   *
   */
 class Fp64Fma extends FpMacroFma(FpFormat.Fp64, FpFormat.Fp64, FpFormat.Fp64, FpFormat.Fp64)

@@ -14,7 +14,7 @@ import harith.ExportForAnalysis
   *
   * fpga@32bit-2cyc: delay[i/o/max] = 2.833ns/1.716ns/1.479ns  area = 168luts + 192ff
   *
-  * 55nm@32bit-2cyc: delay[i/o/max] = 0.3475ns/0.8007ns/0.8007ns  area = 1847.72um²
+  * 55nm@32bit-2cyc: delay[i/o/max] = 0.3304ns/0.8534ns/0.3304ns  area = 1996.96um²
   *
   * @param width  The width of the operands
   * @param style  The parallel prefix network style
