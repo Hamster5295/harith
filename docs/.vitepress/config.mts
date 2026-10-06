@@ -137,6 +137,12 @@ const buildNav = (prefix: string, zh: boolean) => [
 ]
 
 /**
+ * The base path the site is served from. GitHub Pages serves the project site under `/harith/`,
+ * while local development stays at the root. The value always ends with a slash.
+ */
+const base = (process.env.DOCS_BASE ?? '/').replace(/\/*$/, '/')
+
+/**
  * Redirect a Chinese browser to the Chinese home on its first visit.
  *
  * The stored preference is written by the theme layout on every navigation, so
@@ -148,8 +154,9 @@ const languageRedirect = `
     if (localStorage.getItem('harith-lang')) return
     var lang = (navigator.language || navigator.userLanguage || 'en').toLowerCase()
     if (lang.indexOf('zh') !== 0) return
-    if (location.pathname !== '/') return
-    location.replace('/zh/')
+    var base = ${JSON.stringify(base)}
+    if (location.pathname !== base) return
+    location.replace(base + 'zh/')
   } catch (e) {}
 })()
 `
@@ -157,6 +164,7 @@ const languageRedirect = `
 export default defineConfig({
   title: 'Harith',
   description: 'DSP library for Chisel',
+  base,
   cleanUrls: true,
   head: [['script', {}, languageRedirect]],
   locales: {
