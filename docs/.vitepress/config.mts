@@ -32,6 +32,7 @@ const uintModules: Record<string, string[]> = {
     'UIntPipelinedBoothFma',
     'UIntPipelinedTreeFma',
   ],
+  misc: ['PrefixStyle'],
 }
 
 const fpModules: Record<string, string[]> = {
@@ -63,6 +64,7 @@ const fpModules: Record<string, string[]> = {
     'FpPipelinedFma',
   ],
   convert: ['FpGenericConvert', 'FpPipelinedConvert'],
+  misc: ['FpFlags', 'FpFormat', 'FpPolicy'],
 }
 
 const enCategories: Record<string, string> = {
@@ -71,14 +73,16 @@ const enCategories: Record<string, string> = {
   div: 'Div',
   fma: 'Fma',
   convert: 'Convert',
+  misc: 'Misc',
 }
 
 const zhCategories: Record<string, string> = {
-  add: '加法',
-  mul: '乘法',
-  div: '除法',
-  fma: '融合乘加',
-  convert: '转换',
+  add: '加法器',
+  mul: '乘法器',
+  div: '除法器',
+  fma: '乘加器',
+  convert: '转换器',
+  misc: '杂项',
 }
 
 /**
@@ -96,7 +100,9 @@ const buildSidebar = (prefix: string, zh: boolean) => {
       text: categories[category],
       collapsed: true,
       items: [
-        { text: overview, link: `${prefix}/${base}/${category}/` },
+        ...(category === 'misc'
+          ? []
+          : [{ text: overview, link: `${prefix}/${base}/${category}/` }]),
         ...mods.map((mod) => ({
           text: mod,
           link: `${prefix}/${base}/${category}/${mod}`,
@@ -115,7 +121,7 @@ const buildSidebar = (prefix: string, zh: boolean) => {
         },
         { text: zh ? '快速开始' : 'Quick Start', link: `${prefix}/guide/quick-start` },
         { text: zh ? '模块' : 'Modules', link: `${prefix}/guide/modules` },
-        { text: zh ? '分析条件' : 'Analysis Condition', link: `${prefix}/guide/analysis-condition` },
+        { text: zh ? 'PPA 分析' : 'PPA Analysis', link: `${prefix}/guide/analysis-condition` },
       ],
     },
     {
