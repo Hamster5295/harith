@@ -2,7 +2,7 @@
 
 A pipelined carry save tree multiplier using AND partial products.
 
-The reduction levels are distributed over `stages` register layers and the two reduced rows are added by the supplied [[UIntAdd]]. The throughput is one product per cycle and the overall latency is `stages` plus the latency of the final adder, so a pipelined adder can shorten the final add.
+The reduction levels are distributed over `stages` register layers and the two reduced rows are added by the supplied [`UIntAdd`](/uint/add/). The throughput is one product per cycle and the overall latency is `stages` plus the latency of the final adder, so a pipelined adder can shorten the final add.
 
 ::: info Source
 `src/main/scala/uint/mul/UIntPipelinedTreeMul.scala`

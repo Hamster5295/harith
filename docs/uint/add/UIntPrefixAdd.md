@@ -2,7 +2,7 @@
 
 A fully parallel prefix adder.
 
-All carries are computed by a single prefix network, giving a logarithmic critical path. The [[PrefixStyle]] selects the network shape and therefore the area/performance point.
+All carries are computed by a single prefix network, giving a logarithmic critical path. The [`PrefixStyle`](/uint/misc/PrefixStyle) selects the network shape and therefore the area/performance point.
 
 ::: info Source
 `src/main/scala/uint/add/UIntPrefixAdd.scala`

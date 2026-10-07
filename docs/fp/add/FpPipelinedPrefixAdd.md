@@ -2,7 +2,7 @@
 
 A pipelined floating-point adder with a parallel prefix alignment adder.
 
-The prefix levels of the selected [[harith.uint.PrefixStyle]] are distributed over `stages` register layers, while the floating-point control is a register queue matched to the adder latency. `stages = 0` makes the adder combinational. NaN is canonical, per RISC-V.
+The prefix levels of the selected [`harith.uint.PrefixStyle`](/uint/misc/PrefixStyle) are distributed over `stages` register layers, while the floating-point control is a register queue matched to the adder latency. `stages = 0` makes the adder combinational. NaN is canonical, per RISC-V.
 
 ::: info Source
 `src/main/scala/fp/add/FpPipelinedAdd.scala`

@@ -18,7 +18,7 @@ Representative condition per module.
 ## Modules
 
 - **[UIntBoothFma](./UIntBoothFma.md)** — A fused multiply-adder using modified Booth radix-4 partial products.
-- **[UIntComposedFma](./UIntComposedFma.md)** — An FMA composed from a [[UIntMul]] and a [[UIntAdd]].
+- **[UIntComposedFma](./UIntComposedFma.md)** — An FMA composed from a [`UIntMul`](/uint/mul/) and a [`UIntAdd`](/uint/add/).
 - **[UIntMacroFma](./UIntMacroFma.md)** — The unsigned FMA implemented with the `*` and `+` operators.
 - **[UIntPipelinedBoothFma](./UIntPipelinedBoothFma.md)** — A pipelined fused multiply-adder using modified Booth radix-4 partial products.
 - **[UIntPipelinedTreeFma](./UIntPipelinedTreeFma.md)** — A pipelined fused multiply-adder using AND partial products.

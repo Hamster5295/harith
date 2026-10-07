@@ -2,7 +2,7 @@
 
 A structural carry save array multiplier.
 
-Each partial product row is accumulated in carry save form with a row of full adders, and a final ripple carry chain produces the product. The regular structure gives the lowest cost at the price of an O(width) critical path. On FPGAs the inferred [[UIntMacroMul]] is usually preferable.
+Each partial product row is accumulated in carry save form with a row of full adders, and a final ripple carry chain produces the product. The regular structure gives the lowest cost at the price of an O(width) critical path. On FPGAs the inferred [`UIntMacroMul`](/uint/mul/UIntMacroMul) is usually preferable.
 
 ::: info Source
 `src/main/scala/uint/mul/UIntArrayMul.scala`

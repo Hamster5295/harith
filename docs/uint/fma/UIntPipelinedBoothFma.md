@@ -2,7 +2,7 @@
 
 A pipelined fused multiply-adder using modified Booth radix-4 partial products.
 
-The addend is merged into the Booth partial product heap, the reduction levels are distributed over `stages` register layers and the two reduced rows are added by the supplied [[UIntAdd]]. The throughput is one FMA per cycle and the latency is `stages` plus the adder latency.
+The addend is merged into the Booth partial product heap, the reduction levels are distributed over `stages` register layers and the two reduced rows are added by the supplied [`UIntAdd`](/uint/add/). The throughput is one FMA per cycle and the latency is `stages` plus the adder latency.
 
 ::: info Source
 `src/main/scala/uint/fma/UIntPipelinedBoothFma.scala`

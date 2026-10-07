@@ -2,7 +2,7 @@
 
 A fused multiply-adder using AND partial products.
 
-The addend is merged into the partial product heap, so the reduction tree produces two rows that a single carry propagate adder resolves. It is one adder cheaper than [[UIntComposedFma]].
+The addend is merged into the partial product heap, so the reduction tree produces two rows that a single carry propagate adder resolves. It is one adder cheaper than [`UIntComposedFma`](/uint/fma/UIntComposedFma).
 
 ::: info Source
 `src/main/scala/uint/fma/UIntTreeFma.scala`

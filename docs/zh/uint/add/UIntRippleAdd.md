@@ -2,7 +2,7 @@
 
 结构化行波进位加法器。
 
-这是最节省资源的组合加法器，代价是 O(width) 的关键路径。在 FPGA 上，通常更推荐推断出的 [[UIntMacroAdd]]。
+这是最节省资源的组合加法器，代价是 O(width) 的关键路径。在 FPGA 上，通常更推荐推断出的 [`UIntMacroAdd`](/zh/uint/add/UIntMacroAdd)。
 
 ::: info 来源
 `src/main/scala/uint/add/UIntRippleAdd.scala`

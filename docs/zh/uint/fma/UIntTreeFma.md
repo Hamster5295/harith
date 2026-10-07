@@ -2,7 +2,7 @@
 
 使用 AND 部分积的融合乘加器。
 
-加数被合并进部分积堆，因此归约树产生两行，由单个进位传播加法器解析。它比 [[UIntComposedFma]] 少一个加法器。
+加数被合并进部分积堆，因此归约树产生两行，由单个进位传播加法器解析。它比 [`UIntComposedFma`](/zh/uint/fma/UIntComposedFma) 少一个加法器。
 
 ::: info 来源
 `src/main/scala/uint/fma/UIntTreeFma.scala`

@@ -2,7 +2,7 @@
 
 A structural ripple carry adder.
 
-This is the most resource efficient combinational adder, at the cost of an O(width) critical path. On FPGAs the inferred [[UIntMacroAdd]] is usually preferable.
+This is the most resource efficient combinational adder, at the cost of an O(width) critical path. On FPGAs the inferred [`UIntMacroAdd`](/uint/add/UIntMacroAdd) is usually preferable.
 
 ::: info Source
 `src/main/scala/uint/add/UIntRippleAdd.scala`

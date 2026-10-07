@@ -2,7 +2,7 @@
 
 A pipelined floating-point multiplier.
 
-The significand product is computed by a pipelined [[harith.uint.UIntPipelinedArrayMul]] whose register layers are `stages`; the floating-point control is delayed by the same number of cycles so that the rounding and special handling line up with the product. `stages = 0` makes the multiplier combinational, equivalently to [[FpArrayMul]]. NaN is canonical, per RISC-V.  Note: only the significand multiplier is pipelined internally by the underlying [[harith.uint.UIntPipelinedArrayMul]]; the floating-point control is a plain register queue matched to the multiplier latency and the rounding/special logic after it stays combinational, so the effective depth of that part depends on EDA retiming.
+The significand product is computed by a pipelined [`harith.uint.UIntPipelinedArrayMul`](/uint/mul/UIntPipelinedArrayMul) whose register layers are `stages`; the floating-point control is delayed by the same number of cycles so that the rounding and special handling line up with the product. `stages = 0` makes the multiplier combinational, equivalently to [`FpArrayMul`](/fp/mul/FpArrayMul). NaN is canonical, per RISC-V.  Note: only the significand multiplier is pipelined internally by the underlying [`harith.uint.UIntPipelinedArrayMul`](/uint/mul/UIntPipelinedArrayMul); the floating-point control is a plain register queue matched to the multiplier latency and the rounding/special logic after it stays combinational, so the effective depth of that part depends on EDA retiming.
 
 ::: info Source
 `src/main/scala/fp/mul/FpPipelinedMul.scala`

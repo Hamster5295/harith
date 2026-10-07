@@ -2,9 +2,9 @@
 
 流水化浮点乘法器。
 
-有效数乘积由流水化的 [[harith.uint.UIntPipelinedArrayMul]] 计算，其寄存器层数为 `stages`；浮点控制被延迟相同的周期数，使舍入与特殊值处理与乘积对齐。`stages = 0` 使乘法器变为组合逻辑，等价于 [[FpArrayMul]]。按照 RISC-V，NaN 为规范 NaN。
+有效数乘积由流水化的 [`harith.uint.UIntPipelinedArrayMul`](/zh/uint/mul/UIntPipelinedArrayMul) 计算，其寄存器层数为 `stages`；浮点控制被延迟相同的周期数，使舍入与特殊值处理与乘积对齐。`stages = 0` 使乘法器变为组合逻辑，等价于 [`FpArrayMul`](/zh/fp/mul/FpArrayMul)。按照 RISC-V，NaN 为规范 NaN。
 
-注意：只有有效数乘法器由底层 [[harith.uint.UIntPipelinedArrayMul]] 在内部流水化；浮点控制是一个与乘法器延迟匹配的普通寄存器队列，其后的舍入/特殊值逻辑保持组合逻辑，因此该部分的实际深度取决于 EDA 重定时。
+注意：只有有效数乘法器由底层 [`harith.uint.UIntPipelinedArrayMul`](/zh/uint/mul/UIntPipelinedArrayMul) 在内部流水化；浮点控制是一个与乘法器延迟匹配的普通寄存器队列，其后的舍入/特殊值逻辑保持组合逻辑，因此该部分的实际深度取决于 EDA 重定时。
 
 ::: info 来源
 `src/main/scala/fp/mul/FpPipelinedMul.scala`

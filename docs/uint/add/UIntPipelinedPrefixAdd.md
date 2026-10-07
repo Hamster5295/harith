@@ -2,7 +2,7 @@
 
 A pipelined parallel prefix adder.
 
-The prefix levels of the selected [[PrefixStyle]] are distributed over `stages` register layers. The throughput is one addition per cycle and the latency equals `stages`, regardless of whether a layer is used for prefix logic or only for retiming. A value of 0 makes the adder combinational, equivalently to [[UIntPrefixAdd]].
+The prefix levels of the selected [`PrefixStyle`](/uint/misc/PrefixStyle) are distributed over `stages` register layers. The throughput is one addition per cycle and the latency equals `stages`, regardless of whether a layer is used for prefix logic or only for retiming. A value of 0 makes the adder combinational, equivalently to [`UIntPrefixAdd`](/uint/add/UIntPrefixAdd).
 
 ::: info Source
 `src/main/scala/uint/add/UIntPipelinedPrefixAdd.scala`
