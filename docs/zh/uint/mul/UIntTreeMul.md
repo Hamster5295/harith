@@ -2,7 +2,7 @@
 
 使用 AND 部分积的进位保存树乘法器。
 
-部分积矩阵由 Wallace 或 Dadda 网络归约为两行，再由提供的 [[UIntAdd]] 相加。归约是组合逻辑，因此延迟等于最终加法器的延迟。
+部分积矩阵由 Wallace 或 Dadda 网络归约为两行，再由提供的 [`UIntAdd`](/zh/uint/add/) 相加。归约是组合逻辑，因此延迟等于最终加法器的延迟。
 
 ::: info 来源
 `src/main/scala/uint/mul/UIntTreeMul.scala`

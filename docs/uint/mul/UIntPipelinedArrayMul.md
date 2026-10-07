@@ -2,7 +2,7 @@
 
 A pipelined carry save array multiplier.
 
-The partial product rows are distributed over `stages` register layers. The throughput is one product per cycle and the latency equals `stages`. A value of 0 makes the multiplier combinational, equivalently to [[UIntArrayMul]].
+The partial product rows are distributed over `stages` register layers. The throughput is one product per cycle and the latency equals `stages`. A value of 0 makes the multiplier combinational, equivalently to [`UIntArrayMul`](/uint/mul/UIntArrayMul).
 
 ::: info Source
 `src/main/scala/uint/mul/UIntPipelinedArrayMul.scala`

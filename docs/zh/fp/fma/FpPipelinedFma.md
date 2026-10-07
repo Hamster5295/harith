@@ -2,9 +2,9 @@
 
 流水化浮点融合乘加器。
 
-有效数乘积由流水化的 [[harith.uint.UIntPipelinedArrayMul]] 计算，其寄存器层数为 `stages`，随后对齐、加法与舍入对延迟后的操作数组合进行。`stages = 0` 使 FMA 变为组合逻辑。按照 RISC-V，NaN 为规范 NaN。
+有效数乘积由流水化的 [`harith.uint.UIntPipelinedArrayMul`](/zh/uint/mul/UIntPipelinedArrayMul) 计算，其寄存器层数为 `stages`，随后对齐、加法与舍入对延迟后的操作数组合进行。`stages = 0` 使 FMA 变为组合逻辑。按照 RISC-V，NaN 为规范 NaN。
 
-注意：只有有效数乘积由底层 [[harith.uint.UIntPipelinedArrayMul]] 在内部流水化；操作数由一个与乘法器延迟匹配的普通寄存器队列延迟，整个对齐/加法/舍入尾部保持组合逻辑，因此该部分的实际深度取决于 EDA 重定时。
+注意：只有有效数乘积由底层 [`harith.uint.UIntPipelinedArrayMul`](/zh/uint/mul/UIntPipelinedArrayMul) 在内部流水化；操作数由一个与乘法器延迟匹配的普通寄存器队列延迟，整个对齐/加法/舍入尾部保持组合逻辑，因此该部分的实际深度取决于 EDA 重定时。
 
 ::: info 来源
 `src/main/scala/fp/fma/FpPipelinedFma.scala`

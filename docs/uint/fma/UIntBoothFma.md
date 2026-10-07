@@ -2,7 +2,7 @@
 
 A fused multiply-adder using modified Booth radix-4 partial products.
 
-The addend is merged into the Booth partial product heap, so fewer partial products than the AND based [[UIntTreeFma]] are reduced by a single carry propagate adder.
+The addend is merged into the Booth partial product heap, so fewer partial products than the AND based [`UIntTreeFma`](/uint/fma/UIntTreeFma) are reduced by a single carry propagate adder.
 
 ::: info Source
 `src/main/scala/uint/fma/UIntBoothFma.scala`

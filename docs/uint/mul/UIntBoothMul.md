@@ -2,7 +2,7 @@
 
 A modified Booth radix-4 carry save tree multiplier.
 
-The multiplier is recoded so that only about half as many partial products as the AND based [[UIntTreeMul]] are generated. The partial products are reduced to two rows by a Wallace or Dadda network and the two rows are added by the supplied [[UIntAdd]].
+The multiplier is recoded so that only about half as many partial products as the AND based [`UIntTreeMul`](/uint/mul/UIntTreeMul) are generated. The partial products are reduced to two rows by a Wallace or Dadda network and the two rows are added by the supplied [`UIntAdd`](/uint/add/).
 
 ::: info Source
 `src/main/scala/uint/mul/UIntBoothMul.scala`

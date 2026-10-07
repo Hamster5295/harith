@@ -1,6 +1,6 @@
 # UIntComposedFma
 
-由 [[UIntMul]] 和 [[UIntAdd]] 组合而成的 FMA。
+由 [`UIntMul`](/zh/uint/mul/) 和 [`UIntAdd`](/zh/uint/add/) 组合而成的 FMA。
 
 所提供的单元串联在一起，因此乘积与加数要经过两个进位传播加法器。这是灵活且面向复用的选项：将小乘法器与行波加法器搭配可得到最便宜的 FMA，而将树乘法器与前缀加法器搭配可得到快速的 FMA。延迟为两个单元延迟之和。
 

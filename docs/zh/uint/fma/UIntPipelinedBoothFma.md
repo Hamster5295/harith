@@ -2,7 +2,7 @@
 
 使用改进 Booth radix-4 部分积的流水化融合乘加器。
 
-加数被合并进 Booth 部分积堆，归约层级被分布到 `stages` 层寄存器上，归约后的两行由提供的 [[UIntAdd]] 相加。吞吐率为每周期一次 FMA，延迟为 `stages` 加上加法器延迟。
+加数被合并进 Booth 部分积堆，归约层级被分布到 `stages` 层寄存器上，归约后的两行由提供的 [`UIntAdd`](/zh/uint/add/) 相加。吞吐率为每周期一次 FMA，延迟为 `stages` 加上加法器延迟。
 
 ::: info 来源
 `src/main/scala/uint/fma/UIntPipelinedBoothFma.scala`

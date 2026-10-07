@@ -2,7 +2,7 @@
 
 A carry save tree multiplier using AND partial products.
 
-The partial product matrix is reduced to two rows by a Wallace or Dadda network and the two rows are added by the supplied [[UIntAdd]]. The reduction is combinational, so the latency is the latency of the final adder.
+The partial product matrix is reduced to two rows by a Wallace or Dadda network and the two rows are added by the supplied [`UIntAdd`](/uint/add/). The reduction is combinational, so the latency is the latency of the final adder.
 
 ::: info Source
 `src/main/scala/uint/mul/UIntTreeMul.scala`

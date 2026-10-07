@@ -2,7 +2,7 @@
 
 A pipelined floating-point format converter.
 
-The operand is delayed by `stages` and the re-rounding is combinational on the delayed operand, so the throughput is one conversion per cycle. `stages = 0` makes the converter combinational, equivalently to [[FpGenericConvert]]. NaN is canonical, per RISC-V.  Note: the `stages` register layers are a plain delay queue on the operands, not registers placed at internal cut points; the conversion logic between them stays combinational and the intended pipeline depth is only realised once the EDA tool retimes the queue into the logic.
+The operand is delayed by `stages` and the re-rounding is combinational on the delayed operand, so the throughput is one conversion per cycle. `stages = 0` makes the converter combinational, equivalently to [`FpGenericConvert`](/fp/convert/FpGenericConvert). NaN is canonical, per RISC-V.  Note: the `stages` register layers are a plain delay queue on the operands, not registers placed at internal cut points; the conversion logic between them stays combinational and the intended pipeline depth is only realised once the EDA tool retimes the queue into the logic.
 
 ::: info Source
 `src/main/scala/fp/convert/FpPipelinedConvert.scala`

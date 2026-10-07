@@ -2,7 +2,7 @@
 
 A pipelined floating-point fused multiply-adder.
 
-The significand product is computed by a pipelined [[harith.uint.UIntPipelinedArrayMul]] whose register layers are `stages`, then the alignment, addition and rounding are combinational on the delayed operands. `stages = 0` makes the FMA combinational. NaN is canonical, per RISC-V.  Note: only the significand product is pipelined internally by the underlying [[harith.uint.UIntPipelinedArrayMul]]; the operands are delayed by a plain register queue matched to the multiplier latency and the whole alignment/add/round tail stays combinational, so the effective depth of that part depends on EDA retiming.
+The significand product is computed by a pipelined [`harith.uint.UIntPipelinedArrayMul`](/uint/mul/UIntPipelinedArrayMul) whose register layers are `stages`, then the alignment, addition and rounding are combinational on the delayed operands. `stages = 0` makes the FMA combinational. NaN is canonical, per RISC-V.  Note: only the significand product is pipelined internally by the underlying [`harith.uint.UIntPipelinedArrayMul`](/uint/mul/UIntPipelinedArrayMul); the operands are delayed by a plain register queue matched to the multiplier latency and the whole alignment/add/round tail stays combinational, so the effective depth of that part depends on EDA retiming.
 
 ::: info Source
 `src/main/scala/fp/fma/FpPipelinedFma.scala`

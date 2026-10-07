@@ -2,7 +2,7 @@
 
 改进 Booth radix-4 进位保存树乘法器。
 
-乘数被重新编码，生成的部分积数量约为基于 AND 的 [[UIntTreeMul]] 的一半。部分积由 Wallace 或 Dadda 网络归约为两行，再由提供的 [[UIntAdd]] 相加。
+乘数被重新编码，生成的部分积数量约为基于 AND 的 [`UIntTreeMul`](/zh/uint/mul/UIntTreeMul) 的一半。部分积由 Wallace 或 Dadda 网络归约为两行，再由提供的 [`UIntAdd`](/zh/uint/add/) 相加。
 
 ::: info 来源
 `src/main/scala/uint/mul/UIntBoothMul.scala`

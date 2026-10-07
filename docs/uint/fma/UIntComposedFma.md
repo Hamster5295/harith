@@ -1,6 +1,6 @@
 # UIntComposedFma
 
-An FMA composed from a [[UIntMul]] and a [[UIntAdd]].
+An FMA composed from a [`UIntMul`](/uint/mul/) and a [`UIntAdd`](/uint/add/).
 
 The supplied units are wired in series, so the product and the addend go through two carry propagate adders. This is the flexible and reuse oriented option: pairing a small multiplier with a ripple adder gives the cheapest FMA, while a tree multiplier with a prefix adder gives a fast one. The latency is the sum of the two unit latencies.
 

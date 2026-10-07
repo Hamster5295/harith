@@ -1,6 +1,6 @@
 # PrefixStyle
 
-The parallel prefix network styles shared by [[UIntPrefixAdd]], [[UIntPipelinedPrefixAdd]] and [[UIntCarryLookaheadAdd]].
+The parallel prefix network styles shared by [`UIntPrefixAdd`](/uint/add/UIntPrefixAdd), [`UIntPipelinedPrefixAdd`](/uint/add/UIntPipelinedPrefixAdd) and [`UIntCarryLookaheadAdd`](/uint/add/UIntCarryLookaheadAdd).
 
 The styles trade logic depth against area and wiring, spanning the high-performance to resource constrained range of prefix adders. `n` denotes the (power-of-two padded) width of the network.
 
@@ -19,4 +19,4 @@ The styles trade logic depth against area and wiring, spanning the high-performa
 
 ## Usage
 
-`style` is a constructor argument of [[UIntPrefixAdd]] and [[UIntPipelinedPrefixAdd]]. [[UIntCarryLookaheadAdd]] fixes it internally to `Sklansky`, and the floating-point prefix variants use `KoggeStone`.
+`style` is a constructor argument of [`UIntPrefixAdd`](/uint/add/UIntPrefixAdd) and [`UIntPipelinedPrefixAdd`](/uint/add/UIntPipelinedPrefixAdd). [`UIntCarryLookaheadAdd`](/uint/add/UIntCarryLookaheadAdd) fixes it internally to `Sklansky`, and the floating-point prefix variants use `KoggeStone`.

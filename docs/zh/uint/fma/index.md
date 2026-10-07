@@ -18,7 +18,7 @@
 ## 模块
 
 - **[UIntBoothFma](./UIntBoothFma.md)** —— 使用改进 Booth radix-4 部分积的融合乘加器。
-- **[UIntComposedFma](./UIntComposedFma.md)** —— 由 [[UIntMul]] 和 [[UIntAdd]] 组合而成的 FMA。
+- **[UIntComposedFma](./UIntComposedFma.md)** —— 由 [`UIntMul`](/zh/uint/mul/) 和 [`UIntAdd`](/zh/uint/add/) 组合而成的 FMA。
 - **[UIntMacroFma](./UIntMacroFma.md)** —— 用 `*` 和 `+` 运算符实现的无符号 FMA。
 - **[UIntPipelinedBoothFma](./UIntPipelinedBoothFma.md)** —— 使用改进 Booth radix-4 部分积的流水化融合乘加器。
 - **[UIntPipelinedTreeFma](./UIntPipelinedTreeFma.md)** —— 使用 AND 部分积的流水化融合乘加器。

@@ -2,7 +2,7 @@
 
 使用改进 Booth radix-4 部分积的融合乘加器。
 
-加数被合并进 Booth 部分积堆，因此需要由单个进位传播加法器归约的部分积比基于 AND 的 [[UIntTreeFma]] 更少。
+加数被合并进 Booth 部分积堆，因此需要由单个进位传播加法器归约的部分积比基于 AND 的 [`UIntTreeFma`](/zh/uint/fma/UIntTreeFma) 更少。
 
 ::: info 来源
 `src/main/scala/uint/fma/UIntBoothFma.scala`
