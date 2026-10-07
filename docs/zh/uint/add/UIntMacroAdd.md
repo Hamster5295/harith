@@ -4,7 +4,7 @@
 
 FPGA 很可能将其实现为内部 DSP 或 CARRY 原语。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/uint/add/UIntMacroAdd.scala`
 :::
 

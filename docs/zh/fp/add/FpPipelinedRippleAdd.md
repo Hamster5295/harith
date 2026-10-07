@@ -4,7 +4,7 @@
 
 进位链被切成 `stages` 个块，因此延迟就是块的数量。浮点控制是一个与加法器延迟匹配的寄存器队列。按照 RISC-V，NaN 为规范 NaN。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/fp/add/FpPipelinedAdd.scala`
 :::
 

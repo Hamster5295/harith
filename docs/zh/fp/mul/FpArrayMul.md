@@ -2,7 +2,7 @@
 
 采用进位保存阵列有效数乘法器的浮点乘法器，成本最低选项。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/fp/mul/FpArrayMul.scala`
 :::
 

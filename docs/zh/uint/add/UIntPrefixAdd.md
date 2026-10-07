@@ -4,7 +4,7 @@
 
 所有进位都由单一前缀网络计算，得到对数级关键路径。[`PrefixStyle`](/zh/uint/misc/PrefixStyle) 决定网络形状，从而决定面积/性能取舍点。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/uint/add/UIntPrefixAdd.scala`
 :::
 

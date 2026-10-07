@@ -4,7 +4,7 @@
 
 加数被合并进部分积堆，归约层级被分布到 `stages` 层寄存器上，归约后的两行由提供的 [`UIntAdd`](/zh/uint/add/) 相加。吞吐率为每周期一次 FMA，延迟为 `stages` 加上加法器延迟。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/uint/fma/UIntPipelinedTreeFma.scala`
 :::
 

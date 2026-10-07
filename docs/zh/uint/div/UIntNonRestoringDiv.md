@@ -4,7 +4,7 @@
 
 部分余数保持为带符号形式，根据其符号加上或减去除数，因此无需恢复步骤。最后一次修正处理负余数。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/uint/div/UIntNonRestoringDiv.scala`
 :::
 

@@ -2,7 +2,7 @@
 
 采用并行前缀对齐加法器的浮点加法器，速度优先选项。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/fp/add/FpPrefixAdd.scala`
 :::
 

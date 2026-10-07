@@ -6,7 +6,7 @@
 
 注意：`stages` 层寄存器是作用于操作数的普通延迟队列，而非放置在内部切分点的寄存器；它们之间的转换逻辑保持组合逻辑，只有当 EDA 工具将该队列重定时进逻辑后，预期的流水线深度才真正实现。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/fp/convert/FpPipelinedConvert.scala`
 :::
 

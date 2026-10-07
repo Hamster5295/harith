@@ -4,7 +4,7 @@
 
 部分积行被分布到 `stages` 层寄存器上。吞吐率为每周期一个乘积，延迟等于 `stages`。取值为 0 时乘法器为组合逻辑，等价于 [`UIntArrayMul`](/zh/uint/mul/UIntArrayMul)。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/uint/mul/UIntPipelinedArrayMul.scala`
 :::
 

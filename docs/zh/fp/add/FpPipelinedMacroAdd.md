@@ -4,7 +4,7 @@
 
 对齐加法器本身没有内部寄存器层，因此 `stages` 寄存器队列延迟操作数与控制，而加法器与舍入尾部保持组合逻辑；该尾部的实际深度取决于 EDA 重定时。按照 RISC-V，NaN 为规范 NaN。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/fp/add/FpPipelinedAdd.scala`
 :::
 

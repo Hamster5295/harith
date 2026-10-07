@@ -6,7 +6,7 @@
 
 注意：只有有效数乘法器由底层 [`harith.uint.UIntPipelinedArrayMul`](/zh/uint/mul/UIntPipelinedArrayMul) 在内部流水化；浮点控制是一个与乘法器延迟匹配的普通寄存器队列，其后的舍入/特殊值逻辑保持组合逻辑，因此该部分的实际深度取决于 EDA 重定时。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/fp/mul/FpPipelinedMul.scala`
 :::
 

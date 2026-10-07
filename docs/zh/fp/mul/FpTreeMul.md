@@ -2,7 +2,7 @@
 
 采用 AND 部分积进位保存树有效数乘法器的浮点乘法器。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/fp/mul/FpTreeMul.scala`
 :::
 

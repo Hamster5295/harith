@@ -2,7 +2,7 @@
 
 采用行波进位对齐加法器的浮点加法器，成本最低选项。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/fp/add/FpRippleAdd.scala`
 :::
 

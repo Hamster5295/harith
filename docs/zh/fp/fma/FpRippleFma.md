@@ -2,7 +2,7 @@
 
 采用行波进位对齐加法器的浮点融合乘加器。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/fp/fma/FpRippleFma.scala`
 :::
 

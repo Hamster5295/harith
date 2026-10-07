@@ -4,7 +4,7 @@
 
 各位被划分成组。每组用一个先行进位网络解析其内部进位，暴露一个组生成/传播对，组间进位由第二级先行进位解析。这使关键路径保持对数级，同时使用的逻辑远少于全并行前缀加法器。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/uint/add/UIntCarryLookaheadAdd.scala`
 :::
 

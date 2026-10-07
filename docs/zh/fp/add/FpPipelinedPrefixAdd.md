@@ -4,7 +4,7 @@
 
 所选 [`harith.uint.PrefixStyle`](/zh/uint/misc/PrefixStyle) 的前缀层级被分布到 `stages` 层寄存器上，而浮点控制是一个与加法器延迟匹配的寄存器队列。`stages = 0` 使加法器变为组合逻辑。按照 RISC-V，NaN 为规范 NaN。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/fp/add/FpPipelinedAdd.scala`
 :::
 
