@@ -4,7 +4,7 @@
 
 归约层级被分布到 `stages` 层寄存器上，归约后的两行由提供的 [`UIntAdd`](/zh/uint/add/) 相加。吞吐率为每周期一个乘积，总延迟等于 `stages` 加上最终加法器的延迟，因此使用流水化加法器可以缩短最终加法。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/uint/mul/UIntPipelinedTreeMul.scala`
 :::
 

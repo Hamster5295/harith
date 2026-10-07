@@ -6,7 +6,7 @@
 
 注意：只有有效数乘积由底层 [`harith.uint.UIntPipelinedArrayMul`](/zh/uint/mul/UIntPipelinedArrayMul) 在内部流水化；操作数由一个与乘法器延迟匹配的普通寄存器队列延迟，整个对齐/加法/舍入尾部保持组合逻辑，因此该部分的实际深度取决于 EDA 重定时。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/fp/fma/FpPipelinedFma.scala`
 :::
 

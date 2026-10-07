@@ -4,7 +4,7 @@
 
 部分积矩阵由 Wallace 或 Dadda 网络归约为两行，再由提供的 [`UIntAdd`](/zh/uint/add/) 相加。归约是组合逻辑，因此延迟等于最终加法器的延迟。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/uint/mul/UIntTreeMul.scala`
 :::
 

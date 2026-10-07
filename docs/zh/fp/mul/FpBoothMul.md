@@ -2,7 +2,7 @@
 
 采用改进 Booth radix-4 树有效数乘法器的浮点乘法器。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/fp/mul/FpBoothMul.scala`
 :::
 

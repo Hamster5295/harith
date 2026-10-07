@@ -4,7 +4,7 @@
 
 该值被解码为其精确的有效数与指数，并重新舍入到目标格式。特殊值映射到目标编码；按照 RISC-V，NaN 为规范 NaN。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/fp/convert/FpGenericConvert.scala`
 :::
 

@@ -4,7 +4,7 @@
 
 整个表达式交给综合工具处理，在 FPGA 上它很可能将其映射到带有内建乘加的内部 DSP 中。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/uint/fma/UIntMacroFma.scala`
 :::
 

@@ -4,7 +4,7 @@ IEEE-754 二进制浮点格式。它是每个 `fp` 模块的操作数与结果�
 
 一个值具有 `1 + expWidth + manWidth` 位。指数偏置采用 IEEE 二进制交换格式的默认值 `2^(expWidth - 1) - 1`，它是派生得到而非存储的。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/fp/FpFormat.scala`
 :::
 

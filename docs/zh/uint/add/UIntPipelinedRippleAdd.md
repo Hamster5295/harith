@@ -4,7 +4,7 @@
 
 进位链在每个块边界被切断，进位、操作数切片以及累加的和每个周期前进一个块。这样得到短的、以块为单位的临界路径，吞吐率为每周期一次加法，固定延迟等于块的数量。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/uint/add/UIntPipelinedRippleAdd.scala`
 :::
 

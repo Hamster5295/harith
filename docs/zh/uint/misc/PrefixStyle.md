@@ -4,7 +4,7 @@
 
 这些风格在逻辑深度与面积、布线之间权衡，覆盖从高性能到资源受限的前缀加法器范围。`n` 表示网络的（补齐到 2 的幂的）位宽。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/uint/add/utils/PrefixStyle.scala`
 :::
 

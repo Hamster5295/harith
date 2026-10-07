@@ -1,8 +1,6 @@
-# Analysis Condition
+# PPA Analysis
 
-Every module in Harith is characterized twice: once on an FPGA with Vivado, and once on an ASIC
-through Yosys and OpenSTA with the icsprout55 PDK. This page describes the environment, the
-constraints and the exact meaning of the reported numbers.
+Every module provided by Harith undergoes FPGA & ASIC backend analysis. This page will introduce the environment, constrains and the metrics.
 
 ## Metrics
 

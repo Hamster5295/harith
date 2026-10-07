@@ -4,7 +4,7 @@
 
 有效数被规格化到 `NW` 位，商每周期生成一位，当减法下溢时恢复余数。商带有 `manWidth + 3` 个额外小数位以及来自非零余数的粘滞位，因此最终舍入是精确的。按照 RISC-V，NaN 为规范 NaN。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/fp/div/FpRestoringDiv.scala`
 :::
 

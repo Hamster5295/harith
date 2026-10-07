@@ -2,7 +2,7 @@
 
 采用分层先行进位对齐加法器的浮点加法器。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/fp/add/FpCarryLookaheadAdd.scala`
 :::
 

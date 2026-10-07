@@ -4,7 +4,7 @@
 
 FPGA 很可能将其实现为内部 DSP。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/uint/mul/UIntMacroMul.scala`
 :::
 

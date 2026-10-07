@@ -4,7 +4,7 @@
 
 所选 [`PrefixStyle`](/zh/uint/misc/PrefixStyle) 的前缀层级被分布到 `stages` 层寄存器上。吞吐率为每周期一次加法，延迟等于 `stages`，无论某层用于前缀逻辑还是仅用于重定时。取值为 0 时加法器为组合逻辑，等价于 [`UIntPrefixAdd`](/zh/uint/add/UIntPrefixAdd)。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/uint/add/UIntPipelinedPrefixAdd.scala`
 :::
 

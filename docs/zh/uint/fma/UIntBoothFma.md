@@ -4,7 +4,7 @@
 
 加数被合并进 Booth 部分积堆，因此需要由单个进位传播加法器归约的部分积比基于 AND 的 [`UIntTreeFma`](/zh/uint/fma/UIntTreeFma) 更少。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/uint/fma/UIntBoothFma.scala`
 :::
 

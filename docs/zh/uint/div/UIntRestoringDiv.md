@@ -4,7 +4,7 @@
 
 余数每周期移入一位被除数的位并减去除数；当减法下溢时恢复余数，商位为 0。它是最小的除法器，代价是每个操作数位需要一个周期。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/uint/div/UIntRestoringDiv.scala`
 :::
 

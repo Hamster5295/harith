@@ -4,7 +4,7 @@ IEEE-754 异常标志，与 RISC-V 的 `fflags` 字段一致。每个 `fp` 模�
 
 这些标志在系统层面是粘滞的；一次运算只报告它自身引发的异常。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/fp/FpFlags.scala`
 :::
 

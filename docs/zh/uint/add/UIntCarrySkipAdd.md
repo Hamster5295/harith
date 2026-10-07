@@ -4,7 +4,7 @@
 
 每个块内部行波进位，而所有位都传播的块允许输入进位跳过它，以很小的面积代价缩短最坏情况关键路径。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/uint/add/UIntCarrySkipAdd.scala`
 :::
 

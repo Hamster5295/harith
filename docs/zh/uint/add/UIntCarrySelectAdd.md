@@ -4,7 +4,7 @@
 
 每个块针对两种可能的输入进位预先计算结果，并在真实进位到达后选出正确的那个。重复的逻辑将关键路径缩短为每块一次进位选择。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/uint/add/UIntCarrySelectAdd.scala`
 :::
 

@@ -4,7 +4,7 @@
 
 每个部分积行用一行全加器以进位保存形式累加，最后由行波进位链产生乘积。规则的结构带来最低成本，代价是 O(width) 关键路径。在 FPGA 上，通常更推荐推断出的 [`UIntMacroMul`](/zh/uint/mul/UIntMacroMul)。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/uint/mul/UIntArrayMul.scala`
 :::
 

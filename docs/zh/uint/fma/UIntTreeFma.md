@@ -4,7 +4,7 @@
 
 加数被合并进部分积堆，因此归约树产生两行，由单个进位传播加法器解析。它比 [`UIntComposedFma`](/zh/uint/fma/UIntComposedFma) 少一个加法器。
 
-::: info 来源
+::: info 源代码
 `src/main/scala/uint/fma/UIntTreeFma.scala`
 :::
 
