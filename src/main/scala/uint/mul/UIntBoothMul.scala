@@ -17,12 +17,13 @@ import harith.ExportForAnalysis
   *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
-  * @param adder          The final carry propagate adder, which must be `2 * width` bits wide
+  * @param adder          The factory of the final carry propagate adder, given the `2 * width` bit
+  *                       width
   */
 class UIntBoothMul(
     val width:          Int,
     val reductionStyle: ReductionStyle,
-    adder:              => UIntAdd,
+    adder:              Int => UIntAdd,
 ) extends Module
     with UIntMul {
   val io = IO(new UIntMulIO(width))
@@ -32,8 +33,7 @@ class UIntBoothMul(
     MulUtils.reduce(MulUtils.boothColumns(io.src1, io.src2, width), reductionStyle)
   val (lower, upper) = MulUtils.toRows(columns)
 
-  val finalAdd = Module(adder)
-  require(finalAdd.io.src1.getWidth == 2 * width, "the final adder must be 2 * width bits wide")
+  val finalAdd = Module(adder(2 * width))
   finalAdd.io.src1  := lower
   finalAdd.io.src2  := upper
   finalAdd.io.carry := false.B
@@ -47,7 +47,7 @@ object UIntBoothMul extends App {
     new UIntBoothMul(
       32,
       ReductionStyle.Dadda,
-      new UIntPrefixAdd(64, PrefixStyle.KoggeStone),
+      width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
     ),
     args,
     Array(

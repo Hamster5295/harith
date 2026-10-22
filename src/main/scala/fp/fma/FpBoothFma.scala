@@ -47,7 +47,7 @@ class FpBoothFma(
           new UIntBoothMul(
             w,
             ReductionStyle.Dadda,
-            new UIntPrefixAdd(2 * w, PrefixStyle.KoggeStone),
+            width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
           ),
         ),
       w => Module(new UIntMacroAdd(w)),

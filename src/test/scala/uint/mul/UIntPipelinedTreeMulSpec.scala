@@ -18,7 +18,7 @@ class UIntPipelinedTreeMulSpec extends AnyFreeSpec with Matchers with ChiselSim 
               new UIntPipelinedTreeMul(
                 width,
                 style,
-                new UIntPipelinedPrefixAdd(width * 2, PrefixStyle.KoggeStone, 0),
+                w => new UIntPipelinedPrefixAdd(w, PrefixStyle.KoggeStone, 0),
                 stages,
               ),
             ) { dut =>
@@ -40,7 +40,7 @@ class UIntPipelinedTreeMulSpec extends AnyFreeSpec with Matchers with ChiselSim 
       new UIntPipelinedTreeMul(
         8,
         ReductionStyle.Wallace,
-        new UIntPipelinedPrefixAdd(16, PrefixStyle.KoggeStone, 1),
+        w => new UIntPipelinedPrefixAdd(w, PrefixStyle.KoggeStone, 1),
         1,
       ),
     ) { dut =>

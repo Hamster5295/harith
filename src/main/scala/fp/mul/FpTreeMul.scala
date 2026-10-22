@@ -37,7 +37,11 @@ class FpTreeMul(aFmt: FpFormat, bFmt: FpFormat, outFmt: FpFormat, policy: FpPoli
       policy,
       w =>
         Module(
-          new UIntTreeMul(w, ReductionStyle.Dadda, new UIntPrefixAdd(2 * w, PrefixStyle.KoggeStone)),
+          new UIntTreeMul(
+            w,
+            ReductionStyle.Dadda,
+            width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
+          ),
         ),
     )
 

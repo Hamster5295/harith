@@ -14,7 +14,7 @@ class UIntTreeMulSpec extends AnyFreeSpec with Matchers with ChiselSim {
       s"reduction style = $style" - {
         MulTestUtils.widths.foreach { width =>
           s"width = $width" in Sim(
-            new UIntTreeMul(width, style, new UIntPrefixAdd(width * 2, PrefixStyle.KoggeStone)),
+            new UIntTreeMul(width, style, w => new UIntPrefixAdd(w, PrefixStyle.KoggeStone)),
           ) { dut =>
             Test("edge vectors", dut) { dut =>
               MulTestUtils.checkCombinational(dut, MulTestUtils.edgeVectors(width))

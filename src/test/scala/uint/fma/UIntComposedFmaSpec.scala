@@ -12,8 +12,13 @@ class UIntComposedFmaSpec extends AnyFreeSpec with Matchers with ChiselSim {
       s"width = $width" in Sim(
         new UIntComposedFma(
           width,
-          new UIntTreeMul(width, ReductionStyle.Dadda, new UIntPrefixAdd(2 * width, PrefixStyle.KoggeStone)),
-          new UIntPrefixAdd(2 * width + 1, PrefixStyle.KoggeStone),
+          w =>
+            new UIntTreeMul(
+              w,
+              ReductionStyle.Dadda,
+              aw => new UIntPrefixAdd(aw, PrefixStyle.KoggeStone),
+            ),
+          w => new UIntPrefixAdd(w, PrefixStyle.KoggeStone),
         ),
       ) { dut =>
         Test("edge vectors", dut) { dut =>
@@ -29,7 +34,7 @@ class UIntComposedFmaSpec extends AnyFreeSpec with Matchers with ChiselSim {
   "UIntComposedFma with an array multiplier and a ripple adder" - {
     FmaTestUtils.widths.foreach { width =>
       s"width = $width" in Sim(
-        new UIntComposedFma(width, new UIntArrayMul(width), new UIntRippleAdd(2 * width + 1)),
+        new UIntComposedFma(width, w => new UIntArrayMul(w), w => new UIntRippleAdd(w)),
       ) { dut =>
         Test("edge vectors", dut) { dut =>
           FmaTestUtils.checkCombinational(dut, FmaTestUtils.edgeVectors(width))

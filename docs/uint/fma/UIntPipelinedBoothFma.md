@@ -14,7 +14,7 @@ The addend is merged into the Booth partial product heap, the reduction levels a
 | --- | --- | --- |
 | `width` | `Int` | The width of the operands |
 | `reductionStyle` | `ReductionStyle` | The reduction style of the partial product tree |
-| `adder` | `=> UIntAdd` | The final carry propagate adder, which must be `2 * width + 1` bits wide |
+| `adder` | `Int => UIntAdd` | The factory of the final carry propagate adder, given the `2 * width + 1` bit width |
 | `stages` | `Int` | The number of pipeline register layers in the reduction tree |
 
 **Delay** = `stages + adder.latency` cycles

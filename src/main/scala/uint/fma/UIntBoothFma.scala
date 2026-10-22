@@ -16,9 +16,10 @@ import harith.ExportForAnalysis
   *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
-  * @param adder          The final carry propagate adder, which must be `2 * width + 1` bits wide
+  * @param adder          The factory of the final carry propagate adder, given the `2 * width + 1`
+  *                       bit width
   */
-class UIntBoothFma(val width: Int, val reductionStyle: ReductionStyle, adder: => UIntAdd)
+class UIntBoothFma(val width: Int, val reductionStyle: ReductionStyle, adder: Int => UIntAdd)
     extends UIntFma {
   val io = IO(new UIntFmaIO(width))
   require(width > 0, "width must be positive")
@@ -29,11 +30,7 @@ class UIntBoothFma(val width: Int, val reductionStyle: ReductionStyle, adder: =>
   val columns        = FmaUtils.withAddend(partial, io.add, outputWidth)
   val (lower, upper) = MulUtils.toRows(MulUtils.reduce(columns, reductionStyle))
 
-  val finalAdd = Module(adder)
-  require(
-    finalAdd.io.src1.getWidth == outputWidth,
-    "the final adder must be 2 * width + 1 bits wide",
-  )
+  val finalAdd = Module(adder(outputWidth))
   finalAdd.io.src1  := lower
   finalAdd.io.src2  := upper
   finalAdd.io.carry := false.B
@@ -47,7 +44,7 @@ object UIntBoothFma extends App {
     new UIntBoothFma(
       32,
       ReductionStyle.Dadda,
-      new UIntPrefixAdd(65, PrefixStyle.KoggeStone),
+      width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
     ),
     args,
     Array(

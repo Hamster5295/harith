@@ -17,13 +17,14 @@ import harith.ExportForAnalysis
   *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
-  * @param adder          The final carry propagate adder, which must be `2 * width + 1` bits wide
+  * @param adder          The factory of the final carry propagate adder, given the `2 * width + 1`
+  *                       bit width
   * @param stages         The number of pipeline register layers in the reduction tree
   */
 class UIntPipelinedBoothFma(
     val width:          Int,
     val reductionStyle: ReductionStyle,
-    adder:              => UIntAdd,
+    adder:              Int => UIntAdd,
     val stages:         Int,
 ) extends UIntFma {
   val io = IO(new UIntFmaIO(width))
@@ -47,11 +48,7 @@ class UIntPipelinedBoothFma(
 
   val (lower, upper) = MulUtils.toRows(columns)
 
-  val finalAdd = Module(adder)
-  require(
-    finalAdd.io.src1.getWidth == outputWidth,
-    "the final adder must be 2 * width + 1 bits wide",
-  )
+  val finalAdd = Module(adder(outputWidth))
   finalAdd.io.src1  := lower
   finalAdd.io.src2  := upper
   finalAdd.io.carry := false.B
@@ -65,7 +62,7 @@ object UIntPipelinedBoothFma extends App {
     new UIntPipelinedBoothFma(
       32,
       ReductionStyle.Dadda,
-      new UIntPrefixAdd(65, PrefixStyle.KoggeStone),
+      width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
       2,
     ),
     args,

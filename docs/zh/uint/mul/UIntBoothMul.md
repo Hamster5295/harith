@@ -14,7 +14,7 @@
 | --- | --- | --- |
 | `width` | `Int` | 操作数位宽 |
 | `reductionStyle` | `ReductionStyle` | 部分积树的归约风格 |
-| `adder` | `=> UIntAdd` | 最终进位传播加法器，必须为 `2 * width` 位宽 |
+| `adder` | `Int => UIntAdd` | 最终进位传播加法器的工厂，传入 `2 * width` 位宽 |
 
 **延迟** = `adder.latency` 周期
 

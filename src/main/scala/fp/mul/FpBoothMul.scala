@@ -40,7 +40,7 @@ class FpBoothMul(aFmt: FpFormat, bFmt: FpFormat, outFmt: FpFormat, policy: FpPol
           new UIntBoothMul(
             w,
             ReductionStyle.Dadda,
-            new UIntPrefixAdd(2 * w, PrefixStyle.KoggeStone),
+            width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
           ),
         ),
     )

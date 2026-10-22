@@ -13,8 +13,8 @@ The supplied units are wired in series, so the product and the addend go through
 | Name | Type | Description |
 | --- | --- | --- |
 | `width` | `Int` | The width of the operands |
-| `mul` | `=> UIntMul` | The multiplier, whose output must be `2 * width` bits wide |
-| `adder` | `=> UIntAdd` | The final adder, which must be `2 * width + 1` bits wide |
+| `mul` | `Int => UIntMul` | The multiplier factory, given the operand width; its output is `2 * width` bits wide |
+| `adder` | `Int => UIntAdd` | The final adder factory, given the `2 * width + 1` bit width |
 
 **Delay** = `mul.latency + adder.latency` cycles
 

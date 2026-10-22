@@ -13,8 +13,8 @@
 | 名称 | 类型 | 说明 |
 | --- | --- | --- |
 | `width` | `Int` | 操作数位宽 |
-| `mul` | `=> UIntMul` | 乘法器，其输出必须为 `2 * width` 位宽 |
-| `adder` | `=> UIntAdd` | 最终加法器，必须为 `2 * width + 1` 位宽 |
+| `mul` | `Int => UIntMul` | 乘法器工厂，传入操作数位宽；其输出为 `2 * width` 位宽 |
+| `adder` | `Int => UIntAdd` | 最终加法器工厂，传入 `2 * width + 1` 位宽 |
 
 **延迟** = `mul.latency + adder.latency` 周期
 

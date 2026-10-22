@@ -18,13 +18,14 @@ import harith.ExportForAnalysis
   *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
-  * @param adder          The final carry propagate adder, which must be `2 * width` bits wide
+  * @param adder          The factory of the final carry propagate adder, given the `2 * width` bit
+  *                       width
   * @param stages         The number of pipeline register layers in the reduction tree
   */
 class UIntPipelinedTreeMul(
     val width:          Int,
     val reductionStyle: ReductionStyle,
-    adder:              => UIntAdd,
+    adder:              Int => UIntAdd,
     val stages:         Int,
 ) extends Module
     with UIntMul {
@@ -43,8 +44,7 @@ class UIntPipelinedTreeMul(
 
   val (lower, upper) = MulUtils.toRows(columns)
 
-  val finalAdd = Module(adder)
-  require(finalAdd.io.src1.getWidth == 2 * width, "the final adder must be 2 * width bits wide")
+  val finalAdd = Module(adder(2 * width))
   finalAdd.io.src1  := lower
   finalAdd.io.src2  := upper
   finalAdd.io.carry := false.B
@@ -58,7 +58,7 @@ object UIntPipelinedTreeMul extends App {
     new UIntPipelinedTreeMul(
       32,
       ReductionStyle.Dadda,
-      new UIntPrefixAdd(64, PrefixStyle.KoggeStone),
+      width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
       2,
     ),
     args,

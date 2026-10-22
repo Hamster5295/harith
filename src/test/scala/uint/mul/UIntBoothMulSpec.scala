@@ -14,7 +14,7 @@ class UIntBoothMulSpec extends AnyFreeSpec with Matchers with ChiselSim {
       s"reduction style = $style" - {
         MulTestUtils.widths.foreach { width =>
           s"width = $width" in Sim(
-            new UIntBoothMul(width, style, new UIntPrefixAdd(width * 2, PrefixStyle.KoggeStone)),
+            new UIntBoothMul(width, style, w => new UIntPrefixAdd(w, PrefixStyle.KoggeStone)),
           ) { dut =>
             Test("edge vectors", dut) { dut =>
               MulTestUtils.checkCombinational(dut, MulTestUtils.edgeVectors(width))

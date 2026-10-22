@@ -18,7 +18,7 @@ class UIntPipelinedBoothFmaSpec extends AnyFreeSpec with Matchers with ChiselSim
               new UIntPipelinedBoothFma(
                 width,
                 style,
-                new UIntPipelinedPrefixAdd(2 * width + 1, PrefixStyle.KoggeStone, 0),
+                w => new UIntPipelinedPrefixAdd(w, PrefixStyle.KoggeStone, 0),
                 stages,
               ),
             ) { dut =>

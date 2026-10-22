@@ -22,7 +22,7 @@ import harith.ExportForAnalysis
 class UIntTreeMul(
     val width:          Int,
     val reductionStyle: ReductionStyle,
-    adder:              => UIntAdd,
+    adder:              Int => UIntAdd,
 ) extends Module
     with UIntMul {
   val io = IO(new UIntMulIO(width))
@@ -32,8 +32,7 @@ class UIntTreeMul(
     MulUtils.reduce(MulUtils.andColumns(io.src1, io.src2, width), reductionStyle)
   val (lower, upper) = MulUtils.toRows(columns)
 
-  val finalAdd = Module(adder)
-  require(finalAdd.io.src1.getWidth == 2 * width, "the final adder must be 2 * width bits wide")
+  val finalAdd = Module(adder(2 * width))
   finalAdd.io.src1  := lower
   finalAdd.io.src2  := upper
   finalAdd.io.carry := false.B
@@ -47,7 +46,7 @@ object UIntTreeMul extends App {
     new UIntTreeMul(
       32,
       ReductionStyle.Dadda,
-      new UIntPrefixAdd(64, PrefixStyle.KoggeStone),
+      width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
     ),
     args,
     Array(

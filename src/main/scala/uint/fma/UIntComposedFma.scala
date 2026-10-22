@@ -17,25 +17,20 @@ import harith.ExportForAnalysis
   * 55nm@32bit: delay[i/o/max] = 5.3590ns/5.3590ns/5.3590ns  area = 11958.24um²
   *
   * @param width The width of the operands
-  * @param mul   The multiplier, whose output must be `2 * width` bits wide
-  * @param adder The final adder, which must be `2 * width + 1` bits wide
+  * @param mul   The multiplier factory, given the operand width; its output is `2 * width` bits wide
+  * @param adder The final adder factory, given the `2 * width + 1` bit width
   */
-class UIntComposedFma(val width: Int, mul: => UIntMul, adder: => UIntAdd) extends UIntFma {
+class UIntComposedFma(val width: Int, mul: Int => UIntMul, adder: Int => UIntAdd) extends UIntFma {
   val io = IO(new UIntFmaIO(width))
   require(width > 0, "width must be positive")
 
   val outputWidth = 2 * width + 1
 
-  val multiplier = Module(mul)
-  require(multiplier.io.output.getWidth == 2 * width, "the multiplier must be 2 * width bits wide")
+  val multiplier = Module(mul(width))
   multiplier.io.src1 := io.mul1
   multiplier.io.src2 := io.mul2
 
-  val finalAdd = Module(adder)
-  require(
-    finalAdd.io.src1.getWidth == outputWidth,
-    "the final adder must be 2 * width + 1 bits wide",
-  )
+  val finalAdd = Module(adder(outputWidth))
   finalAdd.io.src1  := multiplier.io.output.pad(outputWidth)
   finalAdd.io.src2  := io.add.pad(outputWidth)
   finalAdd.io.carry := false.B
@@ -48,12 +43,13 @@ object UIntComposedFma extends App {
   ExportForAnalysis(
     new UIntComposedFma(
       32,
-      new UIntTreeMul(
-        32,
-        ReductionStyle.Dadda,
-        new UIntPrefixAdd(64, PrefixStyle.KoggeStone),
-      ),
-      new UIntPrefixAdd(65, PrefixStyle.KoggeStone),
+      w =>
+        new UIntTreeMul(
+          w,
+          ReductionStyle.Dadda,
+          aw => new UIntPrefixAdd(aw, PrefixStyle.KoggeStone),
+        ),
+      w => new UIntPrefixAdd(w, PrefixStyle.KoggeStone),
     ),
     args,
     Array(

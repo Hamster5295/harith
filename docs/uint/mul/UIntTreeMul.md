@@ -14,7 +14,7 @@ The partial product matrix is reduced to two rows by a Wallace or Dadda network 
 | --- | --- | --- |
 | `width` | `Int` | The width of the operands |
 | `reductionStyle` | `ReductionStyle` | The reduction style of the partial product tree |
-| `adder` | `=> UIntAdd` | The final carry propagate adder, which must be `2 * width` bits wide |
+| `adder` | `Int => UIntAdd` | The factory of the final carry propagate adder, given the `2 * width` bit width |
 
 **Delay** = `adder.latency` cycles
 
