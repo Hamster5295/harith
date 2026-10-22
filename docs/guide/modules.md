@@ -1,7 +1,8 @@
 # Modules
 
-Currently, 2 categories of modules are implemented: 
+Currently, 3 categories of modules are implemented: 
 - [`UInt`](/uint/): General Purpose UInt calculations, scale from low to high width.
+- [`SInt`](/sint/): Signed two's complement integer calculations.
 - [`Fp`](/fp/): General Purpose Float Point calculations, focusing on IEEE standard & scalar calculations.
 
 ## UInt
@@ -20,6 +21,23 @@ through the `UIntAdd` / `UIntMul` / … interfaces.
   composed, Booth, tree and inferred variants, plus pipelined versions.
 - **Div**: iterative digit-recurrence dividers: restoring, non-restoring, and radix-2 / radix-4
   SRT.
+
+## SInt
+
+Signed integer datapaths use the same operation set as `UInt` but operate on two's complement
+operands.
+
+- **Mul**: two implementations that expose the choice between a direct signed multiplier and a
+  sign-magnitude multiplier built on the unsigned `UIntMul`. At the measured 32-bit condition the
+  direct `*` form is smaller and faster on FPGA and faster on 55 nm, while the magnitude form is
+  slightly smaller on 55 nm.
+- **Div**: the restoring divider is reused as an unsigned magnitude core; the operands are
+  converted to magnitudes and the quotient/remainder signs are restored, with the RISC-V signed
+  divide-by-zero and `min / -1` semantics.
+- **Fma**: a direct signed `*` + `+` form and a sign-magnitude form built on the unsigned
+  multiplier. At 32 bits the direct form is smaller and faster on both platforms.
+
+See the [SInt](/sint/) categories for the per-module PPA tables.
 
 ## Fp
 

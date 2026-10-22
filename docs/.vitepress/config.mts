@@ -35,6 +35,12 @@ const uintModules: Record<string, string[]> = {
   misc: ['PrefixStyle'],
 }
 
+const sintModules: Record<string, string[]> = {
+  mul: ['SIntMacroMul', 'SIntMagnitudeMul'],
+  div: ['SIntRestoringDiv'],
+  fma: ['SIntMacroFma', 'SIntComposedFma'],
+}
+
 const fpModules: Record<string, string[]> = {
   add: [
     'FpCarryLookaheadAdd',
@@ -128,6 +134,11 @@ const buildSidebar = (prefix: string, zh: boolean) => {
       text: 'UInt',
       collapsed: false,
       items: [{ text: overview, link: `${prefix}/uint/` }, ...modules('uint', uintModules)],
+    },
+    {
+      text: 'SInt',
+      collapsed: false,
+      items: [{ text: overview, link: `${prefix}/sint/` }, ...modules('sint', sintModules)],
     },
     {
       text: 'Fp',
