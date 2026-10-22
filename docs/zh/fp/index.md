@@ -9,3 +9,6 @@
 - **[Div](/zh/fp/div/)** —— 1 个模块
 - **[Fma](/zh/fp/fma/)** —— 7 个模块
 - **[Convert](/zh/fp/convert/)** —— 2 个模块
+- **[Reciprocal](/zh/fp/reciprocal/)** —— 3 个模块
+- **[Sqrt](/zh/fp/sqrt/)** —— 3 个模块
+- **[Rsqrt](/zh/fp/rsqrt/)** —— 3 个模块

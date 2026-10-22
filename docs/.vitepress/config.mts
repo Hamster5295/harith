@@ -70,6 +70,9 @@ const fpModules: Record<string, string[]> = {
     'FpPipelinedFma',
   ],
   convert: ['FpGenericConvert', 'FpPipelinedConvert'],
+  reciprocal: ['FpRestoringReciprocal', 'FpSrt4Reciprocal', 'FpNewtonReciprocal'],
+  sqrt: ['FpRestoringSqrt', 'FpSrt4Sqrt', 'FpNewtonSqrt'],
+  rsqrt: ['FpRestoringRsqrt', 'FpSrt4Rsqrt', 'FpNewtonRsqrt'],
   misc: ['FpFlags', 'FpFormat', 'FpPolicy'],
 }
 
@@ -79,6 +82,9 @@ const enCategories: Record<string, string> = {
   div: 'Div',
   fma: 'Fma',
   convert: 'Convert',
+  reciprocal: 'Reciprocal',
+  sqrt: 'Sqrt',
+  rsqrt: 'Rsqrt',
   misc: 'Misc',
 }
 
@@ -88,6 +94,9 @@ const zhCategories: Record<string, string> = {
   div: '除法器',
   fma: '乘加器',
   convert: '转换器',
+  reciprocal: '倒数',
+  sqrt: '开方',
+  rsqrt: '倒数开方',
   misc: '杂项',
 }
 

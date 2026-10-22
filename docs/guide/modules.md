@@ -61,6 +61,15 @@ floating-point implementation reuses the integer building blocks:
   quotient is built one bit per cycle and rounded exactly.
 - **Convert**: decode and re-round to the destination format. The converters cover every directed
   pair among `Fp64`, `Fp32`, `Fp16` and `Bf16`.
+- **Reciprocal**: normalize the significand to `[1, 2)` and compute `1 / m` with a restoring or
+  radix-4 digit recurrence (correctly rounded), or with a LUT-seeded Newton-Raphson iteration
+  (faithfully rounded).
+- **Sqrt**: normalize to `[1, 4)` with an even exponent and compute the root with a restoring or
+  radix-4 recurrence (correctly rounded), or with an rsqrt Newton-Raphson core followed by a
+  multiply (faithfully rounded).
+- **Rsqrt**: a dedicated restoring or radix-4 recurrence keeps `x * y^2` in fixed point (correctly
+  rounded), or a LUT-seeded Newton-Raphson iteration converges to `1 / sqrt(m)` (faithfully
+  rounded).
 
 The pipelined variants pipeline only the wide integer datapath internally; the floating-point
 control is a register queue matched to the datapath latency, so `stages` equals the resulting
