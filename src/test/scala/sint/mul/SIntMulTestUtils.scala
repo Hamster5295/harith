@@ -13,6 +13,9 @@ object SIntMulTestUtils {
     */
   val widths: Seq[Int] = Seq(1, 2, 4, 8, 13)
 
+  /** The widths exercised by the pipelined specs. */
+  val pipelinedWidths: Seq[Int] = Seq(1, 4, 13)
+
   /**
     * Reinterpret `value` as a two's complement number of `width` bits.
     *

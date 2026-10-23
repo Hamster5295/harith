@@ -114,6 +114,47 @@ private[sint] object SIntMulUtils {
     cols.map(_.toSeq).toSeq
   }
 
+  /** One row of the Baugh-Wooley partial product matrix. */
+  def baughWooleyRow(a: SInt, b: SInt, row: Int, width: Int): Seq[Bool] = {
+    val nCols = MulUtils.columnCount(width)
+    val bits  = Array.fill(nCols)(false.B)
+    for (j <- 0 until width) {
+      val bit =
+        if (row == width - 1 && j == width - 1) a(row) & b(j)
+        else if (row == width - 1 || j == width - 1) ~(a(row) & b(j))
+        else a(row) & b(j)
+      bits(row + j) = bit
+    }
+    bits.toSeq
+  }
+
+  /** The Baugh-Wooley correction row. It is zero for a width of one. */
+  def correctionRow(width: Int): Seq[Bool] = {
+    val nCols = MulUtils.columnCount(width)
+    val bits  = Array.fill(nCols)(false.B)
+    if (width > 1) {
+      bits(width) = true.B
+      bits(2 * width - 1) = true.B
+    }
+    bits.toSeq
+  }
+
+  /** Merge a signed addend into a `2 * width` column heap. */
+  def withAddend(columns: Seq[Seq[Bool]], addend: SInt, width: Int): Seq[Seq[Bool]] = {
+    val out = Array.fill(columns.length)(scala.collection.mutable.ArrayBuffer.empty[Bool])
+    for (c <- columns.indices) out(c) ++= columns(c)
+    for (c <- columns.indices) out(c) += addend(c)
+    out.map(_.toSeq).toSeq
+  }
+
+  /**
+    * The sign bit of the signed product, used to build the extended FMA result.
+    *
+    * The sign of a nonzero product is the xor of the operand signs; a zero product is zero.
+    */
+  def productSign(a: SInt, b: SInt, width: Int): Bool =
+    (a(width - 1) ^ b(width - 1)) && a.asUInt.orR && b.asUInt.orR
+
   /** Register `x` through `stages` cycles. */
   def pipe[T <: Data](x: T, stages: Int): T =
     if (stages <= 0) x else pipe(RegNext(x), stages - 1)

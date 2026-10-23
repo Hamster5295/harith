@@ -13,6 +13,9 @@ object SIntFmaTestUtils {
     */
   val widths: Seq[Int] = Seq(1, 2, 4, 8, 13)
 
+  /** The widths exercised by the pipelined specs. */
+  val pipelinedWidths: Seq[Int] = Seq(1, 4, 13)
+
   /**
     * Corner cases around zero, the operand minimum and the operand maximum.
     *
