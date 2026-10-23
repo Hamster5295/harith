@@ -11,9 +11,13 @@ import harith.ExportForAnalysis
   * `stages` register layers and the two reduced rows are added by the supplied [[UIntAdd]]. The
   * throughput is one FMA per cycle and the latency is `stages` plus the adder latency.
   *
-  * fpga@32bit-2cyc: delay[i/o/max] = 6.132ns/4.783ns/4.947ns  area = 1683luts + 211ff
+  * fpga@32bit-2cyc-dadda: delay[i/o/max] = 6.132ns/4.783ns/4.947ns  area = 1683luts + 211ff
   *
-  * 55nm@32bit-2cyc: delay[i/o/max] = 1.9244ns/2.5375ns/2.5375ns  area = 12053.44um²
+  * 55nm@32bit-2cyc-dadda: delay[i/o/max] = 1.9244ns/2.5375ns/2.5375ns  area = 12053.44um²
+  *
+  * fpga@32bit-2cyc-wallace: delay[i/o/max] = 5.504ns/4.783ns/4.212ns  area = 1660luts + 208ff
+  *
+  * 55nm@32bit-2cyc-wallace: delay[i/o/max] = 1.9417ns/2.3465ns/2.3465ns  area = 12174.1200um²
   *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
@@ -59,6 +63,21 @@ object UIntPipelinedTreeFma extends App {
     new UIntPipelinedTreeFma(
       32,
       ReductionStyle.Dadda,
+      width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
+      2,
+    ),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
+}
+
+object UIntPipelinedTreeFmaWallace extends App {
+  ExportForAnalysis(
+    new UIntPipelinedTreeFma(
+      32,
+      ReductionStyle.Wallace,
       width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
       2,
     ),

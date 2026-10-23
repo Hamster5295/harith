@@ -12,9 +12,21 @@ import harith.ExportForAnalysis
   * a layer is used for prefix logic or only for retiming. A value of 0 makes the adder
   * combinational, equivalently to [[UIntPrefixAdd]].
   *
-  * fpga@32bit-2cyc: delay[i/o/max] = 2.833ns/1.716ns/1.479ns  area = 168luts + 192ff
+  * fpga@32bit-2cyc-kogge-stone: delay[i/o/max] = 2.833ns/1.716ns/1.479ns  area = 168luts + 192ff
   *
-  * 55nm@32bit-2cyc: delay[i/o/max] = 0.3475ns/0.8007ns/0.8007ns  area = 1847.72um²
+  * 55nm@32bit-2cyc-kogge-stone: delay[i/o/max] = 0.3475ns/0.8007ns/0.8007ns  area = 1847.72um²
+  *
+  * fpga@32bit-2cyc-brent-kung: delay[i/o/max] = 3.924ns/1.716ns/1.394ns  area = 127luts + 177ff
+  *
+  * 55nm@32bit-2cyc-brent-kung: delay[i/o/max] = 0.3862ns/0.8007ns/0.8007ns  area = 1618.9600um²
+  *
+  * fpga@32bit-2cyc-sklansky: delay[i/o/max] = 2.489ns/1.716ns/1.519ns  area = 130luts + 189ff
+  *
+  * 55nm@32bit-2cyc-sklansky: delay[i/o/max] = 0.2945ns/0.8007ns/0.8007ns  area = 1715.8400um²
+  *
+  * fpga@32bit-2cyc-han-carlson: delay[i/o/max] = 2.836ns/1.716ns/1.589ns  area = 145luts + 177ff
+  *
+  * 55nm@32bit-2cyc-han-carlson: delay[i/o/max] = 0.2672ns/0.8007ns/0.8007ns  area = 1653.1200um²
   *
   * @param width  The width of the operands
   * @param style  The parallel prefix network style
@@ -98,6 +110,36 @@ class UIntPipelinedPrefixAdd(val width: Int, val style: PrefixStyle, val stages:
 object UIntPipelinedPrefixAdd extends App {
   ExportForAnalysis(
     new UIntPipelinedPrefixAdd(32, PrefixStyle.KoggeStone, 2),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
+}
+
+object UIntPipelinedPrefixAddBrentKung extends App {
+  ExportForAnalysis(
+    new UIntPipelinedPrefixAdd(32, PrefixStyle.BrentKung, 2),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
+}
+
+object UIntPipelinedPrefixAddSklansky extends App {
+  ExportForAnalysis(
+    new UIntPipelinedPrefixAdd(32, PrefixStyle.Sklansky, 2),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
+}
+
+object UIntPipelinedPrefixAddHanCarlson extends App {
+  ExportForAnalysis(
+    new UIntPipelinedPrefixAdd(32, PrefixStyle.HanCarlson, 2),
     args,
     Array(
       "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",

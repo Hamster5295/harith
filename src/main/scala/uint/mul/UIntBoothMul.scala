@@ -11,9 +11,13 @@ import harith.ExportForAnalysis
   * [[UIntTreeMul]] are generated. The partial products are reduced to two rows by a Wallace
   * or Dadda network and the two rows are added by the supplied [[UIntAdd]].
   *
-  * fpga@32bit: delay[i/o/max] = 10.234ns/10.806ns/10.234ns  area = 2269luts + 0ff
+  * fpga@32bit-dadda: delay[i/o/max] = 10.234ns/10.806ns/10.234ns  area = 2269luts + 0ff
   *
-  * 55nm@32bit: delay[i/o/max] = 5.3502ns/5.3502ns/5.3502ns  area = 16288.16um²
+  * 55nm@32bit-dadda: delay[i/o/max] = 5.3502ns/5.3502ns/5.3502ns  area = 16288.16um²
+  *
+  * fpga@32bit-wallace: delay[i/o/max] = 10.137ns/10.709ns/10.137ns  area = 2392luts + 0ff
+  *
+  * 55nm@32bit-wallace: delay[i/o/max] = 5.4746ns/5.4746ns/5.4746ns  area = 17640.8400um²
   *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
@@ -47,6 +51,20 @@ object UIntBoothMul extends App {
     new UIntBoothMul(
       32,
       ReductionStyle.Dadda,
+      width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
+    ),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
+}
+
+object UIntBoothMulWallace extends App {
+  ExportForAnalysis(
+    new UIntBoothMul(
+      32,
+      ReductionStyle.Wallace,
       width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
     ),
     args,

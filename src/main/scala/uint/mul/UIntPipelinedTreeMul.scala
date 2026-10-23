@@ -12,9 +12,13 @@ import harith.ExportForAnalysis
   * latency is `stages` plus the latency of the final adder, so a pipelined adder can shorten the
   * final add.
   *
-  * fpga@32bit-2cyc: delay[i/o/max] = 5.976ns/4.530ns/4.947ns  area = 1597luts + 207ff
+  * fpga@32bit-2cyc-dadda: delay[i/o/max] = 5.976ns/4.530ns/4.947ns  area = 1597luts + 207ff
   *
-  * 55nm@32bit-2cyc: delay[i/o/max] = 1.8291ns/2.6226ns/2.6226ns  area = 11401.88um²
+  * 55nm@32bit-2cyc-dadda: delay[i/o/max] = 1.8291ns/2.6226ns/2.6226ns  area = 11401.88um²
+  *
+  * fpga@32bit-2cyc-wallace: delay[i/o/max] = 5.433ns/4.530ns/4.099ns  area = 1568luts + 203ff
+  *
+  * 55nm@32bit-2cyc-wallace: delay[i/o/max] = 1.9425ns/2.4260ns/2.4260ns  area = 11410.5600um²
   *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
@@ -58,6 +62,21 @@ object UIntPipelinedTreeMul extends App {
     new UIntPipelinedTreeMul(
       32,
       ReductionStyle.Dadda,
+      width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
+      2,
+    ),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
+}
+
+object UIntPipelinedTreeMulWallace extends App {
+  ExportForAnalysis(
+    new UIntPipelinedTreeMul(
+      32,
+      ReductionStyle.Wallace,
       width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
       2,
     ),

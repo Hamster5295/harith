@@ -11,9 +11,13 @@ import harith.ExportForAnalysis
   * over `stages` register layers and the two reduced rows are added by the supplied [[UIntAdd]].
   * The throughput is one FMA per cycle and the latency is `stages` plus the adder latency.
   *
-  * fpga@32bit-2cyc: delay[i/o/max] = 6.250ns/4.289ns/3.718ns  area = 2441luts + 454ff
+  * fpga@32bit-2cyc-dadda: delay[i/o/max] = 6.250ns/4.289ns/3.718ns  area = 2441luts + 454ff
   *
-  * 55nm@32bit-2cyc: delay[i/o/max] = 3.4447ns/1.6032ns/3.4447ns  area = 18331.88um²
+  * 55nm@32bit-2cyc-dadda: delay[i/o/max] = 3.4447ns/1.6032ns/3.4447ns  area = 18331.88um²
+  *
+  * fpga@32bit-2cyc-wallace: delay[i/o/max] = 5.863ns/4.272ns/3.701ns  area = 2640luts + 368ff
+  *
+  * 55nm@32bit-2cyc-wallace: delay[i/o/max] = 3.2155ns/1.5694ns/3.2155ns  area = 19205.2000um²
   *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
@@ -62,6 +66,21 @@ object UIntPipelinedBoothFma extends App {
     new UIntPipelinedBoothFma(
       32,
       ReductionStyle.Dadda,
+      width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
+      2,
+    ),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
+}
+
+object UIntPipelinedBoothFmaWallace extends App {
+  ExportForAnalysis(
+    new UIntPipelinedBoothFma(
+      32,
+      ReductionStyle.Wallace,
       width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
       2,
     ),

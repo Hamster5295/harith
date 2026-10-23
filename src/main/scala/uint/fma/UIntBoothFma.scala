@@ -10,9 +10,13 @@ import harith.ExportForAnalysis
   * The addend is merged into the Booth partial product heap, so fewer partial products than the AND
   * based [[UIntTreeFma]] are reduced by a single carry propagate adder.
   *
-  * fpga@32bit: delay[i/o/max] = 10.731ns/11.303ns/10.731ns  area = 2642luts + 0ff
+  * fpga@32bit-dadda: delay[i/o/max] = 10.731ns/11.303ns/10.731ns  area = 2642luts + 0ff
   *
-  * 55nm@32bit: delay[i/o/max] = 5.5558ns/5.5558ns/5.5558ns  area = 18806.76um²
+  * 55nm@32bit-dadda: delay[i/o/max] = 5.5558ns/5.5558ns/5.5558ns  area = 18806.76um²
+  *
+  * fpga@32bit-wallace: delay[i/o/max] = 9.970ns/10.542ns/9.970ns  area = 2701luts + 0ff
+  *
+  * 55nm@32bit-wallace: delay[i/o/max] = 5.1199ns/5.1199ns/5.1199ns  area = 19446.2800um²
   *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
@@ -44,6 +48,20 @@ object UIntBoothFma extends App {
     new UIntBoothFma(
       32,
       ReductionStyle.Dadda,
+      width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
+    ),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
+}
+
+object UIntBoothFmaWallace extends App {
+  ExportForAnalysis(
+    new UIntBoothFma(
+      32,
+      ReductionStyle.Wallace,
       width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
     ),
     args,

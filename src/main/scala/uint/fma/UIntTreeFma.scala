@@ -10,9 +10,13 @@ import harith.ExportForAnalysis
   * The addend is merged into the partial product heap, so the reduction tree produces two rows that
   * a single carry propagate adder resolves. It is one adder cheaper than [[UIntComposedFma]].
   *
-  * fpga@32bit: delay[i/o/max] = 10.448ns/11.020ns/10.448ns  area = 1704luts + 0ff
+  * fpga@32bit-dadda: delay[i/o/max] = 10.448ns/11.020ns/10.448ns  area = 1704luts + 0ff
   *
-  * 55nm@32bit: delay[i/o/max] = 4.8911ns/4.8911ns/4.8911ns  area = 11172.00um²
+  * 55nm@32bit-dadda: delay[i/o/max] = 4.8911ns/4.8911ns/4.8911ns  area = 11172.00um²
+  *
+  * fpga@32bit-wallace: delay[i/o/max] = 10.359ns/10.931ns/10.359ns  area = 1662luts + 0ff
+  *
+  * 55nm@32bit-wallace: delay[i/o/max] = 4.7340ns/4.7340ns/4.7340ns  area = 11436.8800um²
   *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
@@ -44,6 +48,20 @@ object UIntTreeFma extends App {
     new UIntTreeFma(
       32,
       ReductionStyle.Dadda,
+      width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
+    ),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
+}
+
+object UIntTreeFmaWallace extends App {
+  ExportForAnalysis(
+    new UIntTreeFma(
+      32,
+      ReductionStyle.Wallace,
       width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
     ),
     args,

@@ -11,9 +11,13 @@ import harith.ExportForAnalysis
   * rows are added by the supplied [[UIntAdd]]. The reduction is combinational, so the latency is
   * the latency of the final adder.
   *
-  * fpga@32bit: delay[i/o/max] = 10.316ns/10.888ns/10.316ns  area = 1616luts + 0ff
+  * fpga@32bit-dadda: delay[i/o/max] = 10.316ns/10.888ns/10.316ns  area = 1616luts + 0ff
   *
-  * 55nm@32bit: delay[i/o/max] = 4.8125ns/4.8125ns/4.8125ns  area = 10564.68um²
+  * 55nm@32bit-dadda: delay[i/o/max] = 4.8125ns/4.8125ns/4.8125ns  area = 10564.68um²
+  *
+  * fpga@32bit-wallace: delay[i/o/max] = 10.274ns/10.846ns/10.274ns  area = 1568luts + 0ff
+  *
+  * 55nm@32bit-wallace: delay[i/o/max] = 4.7953ns/4.7953ns/4.7953ns  area = 10695.4400um²
   *
   * @param width          The width of the operands
   * @param reductionStyle The reduction style of the partial product tree
@@ -46,6 +50,20 @@ object UIntTreeMul extends App {
     new UIntTreeMul(
       32,
       ReductionStyle.Dadda,
+      width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
+    ),
+    args,
+    Array(
+      "--lowering-options=mitigateVivadoArrayIndexConstPropBug,disallowLocalVariables,disallowPackedArrays",
+    ),
+  )
+}
+
+object UIntTreeMulWallace extends App {
+  ExportForAnalysis(
+    new UIntTreeMul(
+      32,
+      ReductionStyle.Wallace,
       width => new UIntPrefixAdd(width, PrefixStyle.KoggeStone),
     ),
     args,
