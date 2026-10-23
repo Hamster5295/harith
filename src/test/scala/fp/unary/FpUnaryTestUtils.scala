@@ -153,6 +153,37 @@ object FpUnaryTestUtils {
       assert((obs - exp).abs <= 1, s"src=$src observed=$obs expected=$exp")
     }
 
+  /** Stream one operand per cycle and check the results as they leave the pipeline. */
+  def checkStream(
+      dut:      FpUnary,
+      inFmt:    FpFormat,
+      outFmt:   FpFormat,
+      vectors:  Seq[BigInt],
+      ref:      BigInt => BigInt,
+      faithful: Boolean,
+  ): Unit = {
+    var inIdx  = 0
+    var outIdx = 0
+    while (outIdx < vectors.length) {
+      if (inIdx < vectors.length) {
+        dut.io.in.valid.poke(true.B)
+        dut.io.in.bits.src.poke(vectors(inIdx).U(inFmt.width.W))
+        dut.io.in.bits.rm.poke(0.U(3.W))
+      } else {
+        dut.io.in.valid.poke(false.B)
+      }
+      dut.clock.step()
+      if (dut.io.out.valid.peekBoolean()) {
+        val obs = dut.io.out.bits.output.peek().litValue
+        val exp = ref(vectors(outIdx))
+        if (faithful) assert((obs - exp).abs <= 1, s"src=${vectors(outIdx)} observed=$obs expected=$exp")
+        else assert(obs == exp, s"src=${vectors(outIdx)} observed=$obs expected=$exp")
+        outIdx += 1
+      }
+      if (inIdx < vectors.length) inIdx += 1
+    }
+  }
+
   /** The zero bit pattern. */
   def zeroBits(fmt: FpFormat, sign: Boolean = false): BigInt =
     if (sign) BigInt(1) << (fmt.width - 1) else BigInt(0)
