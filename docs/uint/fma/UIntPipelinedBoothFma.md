@@ -34,5 +34,7 @@ The addend is merged into the Booth partial product heap, the reduction levels a
 
 | Condition | Platform | In (ns) | Out (ns) | Max (ns) | Area |
 | --- | --- | --- | --- | --- | --- |
-| `32bit-2cyc` | FPGA | 6.250 | 4.289 | 3.718 | 2,441 LUTs + 454 FF |
-| `32bit-2cyc` | 55 nm | 3.4447 | 1.6032 | 3.4447 | 18,331.88 µm² |
+| `32bit-2cyc-dadda` | FPGA | 6.250 | 4.289 | 3.718 | 2,441 LUTs + 454 FF |
+| `32bit-2cyc-dadda` | 55 nm | 3.4447 | 1.6032 | 3.4447 | 18,331.88 µm² |
+| `32bit-2cyc-wallace` | FPGA | 5.863 | 4.272 | 3.701 | 2,640 LUTs + 368 FF |
+| `32bit-2cyc-wallace` | 55 nm | 3.2155 | 1.5694 | 3.2155 | 19,205.20 µm² |

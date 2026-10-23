@@ -32,5 +32,7 @@ The multiplier is recoded so that only about half as many partial products as th
 
 | Condition | Platform | In (ns) | Out (ns) | Max (ns) | Area |
 | --- | --- | --- | --- | --- | --- |
-| `32bit` | FPGA | 10.234 | 10.806 | 10.234 | 2,269 LUTs + 0 FF |
-| `32bit` | 55 nm | 5.3502 | 5.3502 | 5.3502 | 16,288.16 µm² |
+| `32bit-dadda` | FPGA | 10.234 | 10.806 | 10.234 | 2,269 LUTs + 0 FF |
+| `32bit-dadda` | 55 nm | 5.3502 | 5.3502 | 5.3502 | 16,288.16 µm² |
+| `32bit-wallace` | FPGA | 10.137 | 10.709 | 10.137 | 2,392 LUTs + 0 FF |
+| `32bit-wallace` | 55 nm | 5.4746 | 5.4746 | 5.4746 | 17,640.84 µm² |

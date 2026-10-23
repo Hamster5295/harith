@@ -34,5 +34,7 @@ The addend is merged into the partial product heap, the reduction levels are dis
 
 | Condition | Platform | In (ns) | Out (ns) | Max (ns) | Area |
 | --- | --- | --- | --- | --- | --- |
-| `32bit-2cyc` | FPGA | 6.132 | 4.783 | 4.947 | 1,683 LUTs + 211 FF |
-| `32bit-2cyc` | 55 nm | 1.9244 | 2.5375 | 2.5375 | 12,053.44 µm² |
+| `32bit-2cyc-dadda` | FPGA | 6.132 | 4.783 | 4.947 | 1,683 LUTs + 211 FF |
+| `32bit-2cyc-dadda` | 55 nm | 1.9244 | 2.5375 | 2.5375 | 12,053.44 µm² |
+| `32bit-2cyc-wallace` | FPGA | 5.504 | 4.783 | 4.212 | 1,660 LUTs + 208 FF |
+| `32bit-2cyc-wallace` | 55 nm | 1.9417 | 2.3465 | 2.3465 | 12,174.12 µm² |

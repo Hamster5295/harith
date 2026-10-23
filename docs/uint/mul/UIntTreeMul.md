@@ -32,5 +32,7 @@ The partial product matrix is reduced to two rows by a Wallace or Dadda network 
 
 | Condition | Platform | In (ns) | Out (ns) | Max (ns) | Area |
 | --- | --- | --- | --- | --- | --- |
-| `32bit` | FPGA | 10.316 | 10.888 | 10.316 | 1,616 LUTs + 0 FF |
-| `32bit` | 55 nm | 4.8125 | 4.8125 | 4.8125 | 10,564.68 µm² |
+| `32bit-dadda` | FPGA | 10.316 | 10.888 | 10.316 | 1,616 LUTs + 0 FF |
+| `32bit-dadda` | 55 nm | 4.8125 | 4.8125 | 4.8125 | 10,564.68 µm² |
+| `32bit-wallace` | FPGA | 10.274 | 10.846 | 10.274 | 1,568 LUTs + 0 FF |
+| `32bit-wallace` | 55 nm | 4.7953 | 4.7953 | 4.7953 | 10,695.44 µm² |

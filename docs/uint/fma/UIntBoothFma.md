@@ -33,5 +33,7 @@ The addend is merged into the Booth partial product heap, so fewer partial produ
 
 | Condition | Platform | In (ns) | Out (ns) | Max (ns) | Area |
 | --- | --- | --- | --- | --- | --- |
-| `32bit` | FPGA | 10.731 | 11.303 | 10.731 | 2,642 LUTs + 0 FF |
-| `32bit` | 55 nm | 5.5558 | 5.5558 | 5.5558 | 18,806.76 µm² |
+| `32bit-dadda` | FPGA | 10.731 | 11.303 | 10.731 | 2,642 LUTs + 0 FF |
+| `32bit-dadda` | 55 nm | 5.5558 | 5.5558 | 5.5558 | 18,806.76 µm² |
+| `32bit-wallace` | FPGA | 9.970 | 10.542 | 9.970 | 2,701 LUTs + 0 FF |
+| `32bit-wallace` | 55 nm | 5.1199 | 5.1199 | 5.1199 | 19,446.28 µm² |

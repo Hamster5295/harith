@@ -33,5 +33,11 @@
 
 | 条件 | 平台 | In (ns) | Out (ns) | Max (ns) | 面积 |
 | --- | --- | --- | --- | --- | --- |
-| `32bit-2cyc` | FPGA | 2.833 | 1.716 | 1.479 | 168 LUTs + 192 FF |
-| `32bit-2cyc` | 55 nm | 0.3475 | 0.8007 | 0.8007 | 1,847.72 µm² |
+| `32bit-2cyc-kogge-stone` | FPGA | 2.833 | 1.716 | 1.479 | 168 LUTs + 192 FF |
+| `32bit-2cyc-kogge-stone` | 55 nm | 0.3475 | 0.8007 | 0.8007 | 1,847.72 µm² |
+| `32bit-2cyc-brent-kung` | FPGA | 3.924 | 1.716 | 1.394 | 127 LUTs + 177 FF |
+| `32bit-2cyc-brent-kung` | 55 nm | 0.3862 | 0.8007 | 0.8007 | 1,618.96 µm² |
+| `32bit-2cyc-sklansky` | FPGA | 2.489 | 1.716 | 1.519 | 130 LUTs + 189 FF |
+| `32bit-2cyc-sklansky` | 55 nm | 0.2945 | 0.8007 | 0.8007 | 1,715.84 µm² |
+| `32bit-2cyc-han-carlson` | FPGA | 2.836 | 1.716 | 1.589 | 145 LUTs + 177 FF |
+| `32bit-2cyc-han-carlson` | 55 nm | 0.2672 | 0.8007 | 0.8007 | 1,653.12 µm² |

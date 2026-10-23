@@ -20,3 +20,14 @@
 ## 用法
 
 `style` 是 [`UIntPrefixAdd`](/zh/uint/add/UIntPrefixAdd) 与 [`UIntPipelinedPrefixAdd`](/zh/uint/add/UIntPipelinedPrefixAdd) 的构造参数。[`UIntCarryLookaheadAdd`](/zh/uint/add/UIntCarryLookaheadAdd) 在内部固定使用 `Sklansky`，而浮点前缀变体使用 `KoggeStone`。
+
+## PPA
+
+使用 `UIntPrefixAdd(32, style)` 测量。
+
+| 风格 | 条件 | Max · FPGA | 面积 · FPGA | Max · 55 nm | 面积 · 55 nm |
+| --- | --- | --- | --- | --- | --- |
+| `KoggeStone` | `32bit-kogge-stone` | 3.816 ns | 159 LUTs + 0 FF | 1.3195 ns | 945.84 µm² |
+| `BrentKung` | `32bit-brent-kung` | 4.169 ns | 68 LUTs + 0 FF | 1.3866 ns | 509.32 µm² |
+| `Sklansky` | `32bit-sklansky` | 3.867 ns | 81 LUTs + 0 FF | 1.5115 ns | 656.32 µm² |
+| `HanCarlson` | `32bit-han-carlson` | 4.142 ns | 97 LUTs + 0 FF | 1.7993 ns | 715.12 µm² |

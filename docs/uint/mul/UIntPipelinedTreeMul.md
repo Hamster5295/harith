@@ -33,5 +33,7 @@ The reduction levels are distributed over `stages` register layers and the two r
 
 | Condition | Platform | In (ns) | Out (ns) | Max (ns) | Area |
 | --- | --- | --- | --- | --- | --- |
-| `32bit-2cyc` | FPGA | 5.976 | 4.530 | 4.947 | 1,597 LUTs + 207 FF |
-| `32bit-2cyc` | 55 nm | 1.8291 | 2.6226 | 2.6226 | 11,401.88 µm² |
+| `32bit-2cyc-dadda` | FPGA | 5.976 | 4.530 | 4.947 | 1,597 LUTs + 207 FF |
+| `32bit-2cyc-dadda` | 55 nm | 1.8291 | 2.6226 | 2.6226 | 11,401.88 µm² |
+| `32bit-2cyc-wallace` | FPGA | 5.433 | 4.530 | 4.099 | 1,568 LUTs + 203 FF |
+| `32bit-2cyc-wallace` | 55 nm | 1.9425 | 2.4260 | 2.4260 | 11,410.56 µm² |
