@@ -70,9 +70,9 @@ const fpModules: Record<string, string[]> = {
     'FpPipelinedFma',
   ],
   convert: ['FpGenericConvert', 'FpPipelinedConvert'],
-  reciprocal: ['FpRestoringReciprocal', 'FpSrt4Reciprocal', 'FpNewtonReciprocal'],
-  sqrt: ['FpRestoringSqrt', 'FpSrt4Sqrt', 'FpNewtonSqrt'],
-  rsqrt: ['FpRestoringRsqrt', 'FpSrt4Rsqrt', 'FpNewtonRsqrt'],
+  reciprocal: ['FpRestoringReciprocal', 'FpSrt4Reciprocal', 'FpNewtonReciprocal', 'FpPipelinedNewtonReciprocal'],
+  sqrt: ['FpRestoringSqrt', 'FpSrt4Sqrt', 'FpNewtonSqrt', 'FpPipelinedNewtonSqrt'],
+  rsqrt: ['FpRestoringRsqrt', 'FpSrt4Rsqrt', 'FpNewtonRsqrt', 'FpPipelinedNewtonRsqrt'],
   misc: ['FpFlags', 'FpFormat', 'FpPolicy'],
 }
 

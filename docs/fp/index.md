@@ -9,6 +9,6 @@ Floating-point datapaths. Every module is exposed for the four formats `Fp64`, `
 - **[Div](/fp/div/)** — 1 module
 - **[Fma](/fp/fma/)** — 7 modules
 - **[Convert](/fp/convert/)** — 2 modules
-- **[Reciprocal](/fp/reciprocal/)** — 3 modules
-- **[Sqrt](/fp/sqrt/)** — 3 modules
-- **[Rsqrt](/fp/rsqrt/)** — 3 modules
+- **[Reciprocal](/fp/reciprocal/)** — 4 modules
+- **[Sqrt](/fp/sqrt/)** — 4 modules
+- **[Rsqrt](/fp/rsqrt/)** — 4 modules
