@@ -12,7 +12,7 @@ import scala.collection.mutable
   * compressor and emits one sum in the same column and one carry in the next column. This mirrors
   * the underlying hardware so that levels can be registered for pipelining.
   */
-private[uint] object MulUtils {
+private[harith] object MulUtils {
 
   /** The number of output columns of a `width x width` multiplier. */
   def columnCount(width: Int): Int = 2 * width

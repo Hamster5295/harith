@@ -102,4 +102,17 @@ object SIntMulTestUtils {
       dut.io.output.expect(reference(a, b, width).S((2 * width).W), s"a=$a b=$b")
     }
   }
+
+
+  /** Check a fully pipelined signed multiplier, waiting `latency` cycles. */
+  def checkPipelined(dut: SIntMul, vectors: Seq[(BigInt, BigInt)]): Unit = {
+    val width   = dut.io.src1.getWidth
+    val latency = dut.latency
+    vectors.foreach { case (a, b) =>
+      dut.io.src1.poke(a.S(width.W))
+      dut.io.src2.poke(b.S(width.W))
+      dut.clock.step(latency)
+      dut.io.output.expect(reference(a, b, width).S((2 * width).W), s"a=$a b=$b")
+    }
+  }
 }

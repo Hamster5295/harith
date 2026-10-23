@@ -32,8 +32,10 @@ class SIntComposedFma(val width: Int, mul: Int => UIntMul) extends SIntFma {
   magnitude.io.src2 := Mux(b < 0.S, -b, b).asUInt
 
   val prodWide = magnitude.io.output.pad(2 * width + 1).asSInt
-  val product  = Mux(signP, -prodWide, prodWide)
-  val addend   = io.add.pad(2 * width + 1)
+  val signR    = SIntMulUtils.pipe(signP, magnitude.latency)
+  val addR     = SIntMulUtils.pipe(io.add, magnitude.latency)
+  val product  = Mux(signR, -prodWide, prodWide)
+  val addend   = addR.pad(2 * width + 1)
   io.output := product + addend
 
   override def latency: Int = magnitude.latency

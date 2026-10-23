@@ -88,4 +88,18 @@ object SIntFmaTestUtils {
       dut.io.output.expect(reference(a, b, c, width).S((2 * width + 1).W), s"a=$a b=$b c=$c")
     }
   }
+
+
+  /** Check a fully pipelined signed FMA, waiting `latency` cycles. */
+  def checkPipelined(dut: SIntFma, vectors: Seq[(BigInt, BigInt, BigInt)]): Unit = {
+    val width   = dut.io.mul1.getWidth
+    val latency = dut.latency
+    vectors.foreach { case (a, b, c) =>
+      dut.io.mul1.poke(a.S(width.W))
+      dut.io.mul2.poke(b.S(width.W))
+      dut.io.add.poke(c.S((2 * width).W))
+      dut.clock.step(latency)
+      dut.io.output.expect(reference(a, b, c, width).S((2 * width + 1).W), s"a=$a b=$b c=$c")
+    }
+  }
 }

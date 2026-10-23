@@ -32,7 +32,8 @@ class SIntMagnitudeMul(val width: Int, mul: Int => UIntMul) extends SIntMul {
   magnitude.io.src2 := Mux(b < 0.S, -b, b).asUInt
 
   val wide   = magnitude.io.output.pad(2 * width + 1).asSInt
-  val signed = Mux(sign, -wide, wide)
+  val signR  = SIntMulUtils.pipe(sign, magnitude.latency)
+  val signed = Mux(signR, -wide, wide)
   io.output := signed(2 * width - 1, 0).asSInt
 
   override def latency: Int = magnitude.latency

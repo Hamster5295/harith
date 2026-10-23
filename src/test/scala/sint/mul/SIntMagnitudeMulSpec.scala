@@ -2,7 +2,7 @@ package harith.sint
 
 import chisel3.simulator.scalatest.ChiselSim
 import hammer.test._
-import harith.uint.UIntMacroMul
+import harith.uint.{UIntMacroMul, UIntPipelinedArrayMul}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 
@@ -16,6 +16,16 @@ class SIntMagnitudeMulSpec extends AnyFreeSpec with Matchers with ChiselSim {
         }
         Test("random vectors", dut) { dut =>
           SIntMulTestUtils.checkCombinational(dut, SIntMulTestUtils.randomVectors(width, width))
+        }
+      }
+    }
+  }
+
+  "SIntMagnitudeMul with a pipelined magnitude multiplier" - {
+    SIntMulTestUtils.widths.foreach { width =>
+      s"width = $width" in Sim(new SIntMagnitudeMul(width, w => new UIntPipelinedArrayMul(w, 2))) { dut =>
+        Test("random vectors", dut) { dut =>
+          SIntMulTestUtils.checkPipelined(dut, SIntMulTestUtils.randomVectors(width, width + 1))
         }
       }
     }
