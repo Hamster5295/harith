@@ -12,3 +12,10 @@
 - **[Reciprocal](/zh/fp/reciprocal/)** —— 4 个模块
 - **[Sqrt](/zh/fp/sqrt/)** —— 4 个模块
 - **[Rsqrt](/zh/fp/rsqrt/)** —— 4 个模块
+
+## 参考
+
+- [FpFormat](/zh/fp/misc/FpFormat) —— 浮点格式。
+- [FpPolicy](/zh/fp/misc/FpPolicy) —— 数值策略。
+- [FpFlags](/zh/fp/misc/FpFlags) —— IEEE-754 标志。
+- [RoundingMode](/zh/fp/misc/RoundingMode) —— RISC-V `rm` 编码。

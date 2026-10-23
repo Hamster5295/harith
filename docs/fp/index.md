@@ -12,3 +12,10 @@ Floating-point datapaths. Every module is exposed for the four formats `Fp64`, `
 - **[Reciprocal](/fp/reciprocal/)** — 4 modules
 - **[Sqrt](/fp/sqrt/)** — 4 modules
 - **[Rsqrt](/fp/rsqrt/)** — 4 modules
+
+## Reference
+
+- [FpFormat](/fp/misc/FpFormat) — floating-point formats.
+- [FpPolicy](/fp/misc/FpPolicy) — numeric policy.
+- [FpFlags](/fp/misc/FpFlags) — IEEE-754 flags.
+- [RoundingMode](/fp/misc/RoundingMode) — RISC-V `rm` encodings.

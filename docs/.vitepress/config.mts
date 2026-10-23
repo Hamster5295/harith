@@ -32,7 +32,7 @@ const uintModules: Record<string, string[]> = {
     'UIntPipelinedBoothFma',
     'UIntPipelinedTreeFma',
   ],
-  misc: ['PrefixStyle'],
+  misc: ['PrefixStyle', 'ReductionStyle'],
 }
 
 const sintModules: Record<string, string[]> = {
@@ -73,7 +73,7 @@ const fpModules: Record<string, string[]> = {
   reciprocal: ['FpRestoringReciprocal', 'FpSrt4Reciprocal', 'FpNewtonReciprocal', 'FpPipelinedNewtonReciprocal'],
   sqrt: ['FpRestoringSqrt', 'FpSrt4Sqrt', 'FpNewtonSqrt', 'FpPipelinedNewtonSqrt'],
   rsqrt: ['FpRestoringRsqrt', 'FpSrt4Rsqrt', 'FpNewtonRsqrt', 'FpPipelinedNewtonRsqrt'],
-  misc: ['FpFlags', 'FpFormat', 'FpPolicy'],
+  misc: ['FpFlags', 'FpFormat', 'FpPolicy', 'RoundingMode'],
 }
 
 const enCategories: Record<string, string> = {
