@@ -4,6 +4,6 @@
 
 ## 类别
 
-- **[Mul](/zh/sint/mul/)** —— 2 个模块
+- **[Mul](/zh/sint/mul/)** —— 7 个模块
 - **[Div](/zh/sint/div/)** —— 1 个模块
-- **[Fma](/zh/sint/fma/)** —— 2 个模块
+- **[Fma](/zh/sint/fma/)** —— 6 个模块

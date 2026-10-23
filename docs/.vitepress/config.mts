@@ -36,9 +36,9 @@ const uintModules: Record<string, string[]> = {
 }
 
 const sintModules: Record<string, string[]> = {
-  mul: ['SIntMacroMul', 'SIntMagnitudeMul'],
+  mul: ['SIntMacroMul', 'SIntMagnitudeMul', 'SIntArrayMul', 'SIntBoothMul', 'SIntTreeMul', 'SIntPipelinedArrayMul', 'SIntPipelinedTreeMul'],
   div: ['SIntRestoringDiv'],
-  fma: ['SIntMacroFma', 'SIntComposedFma'],
+  fma: ['SIntMacroFma', 'SIntComposedFma', 'SIntBoothFma', 'SIntTreeFma', 'SIntPipelinedBoothFma', 'SIntPipelinedTreeFma'],
 }
 
 const fpModules: Record<string, string[]> = {

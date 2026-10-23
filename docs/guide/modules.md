@@ -27,15 +27,16 @@ through the `UIntAdd` / `UIntMul` / … interfaces.
 Signed integer datapaths use the same operation set as `UInt` but operate on two's complement
 operands.
 
-- **Mul**: two implementations that expose the choice between a direct signed multiplier and a
-  sign-magnitude multiplier built on the unsigned `UIntMul`. At the measured 32-bit condition the
-  direct `*` form is smaller and faster on FPGA and faster on 55 nm, while the magnitude form is
-  slightly smaller on 55 nm.
+- **Mul**: a direct signed `*` form, a sign-magnitude wrapper around any `UIntMul`, and native
+  signed array, Booth and tree variants (combinational and pipelined). The native variants use
+  Baugh-Wooley or signed modified Booth partial products and avoid the sign-magnitude abs/negate
+  overhead; the signed tree costs about the same as the unsigned tree.
 - **Div**: the restoring divider is reused as an unsigned magnitude core; the operands are
   converted to magnitudes and the quotient/remainder signs are restored, with the RISC-V signed
   divide-by-zero and `min / -1` semantics.
-- **Fma**: a direct signed `*` + `+` form and a sign-magnitude form built on the unsigned
-  multiplier. At 32 bits the direct form is smaller and faster on both platforms.
+- **Fma**: a direct signed `*` + `+` form, a sign-magnitude wrapper around any `UIntMul`, and native
+  signed Booth and tree FMAs that merge the addend into the partial product reduction (combinational
+  and pipelined).
 
 See the [SInt](/sint/) categories for the per-module PPA tables.
 
